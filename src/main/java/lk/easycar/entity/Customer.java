@@ -92,4 +92,18 @@ public class Customer {
     public void setCusContactNo(String cusContactNo) {
         this.cusContactNo = cusContactNo;
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "cusID='" + cusID + '\'' +
+                ", cusName='" + cusName + '\'' +
+                ", cusEmail='" + cusEmail + '\'' +
+                ", cusPassword='" + cusPassword + '\'' +
+                ", cusNIC='" + cusNIC + '\'' +
+                ", cusDrivingLicenseNo='" + cusDrivingLicenseNo + '\'' +
+                ", cusAddress='" + cusAddress + '\'' +
+                ", cusContactNo='" + cusContactNo + '\'' +
+                '}';
+    }
 }
