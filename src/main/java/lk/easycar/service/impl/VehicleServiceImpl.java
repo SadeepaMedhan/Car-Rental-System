@@ -33,17 +33,29 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public void deleteVehicle(String id) {
-
+        if (vehicleRepo.existsById(id)){
+            vehicleRepo.deleteById(id);
+        }else{
+            throw new RuntimeException("Please check the Vehicle ID, Not Found Vehicle!");
+        }
     }
 
     @Override
     public void updateVehicle(VehicleDTO dto) {
-
+        if (vehicleRepo.existsById(dto.getVehicleId())){
+            vehicleRepo.save(mapper.map(dto, Vehicle.class));
+        }else{
+            throw new RuntimeException("No Such Vehicle To Update..! Please Check the ID..!");
+        }
     }
 
     @Override
     public VehicleDTO searchVehicle(String id) {
-        return null;
+        if (vehicleRepo.existsById(id)){
+            return mapper.map(vehicleRepo.findById(id).get(), VehicleDTO.class);
+        }else{
+            throw new RuntimeException("No Vehicle For "+id+" !");
+        }
     }
 
     @Override
