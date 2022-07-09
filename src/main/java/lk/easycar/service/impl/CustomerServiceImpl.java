@@ -33,23 +33,34 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void deleteCustomer(String id) {
-
+        if (repo.existsById(id)){
+            repo.deleteById(id);
+        }else{
+            throw new RuntimeException("Please check the Customer ID.. No Such Customer..!");
+        }
     }
 
     @Override
-    public void updateCustomer(CustomerDTO entity) {
-
+    public void updateCustomer(CustomerDTO dto) {
+        if (repo.existsById(dto.getCusID())) {
+            repo.save(mapper.map(dto, Customer.class));
+        } else {
+            throw new RuntimeException("No Such Customer To Update..! Please Check the ID..!");
+        }
     }
 
     @Override
     public CustomerDTO searchCustomer(String id) {
-        return null;
+        if (repo.existsById(id)){
+            return mapper.map(repo.findById(id).get(), CustomerDTO.class);
+        }else{
+            throw new RuntimeException("No Customer For "+id+" ..!");
+        }
     }
 
     @Override
     public List<CustomerDTO> getAllCustomers() {
-        return mapper.map(repo.findAll(),
-                new TypeToken<List<CustomerDTO>>() {
-                }.getType());
+        return mapper.map(repo.findAll(), new TypeToken<List<CustomerDTO>>() {
+        }.getType());
     }
 }
