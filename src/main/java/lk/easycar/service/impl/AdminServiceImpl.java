@@ -5,6 +5,7 @@ import lk.easycar.entity.Admin;
 import lk.easycar.repo.AdminRepo;
 import lk.easycar.service.AdminService;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,12 +33,20 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void deleteAdmin(String id) {
-
+        if (repo.existsById(id)){
+            repo.deleteById(id);
+        }else{
+            throw new RuntimeException("Please check the Admin ID!");
+        }
     }
 
     @Override
     public void updateAdmin(AdminDTO dto) {
-
+        if (repo.existsById(dto.getAdminID())) {
+            repo.save(mapper.map(dto, Admin.class));
+        } else {
+            throw new RuntimeException("Please Check the ID!");
+        }
     }
 
     @Override
@@ -51,6 +60,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<AdminDTO> getAllAdmins() {
-        return null;
+        return mapper.map(repo.findAll(), new TypeToken<List<AdminDTO>>() {
+        }.getType());
     }
 }
