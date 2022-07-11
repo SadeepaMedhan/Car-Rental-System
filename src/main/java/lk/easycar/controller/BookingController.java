@@ -1,54 +1,32 @@
 package lk.easycar.controller;
 
 import lk.easycar.dto.BookingDTO;
-import lk.easycar.entity.Booking;
-import lk.easycar.repo.BookingRepo;
 import lk.easycar.service.BookingService;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
+import lk.easycar.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
-import java.util.List;
 
-@Service
-@Transactional
-public class BookingController implements BookingService {
-
-    @Autowired
-    private BookingRepo repo;
+@RestController
+@RequestMapping("booking")
+@CrossOrigin
+public class BookingController {
 
     @Autowired
-    private ModelMapper mapper;
+    BookingService bookingService;
 
-    @Override
-    public void saveBooking(BookingDTO dto) {
-        if (!repo.existsById(dto.getBookingId())) {
-            repo.save(mapper.map(dto, Booking.class));
-        } else {
-            throw new RuntimeException("Already Exist Booking-ID!");
-        }
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil getAllBookings(){
+        return new ResponseUtil(200,"Ok",bookingService.getAllBookings());
     }
 
-    @Override
-    public void deleteBooking(String id) {
-
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil createBooking(@RequestBody BookingDTO bookingDTO) {
+        bookingService.saveBooking(bookingDTO);
+        return new ResponseUtil(200, "Save", null);
     }
 
-    @Override
-    public void updateBooking(BookingDTO dto) {
-
-    }
-
-    @Override
-    public BookingDTO searchBooking(String id) {
-        return null;
-    }
-
-    @Override
-    public List<BookingDTO> getAllBookings() {
-        return mapper.map(repo.findAll(), new TypeToken<List<BookingDTO>>() {
-        }.getType());
-    }
 }
