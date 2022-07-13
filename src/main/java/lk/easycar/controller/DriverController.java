@@ -34,14 +34,20 @@ public class DriverController {
         return new ResponseUtil(200,"Updated",null);
     }
 
-    @DeleteMapping(params = {"id"},produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(params = {"id"}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseUtil deleteDriver(@RequestParam String id) {
         driverService.deleteDriver(id);
         return new ResponseUtil(200,"Deleted",null);
     }
 
-    @GetMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseUtil searchDriver(@PathVariable String id) {
         return new ResponseUtil(200,"Ok",driverService.searchDriver(id));
+    }
+
+    //driver/schedule?id=D001
+    @GetMapping(path = "schedule", params = {"id"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil getSchedule(@RequestParam String id) {
+        return new ResponseUtil(200,"Ok",driverService.getSchedule(id));
     }
 }

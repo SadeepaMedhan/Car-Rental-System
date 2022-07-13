@@ -6,6 +6,7 @@ import lk.easycar.entity.Admin;
 import lk.easycar.entity.Booking;
 import lk.easycar.repo.AdminRepo;
 import lk.easycar.repo.BookingRepo;
+import lk.easycar.repo.VehicleRepo;
 import lk.easycar.service.AdminService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -25,6 +26,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private BookingRepo bookingRepo;
+
+    @Autowired
+    private VehicleRepo vehicleRepo;
 
     @Autowired
     private ModelMapper mapper;
