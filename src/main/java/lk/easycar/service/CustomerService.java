@@ -1,5 +1,6 @@
 package lk.easycar.service;
 
+import lk.easycar.dto.BookingDTO;
 import lk.easycar.dto.CustomerDTO;
 
 import java.util.List;
@@ -10,4 +11,6 @@ public interface CustomerService {
     void updateCustomer(CustomerDTO entity);
     CustomerDTO searchCustomer(String id);
     List<CustomerDTO> getAllCustomers();
+
+    List<BookingDTO> getRequestedBookings(String id);
 }

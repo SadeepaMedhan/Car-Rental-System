@@ -45,4 +45,9 @@ public class CustomerController {
         return new ResponseUtil(200,"Ok",customerService.searchCustomer(id));
     }
 
+    //customer/request?id=C001
+    @GetMapping(path = "request", params = {"id"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil getRequestBookings(@RequestParam String id) {
+        return new ResponseUtil(200,"Ok",customerService.getRequestedBookings(id));
+    }
 }
