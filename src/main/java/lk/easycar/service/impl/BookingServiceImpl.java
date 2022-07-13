@@ -33,20 +33,19 @@ public class BookingServiceImpl implements BookingService {
     private ModelMapper mapper;
 
     @Override
-    public void saveBooking(BookingDTO dto) {
-        if (!bookingRepo.existsById(dto.getBookingId())) {
-            bookingRepo.save(mapper.map(dto, Booking.class));
+    public void saveBooking(BookingDTO bookingData) {
+        if (!bookingRepo.existsById(bookingData.getBookingId())) {
+            bookingRepo.save(mapper.map(bookingData, Booking.class));
 
-            if (dto.getVehicleId() == null) {
+            if (bookingData.getVehicle() == null) {
                 throw new RuntimeException("No vehicle added the booking");
             }else {
-                Vehicle vehicle = vehicleRepo.findById(dto.getVehicleId()).get();
+                Vehicle vehicle = bookingData.getVehicle();
                 vehicle.setStatus("Selected");
                 vehicleRepo.save(vehicle);
 
-                if (dto.getDriverId() != null){
-                    Driver driver = driverRepo.findById(dto.getDriverId()).get();
-
+                if (bookingData.getDriver() != null){
+                    Driver driver = bookingData.getDriver();
                 }
             }
 

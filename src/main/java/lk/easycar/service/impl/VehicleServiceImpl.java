@@ -60,7 +60,15 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public List<VehicleDTO> getAllVehicles() {
-        return mapper.map(vehicleRepo.findAll(),
+        List<Vehicle> vehicleList = vehicleRepo.findAll();
+
+        for (Vehicle vehicle : vehicleList) {
+            if (vehicle.getMaintenanceMileage()>=5000) {
+                vehicle.setStatus("Maintenance");
+            }
+        }
+
+        return mapper.map(vehicleList,
                 new TypeToken<List<VehicleDTO>>(){}.getType());
     }
 }
