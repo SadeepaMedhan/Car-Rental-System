@@ -1,8 +1,11 @@
 package lk.easycar.service.impl;
 
 import lk.easycar.dto.AdminDTO;
+import lk.easycar.dto.BookingDTO;
 import lk.easycar.entity.Admin;
+import lk.easycar.entity.Booking;
 import lk.easycar.repo.AdminRepo;
+import lk.easycar.repo.BookingRepo;
 import lk.easycar.service.AdminService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -10,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,6 +22,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private AdminRepo repo;
+
+    @Autowired
+    private BookingRepo bookingRepo;
 
     @Autowired
     private ModelMapper mapper;
@@ -63,4 +70,19 @@ public class AdminServiceImpl implements AdminService {
         return mapper.map(repo.findAll(), new TypeToken<List<AdminDTO>>() {
         }.getType());
     }
+
+
+    @Override
+    public List<BookingDTO> getRentalRequestList() {
+        List<Booking> requestList = new ArrayList<>();
+        List<Booking> bookingList = bookingRepo.findAll();
+        for (Booking booking : bookingList) {
+            if (booking.getStatus().equals("Checking")){
+                requestList.add(booking);
+            }
+        }
+        return mapper.map(requestList, new TypeToken<List<BookingDTO>>() {
+        }.getType());
+    }
+
 }

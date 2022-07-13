@@ -1,12 +1,16 @@
 package lk.easycar.controller;
 
 import lk.easycar.dto.AdminDTO;
+import lk.easycar.dto.BookingDTO;
 import lk.easycar.service.AdminService;
+import lk.easycar.service.BookingService;
 import lk.easycar.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("admin")
@@ -26,6 +30,12 @@ public class AdminController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseUtil getAllAdmins(){
         return new ResponseUtil(200,"Ok",adminService.getAllAdmins());
+    }
+
+
+    @GetMapping(path = "request",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil getRequestList(){
+        return new ResponseUtil(200,"Ok",adminService.getRentalRequestList());
     }
 
 }
