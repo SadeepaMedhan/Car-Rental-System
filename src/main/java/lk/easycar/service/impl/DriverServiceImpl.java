@@ -40,9 +40,9 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     public void deleteDriver(String id) {
-        if (driverRepo.existsById(id)){
+        if (driverRepo.existsById(id)) {
             driverRepo.deleteById(id);
-        }else{
+        } else {
             throw new RuntimeException("Please check the Driver ID.. No Such Driver..!");
         }
     }
@@ -58,30 +58,35 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     public DriverDTO searchDriver(String id) {
-        if (driverRepo.existsById(id)){
+        if (driverRepo.existsById(id)) {
             return mapper.map(driverRepo.findById(id).get(), DriverDTO.class);
-        }else{
-            throw new RuntimeException("No Driver For "+id+" ..!");
+        } else {
+            throw new RuntimeException("No Driver For " + id + " ..!");
         }
     }
 
     @Override
     public List<DriverDTO> getAllDrivers() {
         return mapper.map(driverRepo.findAll(),
-                new TypeToken<List<DriverDTO>>() {}.getType());
+                new TypeToken<List<DriverDTO>>() {
+                }.getType());
     }
 
     @Override
-    public List<BookingDTO> getSchedule(String id){
-        List<Booking> schedule = new ArrayList<>();
-        List<Booking> bookingList = bookingRepo.findAll();
-        for (Booking booking : bookingList) {
-            if (booking.getDriver().getDriverID().equals(id)){
-                schedule.add(booking);
+    public List<BookingDTO> getSchedule(String id) {
+        if (driverRepo.existsById(id)) {
+            List<Booking> schedule = new ArrayList<>();
+            List<Booking> bookingList = bookingRepo.findAll();
+            for (Booking booking : bookingList) {
+                if (booking.getDriver().getDriverID().equals(id)) {
+                    schedule.add(booking);
+                }
             }
+            return mapper.map(schedule, new TypeToken<List<BookingDTO>>() {
+            }.getType());
+        } else {
+            throw new RuntimeException("No Driver For " + id + " ..!");
         }
-        return mapper.map(schedule, new TypeToken<List<BookingDTO>>() {
-        }.getType());
     }
 
 }

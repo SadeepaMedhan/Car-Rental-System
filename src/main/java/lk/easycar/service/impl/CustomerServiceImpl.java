@@ -13,9 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 @Transactional
@@ -41,9 +40,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void deleteCustomer(String id) {
-        if (customerRepo.existsById(id)){
+        if (customerRepo.existsById(id)) {
             customerRepo.deleteById(id);
-        }else{
+        } else {
             throw new RuntimeException("Please check the Customer ID.. No Such Customer..!");
         }
     }
@@ -59,10 +58,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDTO searchCustomer(String id) {
-        if (customerRepo.existsById(id)){
+        if (customerRepo.existsById(id)) {
             return mapper.map(customerRepo.findById(id).get(), CustomerDTO.class);
-        }else{
-            throw new RuntimeException("No Customer For "+id+" ..!");
+        } else {
+            throw new RuntimeException("No Customer For " + id + " ..!");
         }
     }
 
@@ -73,9 +72,14 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<BookingDTO> getRequestedBookings(String id){
-        List<Booking> bookingList = bookingRepo.findAllByCustomer(customerRepo.findById(id).get());
-        return mapper.map(bookingList,
-                new TypeToken<List<BookingDTO>>() {}.getType());
+    public List<BookingDTO> getRequestedBookings(String id) {
+        if (customerRepo.existsById(id)) {
+            List<Booking> bookingList = bookingRepo.findAllByCustomer(customerRepo.findById(id).get());
+            return mapper.map(bookingList,
+                    new TypeToken<List<BookingDTO>>() {
+                    }.getType());
+        } else {
+            throw new RuntimeException("No Customer For " + id + " ..!");
+        }
     }
 }
