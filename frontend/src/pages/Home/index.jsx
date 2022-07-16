@@ -1,60 +1,77 @@
 import * as React from "react";
 import {Component} from "react";
-import VehicleCard from "../../components/Card";
-import vehicleImg1 from "../../assets/images/vehicles/v1f.jpg"
-import vehicleImg2 from "../../assets/images/vehicles/v2f.jpg"
-import NavigationMenu from "../../components/Navbar";
-import logo from "../../assets/images/logo6.jpg";
 
 import {styleSheet} from "./style";
 import {withStyles} from "@mui/styles";
-import ResponsiveAppBar from "../../components/AppBar";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
+import SpeedDialBtn from "../../components/speedDial";
+
+
+const driverStatus = [
+    {value: '0', label: 'Self Drive'},
+    {value: '1', label: 'With Driver'}
+];
+
 
 class HomePage extends Component{
     constructor(props) {
         super(props);
+        this.state = {
+            driverStatus:'0',
+            vehicleOpen:false,
+            anchorElNav:null,
+            value:1
+        }
+
+
     }
 
     render() {
         let { classes } = this.props;
 
+        const handleChange = (event) => {
+            this.setState({driverStatus: event.target.value});
+        };
+
         return(
             <div>
-                <NavigationMenu/>
 
-                <Box sx={{flexGrow:1,marginTop:10}}>
-                    <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-                        <Grid item xs={2} sm={4} md={4}>
-                            <VehicleCard imgSrc={vehicleImg1} name={"Toyota Premio"}/>
-                        </Grid>
-                        <Grid item xs={2} sm={4} md={4} >
-                            <VehicleCard imgSrc={vehicleImg2} name={"Suzuki Alto K10"}/>
-                        </Grid>
-                        <Grid item xs={2} sm={4} md={4}>
-                            <VehicleCard imgSrc={vehicleImg1} name={"Toyota Premio"}/>
-                        </Grid>
-                        <Grid item xs={2} sm={4} md={4} >
-                            <VehicleCard imgSrc={vehicleImg2} name={"Suzuki Alto K10"}/>
-                        </Grid>
-                        <Grid item xs={2} sm={4} md={4}>
-                            <VehicleCard imgSrc={vehicleImg1} name={"Toyota Premio"}/>
-                        </Grid>
-                        <Grid item xs={2} sm={4} md={4} >
-                            <VehicleCard imgSrc={vehicleImg2} name={"Suzuki Alto K10"}/>
-                        </Grid>
-                        <Grid item xs={2} sm={4} md={4}>
-                            <VehicleCard imgSrc={vehicleImg1} name={"Toyota Premio"}/>
-                        </Grid>
-                        <Grid item xs={2} sm={4} md={4} >
-                            <VehicleCard imgSrc={vehicleImg2} name={"Suzuki Alto K10"}/>
-                        </Grid>
+                <Stack direction="row" spacing={2} marginTop={"12px"} marginLeft={"12px"}>
+                    <TextField
+                        id="driverState"
+                        select
+                        label="Select"
+                        value={this.state.driverStatus}
+                        onChange={handleChange}
+                        helperText=""
+                    >
+                        {driverStatus.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                    <TextField
+                        id="pickUpLocation"
+                        select
+                        label="Select"
+                        value={this.state.driverStatus}
+                        onChange={handleChange}
+                        helperText=""
+                    >
+                        {driverStatus.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
 
-                    </Grid>
-                </Box>
+                </Stack>
 
 
+               <SpeedDialBtn/>
             </div>
         )
     }

@@ -44,12 +44,10 @@ export const styleSheet = {
 
     navbar__img:{
         height: '40px',
-        marginRight:'25px'
+        marginRight:'40px'
     },
 
     navbar__tabs:{
         textColor:'#FCD903'
     }
-
-
 }
