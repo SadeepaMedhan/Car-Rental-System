@@ -10,14 +10,14 @@ import Login from "../pages/Login";
 function App() {
     return (
         <div>
-            <Login/>
-
-            <Routes>
-                <Route exact path='/n' element={<MyNav/>}/>
-                <Route path='home' element={<HomePage/>}/>
-                <Route path='vehicle' element={<Vehicle/>}/>
-                <Route path='customer' element={<Dashboard/>}/>
-            </Routes>
+            {/*<Login/>*/}
+            <HomePage/>
+            {/*<Routes>*/}
+            {/*    <Route exact path='/n' element={<MyNav/>}/>*/}
+            {/*    <Route path='home' element={<HomePage/>}/>*/}
+            {/*    <Route path='vehicle' element={<Vehicle/>}/>*/}
+            {/*    <Route path='customer' element={<Dashboard/>}/>*/}
+            {/*</Routes>*/}
         </div>
 
     );
