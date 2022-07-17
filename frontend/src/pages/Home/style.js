@@ -4,14 +4,13 @@ export const styleSheet = {
         display:'flex',
         width:'100vw',
         height:'100vh',
-        border:'gray solid',
     },
     nav__bar:{
-        position:'static',
+        position:'fixed',
         display:'flex',
         width:'100%',
         height:'50px',
-        border:'gray solid',
+        backgroundColor: 'rgba(241,241,241,0.91)',
         zIndex:'4',
     },
     nav__logo:{
@@ -33,7 +32,6 @@ export const styleSheet = {
     },
     tab__lis__item:{
         display: 'inline-block',
-        fontFamily: 'open_sansbold',
         textTransform: 'uppercase',
         fontSize: '14px',
         //lineHeight: 1.42857143,
@@ -51,9 +49,9 @@ export const styleSheet = {
         display: 'block',
         lineHeight: '30px',
         color: '#000',
-        fontSize: '12px',
+        fontSize: '20px',
         fontWeight: 500,
-        fontFamily: 'Poppins',
+        fontFamily: 'arial',
         textTransform: 'uppercase',
     },
     back__img:{
@@ -71,16 +69,19 @@ export const styleSheet = {
         top: '60px',
         display:'flex',
         flexWrap: 'wrap',
-        justifyContent: 'center'
-
+        justifyContent: 'center',
+        backgroundColor: 'rgba(149,157,194,0.31)',
+        borderRadius:'8px',
     },
     book__item:{
         display:'flex',
         alignItems: 'center',
+        justifyContent: 'center',
+        width:'168px',
+        padding:'8px'
 
     },check__btn:{
         height:'50px',
         width:"120px",
-
     },
 }

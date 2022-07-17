@@ -37,18 +37,20 @@ class HomePage extends Component{
 
     }
 
+
     render() {
         let { classes } = this.props;
 
         const handleChange = (event) => {
             this.setState({driverStatus: event.target.value});
         };
-        const dateChange = (event) => {
-            this.setState({selectDate: event.target.value});
+        const dateChange = (date) => {
+            this.setState({selectDate: date});
         };
-        const timeChange = (event) => {
-            this.setState({selectTime: event.target.value});
+        const timeChange = (time) => {
+            this.setState({selectTime: time});
         };
+
 
         return(
             <div>
@@ -58,7 +60,7 @@ class HomePage extends Component{
                             <img className={classes.nav__logo} src={logo} alt=""/>
                             <p>Easy Car Rental Pvt(Ltd)</p>
                         </div>
-                        <div className={classes.nav__item}>
+                        <div className={classes.nav__item}  >
                             <ul className={classes.tab__lis}>
                                 <li className={classes.tab__lis__item}>
                                     <a className={classes.tab__lis__item_link} href="">Home</a>
@@ -88,11 +90,11 @@ class HomePage extends Component{
                     <div className={classes.book__back}>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <div >
-                            <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-                                <InputLabel id="demo-simple-select-filled-label">Vehicle Type</InputLabel>
+                            <FormControl variant="outlined" sx={{ m: 1, minWidth: 120 }}>
+                                <InputLabel id="lblType">Vehicle Type</InputLabel>
                                 <Select
-                                    labelId="demo-simple-select-filled-label"
-                                    id="demo-simple-select-filled"
+                                    labelId="lblType"
+                                    id="txtType"
                                     value={this.state.driverStatus}
                                     onChange={handleChange}
                                 >
@@ -106,7 +108,7 @@ class HomePage extends Component{
                             </FormControl>
                         </div>
                         <div >
-                            <FormControl variant="filled" sx={{ m: 1, minWidth: 240 }}>
+                            <FormControl sx={{ m: 1, minWidth: 240 }}>
                                 <InputLabel id="demo-simple-select-filled-label">Pickup Location</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-filled-label"
@@ -123,53 +125,45 @@ class HomePage extends Component{
                                 </Select>
                             </FormControl>
                         </div>
-                        <div >
-                            <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+                        <div className={classes.book__item}>
                                 <DesktopDatePicker
+                                    sx={{ m: 1, minWidth: 120 }}
                                     label="Pickup Date"
                                     inputFormat="MM/dd/yyyy"
                                     value={this.state.selectDate}
                                     onChange={dateChange}
                                     renderInput={(params) => <TextField {...params} />}
                                 />
-                            </FormControl>
 
                         </div>
-                        <div >
-                            <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-
+                        <div className={classes.book__item}>
                             <TimePicker
                                     label="Pickup Time"
                                     value={this.state.selectTime}
                                     onChange={timeChange}
                                     renderInput={(params) => <TextField {...params} />}
                                 />
-                            </FormControl>
-
                         </div>
-                        <div >
-                            <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+                        <div className={classes.book__item}>
                             <DesktopDatePicker
+                                variant="filled"
                                 label="Pickup Date"
                                 inputFormat="MM/dd/yyyy"
                                 value={this.state.selectDate}
                                 onChange={dateChange}
                                 renderInput={(params) => <TextField {...params} />}
                              />
-                            </FormControl>
                         </div>
                         <div >
-                            <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+                            <FormControl sx={{ m: 1, minWidth: 120 }}>
                                 <InputLabel id="demo-simple-select-filled-label">Self Driver</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-filled-label"
-                                    id="demo-simple-select-filled"
+                                    id="demo-simple-select"
                                     value={this.state.driverStatus}
+                                    label="Age"
                                     onChange={handleChange}
                                 >
-                                    <MenuItem value="">
-                                        <em>None</em>
-                                    </MenuItem>
                                     <MenuItem value={10}>Ten</MenuItem>
                                     <MenuItem value={20}>Twenty</MenuItem>
                                     <MenuItem value={30}>Thirty</MenuItem>
