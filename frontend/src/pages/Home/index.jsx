@@ -17,8 +17,9 @@ import {TimePicker} from "@mui/x-date-pickers";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from '@mui/icons-material/Menu';
 import Menu from "@mui/material/Menu";
+import Grid from "@mui/material/Grid";
 
-const pages = ['Vehicles', 'Customer', 'Booking', 'About', 'Income'];
+const pages = ['Home', 'Vehicles', 'Service', 'About'];
 
 const driverStatus = [
     {value: '0', label: 'Self Drive'},
@@ -70,10 +71,21 @@ class HomePage extends Component {
                 <div className={classes.back__floor}>
                     <div className={classes.nav__bar}>
                         <div className={classes.nav__item}>
-                            <img className={classes.nav__logo} src={logo} alt=""/>
-                            <p>Easy Car Rental Pvt(Ltd)</p>
+                            <Stack  direction="row"
+                                    justifyContent="center"
+                                    alignItems="center"
+                                    spacing={2}
+                                    sx={{display: { xs: 'none', md: 'block' }}}
+                            >
+                                <img className={classes.nav__logo} src={logo} alt=""/>
+                            </Stack>
+                            <h3 className={classes.nav__head}>Easy Car Rental Pvt(Ltd)</h3>
                         </div>
                         <div className={classes.nav__item}>
+                            <Typography sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}
+                                        height={"40px"}  textAlign="center">
+                                <img src={logo} alt=""/>
+                            </Typography>
                             <Stack className={classes.tab__lis}
                                    direction={{xs: 'column', sm: 'row'}}
                                    spacing={{xs: 1, sm: 2, md: 4}}
@@ -127,6 +139,7 @@ class HomePage extends Component {
                                         <Typography textAlign="center">{page}</Typography>
                                     </MenuItem>
                                 ))}
+
                             </Menu>
                         </div>
                     </div>

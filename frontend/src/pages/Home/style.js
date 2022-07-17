@@ -23,6 +23,9 @@ export const styleSheet = {
         justifyContent: 'center',
 
 
+    },nav__head:{
+        fontFamily:'Arial',
+        fontSize:'0.9em'
     },
     tab__lis:{
         display:'flex',
