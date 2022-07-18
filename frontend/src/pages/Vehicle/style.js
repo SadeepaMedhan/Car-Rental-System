@@ -8,7 +8,6 @@ export const styleSheet = {
         display:'flex',
         flexWrap: 'wrap',
         alignItems: 'center',
-
         justifyContent: 'center',
         backgroundColor: 'rgba(149,157,194,0.31)',
     }

@@ -77,10 +77,7 @@ class HomePage extends Component {
             selectTime: new Date('2014-08-18T21:11:54'),
             anchorEl: true,
         }
-
-
     }
-
 
     render() {
         let {classes} = this.props;
