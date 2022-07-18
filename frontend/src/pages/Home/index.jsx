@@ -136,25 +136,6 @@ class HomePage extends Component {
                                 </Tabs>
                             </Box>
 
-                            {/*<Stack className={classes.tab__lis}
-                                   direction={{xs: 'column', sm: 'row'}}
-                                   spacing={{xs: 1, sm: 2, md: 4}}
-                                   sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}
-                                   onChange={navTabChange}
-                            >
-                                <li className={classes.tab__lis__item}>
-                                    <a className={classes.tab__lis__item_link} href="">Home</a>
-                                </li>
-                                <li className={classes.tab__lis__item}>
-                                    <a className={classes.tab__lis__item_link} href="">Vehicles</a>
-                                </li>
-                                <li className={classes.tab__lis__item}>
-                                    <a className={classes.tab__lis__item_link} href="">Service</a>
-                                </li>
-                                <li className={classes.tab__lis__item}>
-                                    <a className={classes.tab__lis__item_link} href="">About</a>
-                                </li>
-                            </Stack>*/}
                         </div>
                         <div className={classes.nav__item}>
                             <IconButton
@@ -186,17 +167,18 @@ class HomePage extends Component {
                                 }}
                             >
 
-                                <Tabs orientation="vertical" className={classes.menu__item} value={this.state.tabValue} onChange={navTabChange} aria-label="menu tabs">
+                                <Tabs
+                                    orientation="vertical"
+                                    value={this.state.tabValue}
+                                    onChange={navTabChange}
+                                    aria-label="menu tabs"
+                                >
                                     <Tab label="Home" {...a11yProps(0)} />
                                     <Tab label="Vehicles" {...a11yProps(1)} />
                                     <Tab label="Service" {...a11yProps(2)} />
                                     <Tab label="About" {...a11yProps(3)} />
                                 </Tabs>
-                                {/*{pages.map((page) => (
-                                    <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                        <Typography textAlign="center">{page}</Typography>
-                                    </MenuItem>
-                                ))}*/}
+
                             </Menu>
                         </div>
                     </div>
@@ -311,11 +293,9 @@ class HomePage extends Component {
                         <Vehicle/>
                     </TabPanel>
 
+                    <SpeedDialBtn sx={{ position: 'fixed', bottom: 16, right: 16 }}/>
                 </div>
 
-
-
-                <SpeedDialBtn/>
             </div>
         )
     }

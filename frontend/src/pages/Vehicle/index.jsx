@@ -16,34 +16,23 @@ class Vehicle extends Component{
         }
     }
     render() {
+        let {classes} = this.props;
 
         return(
             <div >
 
-                <Box sx={{flexGrow:1,marginTop:10}}>
-                    <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-                        <Grid item xs={2} sm={4} md={4}>
+                <Box className={classes.vehicle__card_box} sx={{flexGrow:1,marginTop:10}}>
+                    <Grid container spacing={{ xs: 1, md: 2 }} columns={{ md: 8 }}>
+                        <Grid item xs={6} >
                             <VehicleCard imgSrc={vehicleImg1} name={"Toyota Premio"}/>
                         </Grid>
-                        <Grid item xs={2} sm={4} md={4} >
+                        <Grid item xs={6} >
                             <VehicleCard imgSrc={vehicleImg2} name={"Suzuki Alto K10"}/>
                         </Grid>
-                        <Grid item xs={2} sm={4} md={4}>
+                        <Grid item xs={6} >
                             <VehicleCard imgSrc={vehicleImg1} name={"Toyota Premio"}/>
                         </Grid>
-                        <Grid item xs={2} sm={4} md={4} >
-                            <VehicleCard imgSrc={vehicleImg2} name={"Suzuki Alto K10"}/>
-                        </Grid>
-                        <Grid item xs={2} sm={4} md={4}>
-                            <VehicleCard imgSrc={vehicleImg1} name={"Toyota Premio"}/>
-                        </Grid>
-                        <Grid item xs={2} sm={4} md={4} >
-                            <VehicleCard imgSrc={vehicleImg2} name={"Suzuki Alto K10"}/>
-                        </Grid>
-                        <Grid item xs={2} sm={4} md={4}>
-                            <VehicleCard imgSrc={vehicleImg1} name={"Toyota Premio"}/>
-                        </Grid>
-                        <Grid item xs={2} sm={4} md={4} >
+                        <Grid item xs={6} >
                             <VehicleCard imgSrc={vehicleImg2} name={"Suzuki Alto K10"}/>
                         </Grid>
 

@@ -27,36 +27,7 @@ export const styleSheet = {
         fontFamily:'Arial',
         fontSize:'0.9em'
     },
-    tab__lis:{
-        display:'flex',
-        margin: 0,
-        padding: '0 15px 0',
-        float: 'left',
-    },
-    tab__lis__item:{
-        display: 'inline-block',
-        textTransform: 'uppercase',
-        fontSize: '14px',
-        //lineHeight: 1.42857143,
-        color: '#333',
-        border: 'none',
-        textAlign: 'center',
 
-    },
-    tab__lis__item_link:{
-        cursor: 'pointer',
-        textDecoration: 'none !important',
-        width: '100%',
-        padding: '0 10px',
-        height: '30px',
-        display: 'block',
-        lineHeight: '30px',
-        color: '#000',
-        fontSize: '20px',
-        fontWeight: 500,
-        fontFamily: 'arial',
-        textTransform: 'uppercase',
-    },
     back__img:{
         position: 'absolute',
         width:'99vw',
@@ -88,8 +59,4 @@ export const styleSheet = {
         width:"120px",
     },
 
-    menu__item:{
-
-
-    }
 }
