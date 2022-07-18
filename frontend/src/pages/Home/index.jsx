@@ -18,6 +18,11 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from '@mui/icons-material/Menu';
 import Menu from "@mui/material/Menu";
 import Grid from "@mui/material/Grid";
+import Vehicle from "../Vehicle";
+import Box from "@mui/material/Box";
+import PropTypes from "prop-types";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
 
 const pages = ['Home', 'Vehicles', 'Service', 'About'];
 
@@ -27,6 +32,38 @@ const driverStatus = [
 ];
 
 
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box sx={{  }}>
+                    {children}
+                </Box>
+            )}
+        </div>
+    );
+}
+TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+    return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
+    };
+}
+
 class HomePage extends Component {
     constructor(props) {
         super(props);
@@ -35,6 +72,7 @@ class HomePage extends Component {
             vehicleOpen: false,
             anchorElNav: null,
             value: 1,
+            tabValue: 0,
             selectDate: new Date('2014-08-18T21:11:54'),
             selectTime: new Date('2014-08-18T21:11:54'),
             anchorEl: true,
@@ -48,6 +86,9 @@ class HomePage extends Component {
         let {classes} = this.props;
         // const open = Boolean(this.state.anchorEl);
 
+        const navTabChange = (event,newValue) => {
+            this.setState({tabValue : newValue});
+        };
         const handleChange = (event) => {
             this.setState({driverStatus: event.target.value});
         };
@@ -84,12 +125,22 @@ class HomePage extends Component {
                         <div className={classes.nav__item}>
                             <Typography sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}
                                         height={"40px"}  textAlign="center">
-                                <img src={logo} alt=""/>
+                                <img className={classes.nav__logo} src={logo} alt=""/>
                             </Typography>
-                            <Stack className={classes.tab__lis}
+                            <Box sx={{ borderBottom: 1, borderColor: 'divider' ,display: {xs: 'none', md: 'flex'}}}>
+                                <Tabs value={this.state.tabValue} onChange={navTabChange} aria-label="basic tabs example">
+                                    <Tab label="Home" {...a11yProps(0)} />
+                                    <Tab label="Vehicles" {...a11yProps(1)} />
+                                    <Tab label="Service" {...a11yProps(2)} />
+                                    <Tab label="About" {...a11yProps(3)} />
+                                </Tabs>
+                            </Box>
+
+                            {/*<Stack className={classes.tab__lis}
                                    direction={{xs: 'column', sm: 'row'}}
                                    spacing={{xs: 1, sm: 2, md: 4}}
                                    sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}
+                                   onChange={navTabChange}
                             >
                                 <li className={classes.tab__lis__item}>
                                     <a className={classes.tab__lis__item_link} href="">Home</a>
@@ -103,7 +154,7 @@ class HomePage extends Component {
                                 <li className={classes.tab__lis__item}>
                                     <a className={classes.tab__lis__item_link} href="">About</a>
                                 </li>
-                            </Stack>
+                            </Stack>*/}
                         </div>
                         <div className={classes.nav__item}>
                             <IconButton
@@ -144,104 +195,118 @@ class HomePage extends Component {
                         </div>
                     </div>
 
-                    <div className={classes.back__img}>
+
+                    <TabPanel value={this.state.tabValue} index={0}>
                         <div>
-                            <img src={backImg} alt="" style={{width: '98vw'}}/>
+                            <div className={classes.back__img}>
+                                <div>
+                                    <img src={backImg} alt="" style={{width: '98vw'}}/>
+                                </div>
+                            </div>
+
+                            <div className={classes.book__back}>
+                                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                    <div>
+                                        <FormControl variant="outlined" sx={{m: 1, minWidth: 120}}>
+                                            <InputLabel id="lblType">Vehicle Type</InputLabel>
+                                            <Select
+                                                labelId="lblType"
+                                                id="txtType"
+                                                value={this.state.driverStatus}
+                                                onChange={handleChange}
+                                            >
+                                                <MenuItem value="">
+                                                    <em>None</em>
+                                                </MenuItem>
+                                                <MenuItem value={10}>Ten</MenuItem>
+                                                <MenuItem value={20}>Twenty</MenuItem>
+                                                <MenuItem value={30}>Thirty</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    </div>
+                                    <div>
+                                        <FormControl sx={{m: 1, minWidth: 240}}>
+                                            <InputLabel id="demo-simple-select-filled-label">Pickup Location</InputLabel>
+                                            <Select
+                                                labelId="demo-simple-select-filled-label"
+                                                id="demo-simple-select-filled"
+                                                value={this.state.driverStatus}
+                                                onChange={handleChange}
+                                            >
+                                                <MenuItem value="">
+                                                    <em>None</em>
+                                                </MenuItem>
+                                                <MenuItem value={10}>Ten</MenuItem>
+                                                <MenuItem value={20}>Twenty</MenuItem>
+                                                <MenuItem value={30}>Thirty</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    </div>
+                                    <div className={classes.book__item}>
+                                        <DesktopDatePicker
+                                            sx={{m: 1, minWidth: 120}}
+                                            label="Pickup Date"
+                                            inputFormat="MM/dd/yyyy"
+                                            value={this.state.selectDate}
+                                            onChange={dateChange}
+                                            renderInput={(params) => <TextField {...params} />}
+                                        />
+
+                                    </div>
+                                    <div className={classes.book__item}>
+                                        <TimePicker
+                                            label="Pickup Time"
+                                            value={this.state.selectTime}
+                                            onChange={timeChange}
+                                            renderInput={(params) => <TextField {...params} />}
+                                        />
+                                    </div>
+                                    <div className={classes.book__item}>
+                                        <DesktopDatePicker
+                                            variant="filled"
+                                            label="Pickup Date"
+                                            inputFormat="MM/dd/yyyy"
+                                            value={this.state.selectDate}
+                                            onChange={dateChange}
+                                            renderInput={(params) => <TextField {...params} />}
+                                        />
+                                    </div>
+                                    <div>
+                                        <FormControl sx={{m: 1, minWidth: 120}}>
+                                            <InputLabel id="demo-simple-select-filled-label">Self Driver</InputLabel>
+                                            <Select
+                                                labelId="demo-simple-select-filled-label"
+                                                id="demo-simple-select"
+                                                value={this.state.driverStatus}
+                                                label="Age"
+                                                onChange={handleChange}
+                                            >
+                                                <MenuItem value={10}>Ten</MenuItem>
+                                                <MenuItem value={20}>Twenty</MenuItem>
+                                                <MenuItem value={30}>Thirty</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    </div>
+                                    <div className={classes.book__item}>
+                                        <Button className={classes.check__btn}
+                                                color="primary"
+                                                variant="contained"
+                                        >Check</Button>
+                                    </div>
+                                </LocalizationProvider>
+                            </div>
                         </div>
-                    </div>
 
-                    <div className={classes.book__back}>
-                        <LocalizationProvider dateAdapter={AdapterDateFns}>
-                            <div>
-                                <FormControl variant="outlined" sx={{m: 1, minWidth: 120}}>
-                                    <InputLabel id="lblType">Vehicle Type</InputLabel>
-                                    <Select
-                                        labelId="lblType"
-                                        id="txtType"
-                                        value={this.state.driverStatus}
-                                        onChange={handleChange}
-                                    >
-                                        <MenuItem value="">
-                                            <em>None</em>
-                                        </MenuItem>
-                                        <MenuItem value={10}>Ten</MenuItem>
-                                        <MenuItem value={20}>Twenty</MenuItem>
-                                        <MenuItem value={30}>Thirty</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </div>
-                            <div>
-                                <FormControl sx={{m: 1, minWidth: 240}}>
-                                    <InputLabel id="demo-simple-select-filled-label">Pickup Location</InputLabel>
-                                    <Select
-                                        labelId="demo-simple-select-filled-label"
-                                        id="demo-simple-select-filled"
-                                        value={this.state.driverStatus}
-                                        onChange={handleChange}
-                                    >
-                                        <MenuItem value="">
-                                            <em>None</em>
-                                        </MenuItem>
-                                        <MenuItem value={10}>Ten</MenuItem>
-                                        <MenuItem value={20}>Twenty</MenuItem>
-                                        <MenuItem value={30}>Thirty</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </div>
-                            <div className={classes.book__item}>
-                                <DesktopDatePicker
-                                    sx={{m: 1, minWidth: 120}}
-                                    label="Pickup Date"
-                                    inputFormat="MM/dd/yyyy"
-                                    value={this.state.selectDate}
-                                    onChange={dateChange}
-                                    renderInput={(params) => <TextField {...params} />}
-                                />
+                    </TabPanel>
+                    <TabPanel value={this.state.tabValue} index={1}>
+                        <Vehicle/>
+                    </TabPanel>
+                    <TabPanel value={this.state.tabValue} index={2}>
+                        <Vehicle/>
+                    </TabPanel>
 
-                            </div>
-                            <div className={classes.book__item}>
-                                <TimePicker
-                                    label="Pickup Time"
-                                    value={this.state.selectTime}
-                                    onChange={timeChange}
-                                    renderInput={(params) => <TextField {...params} />}
-                                />
-                            </div>
-                            <div className={classes.book__item}>
-                                <DesktopDatePicker
-                                    variant="filled"
-                                    label="Pickup Date"
-                                    inputFormat="MM/dd/yyyy"
-                                    value={this.state.selectDate}
-                                    onChange={dateChange}
-                                    renderInput={(params) => <TextField {...params} />}
-                                />
-                            </div>
-                            <div>
-                                <FormControl sx={{m: 1, minWidth: 120}}>
-                                    <InputLabel id="demo-simple-select-filled-label">Self Driver</InputLabel>
-                                    <Select
-                                        labelId="demo-simple-select-filled-label"
-                                        id="demo-simple-select"
-                                        value={this.state.driverStatus}
-                                        label="Age"
-                                        onChange={handleChange}
-                                    >
-                                        <MenuItem value={10}>Ten</MenuItem>
-                                        <MenuItem value={20}>Twenty</MenuItem>
-                                        <MenuItem value={30}>Thirty</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </div>
-                            <div className={classes.book__item}>
-                                <Button className={classes.check__btn}
-                                        color="primary"
-                                        variant="contained"
-                                >Check</Button>
-                            </div>
-                        </LocalizationProvider>
-                    </div>
                 </div>
+
 
 
                 <SpeedDialBtn/>
