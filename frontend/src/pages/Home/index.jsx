@@ -9,7 +9,7 @@ import SpeedDialBtn from "../../components/speedDial";
 import logo from "../../assets/images/logo4.jpg";
 import backImg from "../../assets/images/carBack.jpg";
 import Button from "@mui/material/Button";
-import {FormControl, InputLabel, Select, Stack, Typography} from "@mui/material";
+import {FormControl, InputLabel, Select, Stack, Tooltip, Typography} from "@mui/material";
 import {DesktopDatePicker} from '@mui/x-date-pickers/DesktopDatePicker';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
@@ -23,13 +23,7 @@ import Box from "@mui/material/Box";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-
-const pages = ['Home', 'Vehicles', 'Service', 'About'];
-
-const driverStatus = [
-    {value: '0', label: 'Self Drive'},
-    {value: '1', label: 'With Driver'}
-];
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 
 function TabPanel(props) {
@@ -68,8 +62,9 @@ class HomePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            driverStatus: '0',
-            vehicleOpen: false,
+            driverStatus: 0,
+            vehicleType: 0,
+            location: 0,
             anchorElNav: null,
             value: 1,
             tabValue: 0,
@@ -86,8 +81,14 @@ class HomePage extends Component {
         const navTabChange = (event,newValue) => {
             this.setState({tabValue : newValue});
         };
-        const handleChange = (event) => {
+        const driverChange = (event) => {
             this.setState({driverStatus: event.target.value});
+        };
+        const vehicleChange = (event) => {
+            this.setState({vehicleType: event.target.value});
+        };
+        const locationChange = (event) => {
+            this.setState({location: event.target.value});
         };
         const dateChange = (date) => {
             this.setState({selectDate: date});
@@ -103,10 +104,14 @@ class HomePage extends Component {
         const handleCloseNavMenu = (event,newValue) => {
             this.setState({anchorElNav : null});
         };
+        const handleOpenDash = (event) => {
+            console.log(IconButton)
+        };
 
         return (
             <div>
                 <div className={classes.back__floor}>
+
                     <div className={classes.nav__bar}>
                         <div className={classes.nav__item}>
                             <Stack  direction="row"
@@ -142,6 +147,9 @@ class HomePage extends Component {
                                 aria-haspopup="true"
                                 onClick={handleOpenNavMenu}
                                 color="inherit"
+                                sx={{
+                                    display: { xs: 'block', md: 'none' },
+                                }}
                             >
                                 <MenuIcon />
                             </IconButton>
@@ -175,19 +183,38 @@ class HomePage extends Component {
                                     <Tab label="Service" {...a11yProps(2)} />
                                     <Tab label="About" {...a11yProps(3)} />
                                 </Tabs>
-
                             </Menu>
+                            <Tooltip title="Sign In" >
+                            <IconButton
+                                size="large"
+                                aria-label="account of user"
+                                aria-controls="sign-appbar"
+                                aria-haspopup="true"
+                                 onClick={handleOpenDash}
+                                color="inherit"
+                                sx={{
+                                    display: { xs: 'none', md: 'block' },
+                                }}
+                            >
+                                <AccountCircleIcon />
+                            </IconButton>
+                            </Tooltip>
                         </div>
                     </div>
 
 
                     <TabPanel value={this.state.tabValue} index={0}>
                         <div>
-                            <div className={classes.back__img}>
+                            <Grid className={classes.back__img} sx={{height: { xs: '100vh', md: '80vh' }}}>
                                 <div>
-                                    <img src={backImg} alt="" style={{width: '98vw'}}/>
+                                    <img src={backImg} alt="" style={{width: '100vw',
+                                        position: 'absolute',
+                                        margin: 'auto',
+                                        bottom: 0,
+                                        top: 0}}
+                                    />
                                 </div>
-                            </div>
+                            </Grid>
 
                             <div className={classes.book__back}>
                                 <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -197,33 +224,33 @@ class HomePage extends Component {
                                             <Select
                                                 labelId="lblType"
                                                 id="txtType"
-                                                value={this.state.driverStatus}
-                                                onChange={handleChange}
+                                                value={this.state.vehicleType}
+                                                onChange={vehicleChange}
                                             >
-                                                <MenuItem value="">
+                                                <MenuItem value={0}>
                                                     <em>None</em>
                                                 </MenuItem>
-                                                <MenuItem value={10}>Ten</MenuItem>
-                                                <MenuItem value={20}>Twenty</MenuItem>
-                                                <MenuItem value={30}>Thirty</MenuItem>
+                                                <MenuItem value={1}>General</MenuItem>
+                                                <MenuItem value={2}>Premium</MenuItem>
+                                                <MenuItem value={3}>Luxury</MenuItem>
                                             </Select>
                                         </FormControl>
                                     </div>
                                     <div>
-                                        <FormControl sx={{m: 1, minWidth: 240}}>
+                                        <FormControl sx={{m: 1, minWidth: 220}}>
                                             <InputLabel id="demo-simple-select-filled-label">Pickup Location</InputLabel>
                                             <Select
                                                 labelId="demo-simple-select-filled-label"
                                                 id="demo-simple-select-filled"
-                                                value={this.state.driverStatus}
-                                                onChange={handleChange}
+                                                value={this.state.location}
+                                                onChange={locationChange}
                                             >
-                                                <MenuItem value="">
+                                                <MenuItem value={0}>
                                                     <em>None</em>
                                                 </MenuItem>
-                                                <MenuItem value={10}>Ten</MenuItem>
-                                                <MenuItem value={20}>Twenty</MenuItem>
-                                                <MenuItem value={30}>Thirty</MenuItem>
+                                                <MenuItem value={1}>Ten</MenuItem>
+                                                <MenuItem value={2}>Twenty</MenuItem>
+                                                <MenuItem value={3}>Thirty</MenuItem>
                                             </Select>
                                         </FormControl>
                                     </div>
@@ -264,11 +291,10 @@ class HomePage extends Component {
                                                 id="demo-simple-select"
                                                 value={this.state.driverStatus}
                                                 label="Age"
-                                                onChange={handleChange}
+                                                onChange={driverChange}
                                             >
-                                                <MenuItem value={10}>Ten</MenuItem>
-                                                <MenuItem value={20}>Twenty</MenuItem>
-                                                <MenuItem value={30}>Thirty</MenuItem>
+                                                <MenuItem value={0}>With Driver</MenuItem>
+                                                <MenuItem value={1}>Self Driver</MenuItem>
                                             </Select>
                                         </FormControl>
                                     </div>
@@ -290,7 +316,7 @@ class HomePage extends Component {
                         <Vehicle/>
                     </TabPanel>
 
-                    <SpeedDialBtn sx={{ position: 'fixed', bottom: 16, right: 16 }}/>
+                    <SpeedDialBtn/>
                 </div>
 
             </div>

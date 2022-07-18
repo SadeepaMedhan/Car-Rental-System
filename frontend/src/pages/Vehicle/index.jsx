@@ -59,10 +59,78 @@ class Vehicle extends Component{
 
         return(
             <div >
-
-                <Box  sx={{flexGrow:1,marginTop:10}}>
+                <h2 className={classes.vehicle__tittle}>VEHICLE FLEET</h2>
+                <Box  sx={{flexGrow:1,marginTop:12}}>
                     <Grid  className={classes.vehicle__card_box} container spacing={{ xs: 1, md: 2 }} columns={{ md: 8 }}>
                         <Grid item xs={6} >
+                            <VehicleCard
+                                imgSrc={vehicleImg1}
+                                brand={"WagonR"}
+                                type={"General"}
+                                noOfPassenger={"4"}
+                                transmissionType={"Auto"}
+                                fuelType={"Petrol"}
+                                dailyRate={"vehicle.dailyRate"}
+                                monthlyRate={"vehicle.monthlyRate"}
+                                freeMileageDay={"vehicle.freeMileageDay"}
+                                freeMileageMonth={"vehicle.freeMileageMonth"}
+                                priceExtraKM={"vehicle.priceExtraKM"}
+                                color={"vehicle.color"}
+                                maintenanceMileage={"vehicle.maintenanceMileage"}
+                                status={"vehicle.status"}
+                            />
+                        </Grid><Grid item xs={6} >
+                            <VehicleCard
+                                imgSrc={vehicleImg2}
+                                brand={"WagonR"}
+                                type={"General"}
+                                noOfPassenger={"4"}
+                                transmissionType={"Auto"}
+                                fuelType={"Petrol"}
+                                dailyRate={"vehicle.dailyRate"}
+                                monthlyRate={"vehicle.monthlyRate"}
+                                freeMileageDay={"vehicle.freeMileageDay"}
+                                freeMileageMonth={"vehicle.freeMileageMonth"}
+                                priceExtraKM={"vehicle.priceExtraKM"}
+                                color={"vehicle.color"}
+                                maintenanceMileage={"vehicle.maintenanceMileage"}
+                                status={"vehicle.status"}
+                            />
+                        </Grid><Grid item xs={6} >
+                            <VehicleCard
+                                imgSrc={vehicleImg1}
+                                brand={"WagonR"}
+                                type={"General"}
+                                noOfPassenger={"4"}
+                                transmissionType={"Auto"}
+                                fuelType={"Petrol"}
+                                dailyRate={"vehicle.dailyRate"}
+                                monthlyRate={"vehicle.monthlyRate"}
+                                freeMileageDay={"vehicle.freeMileageDay"}
+                                freeMileageMonth={"vehicle.freeMileageMonth"}
+                                priceExtraKM={"vehicle.priceExtraKM"}
+                                color={"vehicle.color"}
+                                maintenanceMileage={"vehicle.maintenanceMileage"}
+                                status={"vehicle.status"}
+                            />
+                        </Grid><Grid item xs={6} >
+                            <VehicleCard
+                                imgSrc={vehicleImg2}
+                                brand={"WagonR"}
+                                type={"General"}
+                                noOfPassenger={"4"}
+                                transmissionType={"Auto"}
+                                fuelType={"Petrol"}
+                                dailyRate={"vehicle.dailyRate"}
+                                monthlyRate={"vehicle.monthlyRate"}
+                                freeMileageDay={"vehicle.freeMileageDay"}
+                                freeMileageMonth={"vehicle.freeMileageMonth"}
+                                priceExtraKM={"vehicle.priceExtraKM"}
+                                color={"vehicle.color"}
+                                maintenanceMileage={"vehicle.maintenanceMileage"}
+                                status={"vehicle.status"}
+                            />
+                        </Grid><Grid item xs={6} >
                             <VehicleCard
                                 imgSrc={vehicleImg1}
                                 brand={"WagonR"}

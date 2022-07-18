@@ -12,12 +12,12 @@ function App() {
         <div>
             {/*<Login/>*/}
             <HomePage/>
-            {/*<Routes>*/}
-            {/*    <Route exact path='/n' element={<MyNav/>}/>*/}
-            {/*    <Route path='home' element={<HomePage/>}/>*/}
-            {/*    <Route path='vehicle' element={<Vehicle/>}/>*/}
-            {/*    <Route path='customer' element={<Dashboard/>}/>*/}
-            {/*</Routes>*/}
+            <Routes>
+                {/*<Route exact path='/n' element={<MyNav/>}/>*/}
+                {/*<Route path='home' element={<HomePage/>}/>*/}
+                {/*<Route path='vehicle' element={<Vehicle/>}/>*/}
+                <Route path='dash' element={<Dashboard/>}/>
+            </Routes>
         </div>
 
     );

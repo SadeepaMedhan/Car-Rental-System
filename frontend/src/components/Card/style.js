@@ -23,6 +23,7 @@ export const styleSheet = {
 
     },
     card_btn1_box:{
+        position:'relative',
         display: 'flex',
         justifyContent: 'center',
     },

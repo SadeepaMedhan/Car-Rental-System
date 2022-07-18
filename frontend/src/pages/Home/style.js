@@ -30,7 +30,7 @@ export const styleSheet = {
 
     back__img:{
         position: 'absolute',
-        width:'99vw',
+        width:'100vw',
         zIndex:'0',
     },
     book__back:{
@@ -46,6 +46,7 @@ export const styleSheet = {
         justifyContent: 'center',
         backgroundColor: 'rgba(149,157,194,0.31)',
         borderRadius:'8px',
+        zIndex:'8',
     },
     book__item:{
         display:'flex',
