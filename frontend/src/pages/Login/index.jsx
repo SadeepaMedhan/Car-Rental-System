@@ -40,7 +40,7 @@ class Login extends Component {
 
         return (
             <div className={classes.login} >
-                <div className={classes.login__cover}>
+                <Grid container xs={12} sm={6} md={4}   className={classes.login__cover}>
                     <Grid container columns rowSpacing={2}  className={classes.login__back}>
                         <Grid item xs={2} sm={2} md={2}  className={classes.login__tittle}>
                             <h2>WELCOME</h2>
@@ -70,6 +70,8 @@ class Login extends Component {
                                     variant="outlined"
                                     helperText="Incorrect entry."
                                     size="small"
+                                    color="primary"
+
                                 />
                             </Grid>
                             <Grid  className={classes.login__textField}>
@@ -101,7 +103,7 @@ class Login extends Component {
                             <Button style={{fontWeight:'bold', width:'95px',borderRadius:15 }} color="primary" variant="contained">Sign Up</Button>
                         </Grid>
                     </Grid>
-                </div>
+                </Grid>
 
             </div>
         )

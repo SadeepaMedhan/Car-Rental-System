@@ -1,21 +1,28 @@
 export const styleSheet = {
 
     login:{
-        height: '100vh',
         display: 'flex',
         flexWrap: 'wrap',
         alignItems: 'center',
         justifyContent: 'center',
-         backgroundColor:'rgba(187,193,185,0.16)'
+        position: 'fixed',
+        boxSizing: 'border-box',
+        inset: '0px',
+        width: '100vw',
+        height: '100vh',
+        backgroundColor: 'rgba(0, 0, 0, 0.85)',
+        //color: 'rgb(232, 232, 232)',
+        zIndex:'12',
     },
     login__cover:{
-        height: '70vh',
-        width: '60vw'
+        height: '80%',
+        width: '60%'
     },
     login__back:{
         height: '100%',
         alignItems: 'center',
-        // border: 'gray solid',
+        backgroundColor: 'rgba(255,255,255,0.85)',
+         border: 'gray solid',
         borderRadius:15,
     },
     login__tittle:{
@@ -44,7 +51,8 @@ export const styleSheet = {
         flexWrap: 'wrap',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingTop:'10px'
+        paddingTop:'10px',
+
     },
 
     login__btn:{

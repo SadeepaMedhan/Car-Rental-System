@@ -9,7 +9,7 @@ import SpeedDialBtn from "../../components/speedDial";
 import logo from "../../assets/images/logo4.jpg";
 import backImg from "../../assets/images/carBack.jpg";
 import Button from "@mui/material/Button";
-import {FormControl, InputLabel, Select, Stack, Tooltip, Typography} from "@mui/material";
+import {FormControl, InputLabel, Link, Select, Stack, Tooltip, Typography} from "@mui/material";
 import {DesktopDatePicker} from '@mui/x-date-pickers/DesktopDatePicker';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
@@ -24,6 +24,7 @@ import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Login from "../Login";
 
 
 function TabPanel(props) {
@@ -71,6 +72,7 @@ class HomePage extends Component {
             selectDate: new Date('2014-08-18T21:11:54'),
             selectTime: new Date('2014-08-18T21:11:54'),
             anchorEl: true,
+            openLogin: false,
         }
     }
 
@@ -105,7 +107,7 @@ class HomePage extends Component {
             this.setState({anchorElNav : null});
         };
         const handleOpenDash = (event) => {
-            console.log(IconButton)
+            this.setState({openLogin : true});
         };
 
         return (
@@ -185,19 +187,21 @@ class HomePage extends Component {
                                 </Tabs>
                             </Menu>
                             <Tooltip title="Sign In" >
-                            <IconButton
-                                size="large"
-                                aria-label="account of user"
-                                aria-controls="sign-appbar"
-                                aria-haspopup="true"
-                                 onClick={handleOpenDash}
-                                color="inherit"
-                                sx={{
-                                    display: { xs: 'none', md: 'block' },
-                                }}
-                            >
-                                <AccountCircleIcon />
-                            </IconButton>
+
+                                    <IconButton
+                                        size="large"
+                                        aria-label="account of user"
+                                        aria-controls="sign-appbar"
+                                        aria-haspopup="true"
+                                         onClick={handleOpenDash}
+                                        color="inherit"
+                                        sx={{
+                                            display: { xs: 'none', md: 'block' },
+                                        }}
+                                    >
+                                        <AccountCircleIcon />
+                                    </IconButton>
+
                             </Tooltip>
                         </div>
                     </div>
@@ -318,6 +322,9 @@ class HomePage extends Component {
 
                     <SpeedDialBtn/>
                 </div>
+
+                <Login  sx={{display:'block' }}
+                />
 
             </div>
         )
