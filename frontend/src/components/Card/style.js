@@ -4,8 +4,7 @@ export const styleSheet = {
         alignItems: 'center',
         justifyContent: 'center',
         direction: 'row',
-        backgroundColor: 'rgba(42,65,170,0.31)',
-        padding:5
+        boxShadow: '2px 5px #888888'
     },
     card_img:{
         width:'300px',
@@ -20,7 +19,17 @@ export const styleSheet = {
         fontSize:'1.2em'
     },
     card_price:{
-        alignSelf: 'end'
+        alignSelf: 'end',
+
+    },
+    card_btn1_box:{
+        display: 'flex',
+        justifyContent: 'center',
+    },
+    card_btn1:{
+        position:'absolute',
+        margin:'auto',
+        bottom:'10px'
     },
 
 }

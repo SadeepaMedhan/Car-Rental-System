@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions } from '@mui/material';
+import {Button, CardActionArea, CardActions, Rating} from '@mui/material';
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
@@ -12,6 +12,7 @@ import SpeedOutlinedIcon from '@mui/icons-material/SpeedOutlined';
 import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
+import NoiseControlOffIcon from '@mui/icons-material/NoiseControlOff';
 
 import {Component} from "react";
 import {styleSheet} from "./style";
@@ -30,32 +31,31 @@ class VehicleCard extends Component{
 
         return (
             <div /*sx={{ maxWidth: 345 }}*/>
-                <Grid container className={classes.card_box}>
-                    <Grid item xs>
+                <Grid container spacing={2}  className={classes.card_box}>
+                    <Grid item xs className={classes.card_btn1_box}>
                         <img className={classes.card_img} src={this.props.imgSrc} alt=""/>
                     </Grid>
 
                     <Grid item xs>
-
                         <Grid>
                             <Typography className={classes.card_brand} sx={{ fontSize: { xs: '1.5em', md: '1.7em' } }} >
                                 {this.props.brand}
                             </Typography>
                             <p className={classes.card_type} >{this.props.type}</p>
                             <div>
-                                <IconButton aria-label="delete">
+                                <IconButton>
                                     <PersonOutlineOutlinedIcon /><pre style={{ fontSize:'0.75em'}}> Seating Capacity : </pre>
                                     <span style={{ fontSize:'0.75em'}}>{this.props.noOfPassenger}</span>
                                 </IconButton>
-                                <IconButton aria-label="delete">
+                                <IconButton>
                                     <LocalGasStationIcon /><pre style={{ fontSize:'0.75em'}}> Fuel Type : </pre>
                                     <span style={{ fontSize:'0.75em'}}>{this.props.fuelType}</span>
                                 </IconButton>
-                                <IconButton aria-label="delete">
+                                <IconButton>
                                     <SettingsSuggestIcon /><pre style={{ fontSize:'0.75em'}}> Transmission : </pre>
                                     <span style={{ fontSize:'0.75em'}}>{this.props.fuelType}</span>
                                 </IconButton>
-                                <IconButton aria-label="delete">
+                                <IconButton>
                                     <AcUnitIcon /><pre style={{ fontSize:'0.75em'}}> Air Condition : </pre>
                                     <span style={{ fontSize:'0.75em'}}>Yes</span>
                                 </IconButton>
@@ -65,35 +65,42 @@ class VehicleCard extends Component{
                     <Grid item xs className={classes.card_price}>
                         <Grid>
                             <div>
-                                <IconButton aria-label="delete">
-                                    <PersonOutlineOutlinedIcon /><pre style={{ fontSize:'0.75em'}}> Seating Capacity : </pre>
+                                <IconButton>
+                                    <NoiseControlOffIcon /><pre style={{ fontSize:'0.75em'}}> Daily Rate : </pre>
                                     <span style={{ fontSize:'0.75em'}}>{this.props.noOfPassenger}</span>
                                 </IconButton>
-                                <IconButton aria-label="delete">
-                                    <LocalGasStationIcon /><pre style={{ fontSize:'0.75em'}}> Fuel Type : </pre>
+                                <IconButton>
+                                    <NoiseControlOffIcon /><pre style={{ fontSize:'0.75em'}}> Free KM for a Day : </pre>
                                     <span style={{ fontSize:'0.75em'}}>{this.props.fuelType}</span>
                                 </IconButton>
-                                <IconButton aria-label="delete">
-                                    <SettingsSuggestIcon /><pre style={{ fontSize:'0.75em'}}> Transmission : </pre>
+                                <IconButton>
+                                    <NoiseControlOffIcon /><pre style={{ fontSize:'0.75em'}}> Monthly Rate : </pre>
                                     <span style={{ fontSize:'0.75em'}}>{this.props.fuelType}</span>
                                 </IconButton>
-                                <IconButton aria-label="delete">
-                                    <AcUnitIcon /><pre style={{ fontSize:'0.75em'}}> Air Condition : </pre>
+                                <IconButton>
+                                    <NoiseControlOffIcon /><pre style={{ fontSize:'0.75em'}}> Free KM for a Month : </pre>
+                                    <span style={{ fontSize:'0.75em'}}>Yes</span>
+                                </IconButton>
+                                <IconButton>
+                                    <NoiseControlOffIcon /><pre style={{ fontSize:'0.75em'}}> Price per Extra KM : </pre>
                                     <span style={{ fontSize:'0.75em'}}>Yes</span>
                                 </IconButton>
                             </div>
                         </Grid>
                     </Grid>
-                    <div>
-                        <Button  color="primary"
-                                 variant="contained"
-                                 sx={{ display: { xs: 'none', md: 'block' } }}
-                        >
-                            Select
-                        </Button>
-                    </div>
+                    <Grid item xs className={classes.card_btn1_box}>
+                        <Grid item className={classes.card_btn1}>
+                            <Button
+                                color="primary"
+                                variant="contained"
+                                sx={{ display: { xs: 'none', md: 'block' } }}
+                            >
+                                Select
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </Grid>
-                <Grid item xs>
+                <Grid item xs className={classes.card_btn1_box}>
                     <Button  color="primary"
                              variant="contained"
                              sx={{ display: { xs: 'block', md: 'none' } }}
