@@ -87,4 +87,9 @@ export const styleSheet = {
         height:'50px',
         width:"120px",
     },
+
+    menu__item:{
+
+
+    }
 }

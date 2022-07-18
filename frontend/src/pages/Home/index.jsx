@@ -103,7 +103,7 @@ class HomePage extends Component {
             this.setState({anchorElNav : event.currentTarget});
         };
 
-        const handleCloseNavMenu = () => {
+        const handleCloseNavMenu = (event,newValue) => {
             this.setState({anchorElNav : null});
         };
 
@@ -182,15 +182,21 @@ class HomePage extends Component {
                                 open={Boolean(this.state.anchorElNav)}
                                 onClose={handleCloseNavMenu}
                                 sx={{
-                                    display: { xs: 'block', md: 'none' },
+                                    display: { xs: 'fex', md: 'none' },
                                 }}
                             >
-                                {pages.map((page) => (
+
+                                <Tabs orientation="vertical" className={classes.menu__item} value={this.state.tabValue} onChange={navTabChange} aria-label="menu tabs">
+                                    <Tab label="Home" {...a11yProps(0)} />
+                                    <Tab label="Vehicles" {...a11yProps(1)} />
+                                    <Tab label="Service" {...a11yProps(2)} />
+                                    <Tab label="About" {...a11yProps(3)} />
+                                </Tabs>
+                                {/*{pages.map((page) => (
                                     <MenuItem key={page} onClick={handleCloseNavMenu}>
                                         <Typography textAlign="center">{page}</Typography>
                                     </MenuItem>
-                                ))}
-
+                                ))}*/}
                             </Menu>
                         </div>
                     </div>
