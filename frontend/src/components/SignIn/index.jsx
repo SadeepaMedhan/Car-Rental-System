@@ -16,6 +16,7 @@ import GoogleIcon from "@mui/icons-material/Google";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
 import {styleSheet} from "./style";
+import Chip from '@mui/material/Chip';
 
 
 
@@ -85,9 +86,7 @@ export default function SignIn() {
     return (
         <div>
             <Tooltip title="Sign In" >
-                    <Button variant="outlined" onClick={handleClickOpen}>
-                        Sign In
-                    </Button>
+                <Chip label="Sign In" onClick={handleClickOpen} />
                 </Tooltip>
             <BootstrapDialog className={classes.login__cover}
                 onClose={handleClose}

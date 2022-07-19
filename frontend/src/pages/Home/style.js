@@ -9,12 +9,12 @@ export const styleSheet = {
         position:'fixed',
         display:'flex',
         width:'100%',
-        height:'50px',
-        backgroundColor: 'rgba(241,241,241,0.91)',
+        height:'10%',
+        backgroundColor: 'rgba(255,252,252,0.95)',
         zIndex:'4',
     },
     nav__logo:{
-        height:'40px',
+        height:'10vh',
     },
     nav__item:{
         width: '80%',
@@ -25,7 +25,7 @@ export const styleSheet = {
 
     },nav__head:{
         fontFamily:'Arial',
-        fontSize:'0.9em'
+        fontSize:'1.2em'
     },
 
     back__img:{
@@ -40,24 +40,54 @@ export const styleSheet = {
         right: 0,
         left: 0,
         margin: 'auto',
-        top: '60px',
+        top: '65%',
         display:'flex',
         flexWrap: 'wrap',
         justifyContent: 'center',
-        backgroundColor: 'rgba(149,157,194,0.31)',
+        backgroundColor: 'rgba(255,252,252,0.95)',
         borderRadius:'8px',
-        zIndex:'8',
+        zIndex:'5',
     },
     book__item:{
         display:'flex',
         alignItems: 'center',
         justifyContent: 'center',
         width:'168px',
-        padding:'8px'
+        padding:'8px',
+
 
     },check__btn:{
         height:'50px',
         width:"120px",
+    },
+    //---------------------------------
+
+
+    suggest__result_box:{
+         position: 'absolute',
+        // flexWrap: 'wrap',
+         top:'35vh',
+         width:'88vw',
+         //border:'red solid',
+         right: 0,
+         left: 0,
+         margin: 'auto !important',
+         display:'flex',
+        alignItems:'center',
+         justifyContent: 'center',
+
+    },
+    suggest__result:{
+        //  position: 'absolute',
+        //flexWrap: 'wrap',
+        //top:'35vh',
+         width:'90%',
+         height:'200px',
+        // border:'green solid',
+        // display:'flex',
+        // justifyContent: 'center',
+        //backgroundColor: 'rgba(149,157,194,0.31)',
+
     },
 
 }

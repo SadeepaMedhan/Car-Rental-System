@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import {Button, CardActionArea, CardActions, Rating} from '@mui/material';
+import { CardActionArea, CardActions, Rating} from '@mui/material';
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
@@ -17,6 +17,7 @@ import NoiseControlOffIcon from '@mui/icons-material/NoiseControlOff';
 import {Component} from "react";
 import {styleSheet} from "./style";
 import {withStyles} from "@mui/styles";
+import Button from "@mui/material/Button";
 
 class VehicleCard extends Component{
 
@@ -112,4 +113,5 @@ class VehicleCard extends Component{
         );
     }
 
-}export default withStyles(styleSheet)(VehicleCard)
+}
+export default withStyles(styleSheet)(VehicleCard)
