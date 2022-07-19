@@ -10,12 +10,12 @@ import Login from "../pages/Login";
 function App() {
     return (
         <div>
-            {/*<Login/>*/}
+            {/*<Login viewOpen={true}/>*/}
             <HomePage/>
             <Routes>
                 {/*<Route exact path='/n' element={<MyNav/>}/>*/}
                 {/*<Route path='home' element={<HomePage/>}/>*/}
-                {/*<Route path='vehicle' element={<Vehicle/>}/>*/}
+                {/*<Route path='log' element={<Login/>}/>*/}
                 <Route path='dash' element={<Dashboard/>}/>
             </Routes>
         </div>

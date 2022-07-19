@@ -25,6 +25,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Login from "../Login";
+import SignIn from "../../components/SignIn";
 
 
 function TabPanel(props) {
@@ -107,7 +108,8 @@ class HomePage extends Component {
             this.setState({anchorElNav : null});
         };
         const handleOpenDash = (event) => {
-            this.setState({openLogin : true});
+            console.log(this.state.openLogin)
+            this.setState({openLogin : !this.state.openLogin});
         };
 
         return (
@@ -186,23 +188,7 @@ class HomePage extends Component {
                                     <Tab label="About" {...a11yProps(3)} />
                                 </Tabs>
                             </Menu>
-                            <Tooltip title="Sign In" >
-
-                                    <IconButton
-                                        size="large"
-                                        aria-label="account of user"
-                                        aria-controls="sign-appbar"
-                                        aria-haspopup="true"
-                                         onClick={handleOpenDash}
-                                        color="inherit"
-                                        sx={{
-                                            display: { xs: 'none', md: 'block' },
-                                        }}
-                                    >
-                                        <AccountCircleIcon />
-                                    </IconButton>
-
-                            </Tooltip>
+                                <SignIn/>
                         </div>
                     </div>
 
@@ -323,8 +309,8 @@ class HomePage extends Component {
                     <SpeedDialBtn/>
                 </div>
 
-                <Login  sx={{display:'block' }}
-                />
+                {/*<Login viewOpen={this.state.openLogin}/>*/}
+
 
             </div>
         )

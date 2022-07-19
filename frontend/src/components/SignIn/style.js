@@ -1,31 +1,18 @@
-export const styleSheet = {
+import {createUseStyles} from 'react-jss'
 
-    login:{
-        display: 'flex',
-        flexWrap: 'wrap',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'fixed',
-        boxSizing: 'border-box',
-        inset: '0px',
-        width: '100vw',
-        height: '100vh',
-        backgroundColor: 'rgba(0, 0, 0, 0.85)',
-        //color: 'rgb(232, 232, 232)',
-        zIndex:'12',
-    },
+
+export const styleSheet = createUseStyles({
+
+
     login__cover:{
         position:'absolute',
-        height: '80%',
-        width: '60%'
+        height: '100vh',
+        width: '100vw',
+        borderRadius: '15px',
     },
     login__back:{
-
         height: '100%',
         alignItems: 'center',
-        backgroundColor: 'rgba(255,255,255,0.85)',
-         border: 'gray solid',
-        borderRadius:15,
     },
     login__tittle:{
         textAlign: 'center',
@@ -39,14 +26,16 @@ export const styleSheet = {
         fontFamily:'Arial',
     },
     login__hr:{
-        width:'100%',
+        width:'70%',
         alignItems: 'center',
         display:'flex',
         justifyContent: 'center',
+        margin: 'auto'
     },
     login__textField_c:{
-        width:'80%',
-        paddingTop:0
+        width:'85%',
+        paddingTop:0,
+        margin: 'auto !important'
     },
     login__textField:{
         display: 'flex',
@@ -61,7 +50,7 @@ export const styleSheet = {
         display: 'flex',
         flexWrap: 'wrap',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center !important'
     },
     login__g:{
         width: '100%',
@@ -76,4 +65,4 @@ export const styleSheet = {
 
     }
 
-}
+})
