@@ -26,6 +26,7 @@ import Tab from "@mui/material/Tab";
 import SignIn from "../../components/SignIn";
 import {styled} from "@mui/material/styles";
 import Slideshow from "../../components/Slider";
+import backImg2 from "../../assets/images/carBack5.jpg";
 
 
 function TabPanel(props) {
@@ -205,6 +206,11 @@ class HomePage extends Component {
 
                     <TabPanel value={this.state.tabValue} index={0}>
                         <Grid className={classes.back__img} sx={{height: {xs: '100vh', md: '80vh'},top:'10%'}}>
+                            <div className={classes.topic__text}>
+                                <h2 className={classes.maintopic__text}>Best Value Car Hire</h2>
+                                <h3 className={classes.subtopic__text}>Book car hire now and get exclusive rates for your trip!</h3>
+                            </div>
+
                             <div>
                                 <Slideshow></Slideshow>
                             </div>
@@ -301,17 +307,53 @@ class HomePage extends Component {
                             </LocalizationProvider>
                         </div>
 
+
                         <Grid container
                               direction="column"
-                              className={classes.suggest__result_box}
+                              className={classes.scroll__box}
+
                         >
-                            <div className={classes.suggest__result}>
+
+                            <div className={classes.suggest__result_box}
+                            >
+                                <h2 style={{
+                                    fontFamily:'Convergence',
+                                    fontSize:'1.2em',
+                                    textAlign:'center',
+                                    marginTop:'50px'
+                                }}>Suggest Results</h2>
+                                <div className={classes.suggest__result}>
+
+                                </div>
+                            </div>
+                            <div className={classes.service_box}
+                                ><img src={backImg} alt="" style={{
+                                width: '100vw',
+                                height:'100%',
+                                backgroundPosition: 'center',
+                                backgroundRepeat: 'no-repeat',
+                                backgroundSize: 'cover',
+                                backgroundAttachment:'fixed'
+                                }}/>
 
                             </div>
-                            <div className={classes.suggest__result}>
+                            <div className={classes.suggest__result_box}
+                                >
+                                <div className={classes.suggest__result}>
+
+                                </div>
+                            </div>
+                            <div className={classes.service_box}
+                            ><img src={backImg} alt="" style={{
+                                width: '100vw',
+                                height:'100%',
+                                backgroundPosition: 'center',
+                                backgroundRepeat: 'no-repeat',
+                                backgroundSize: 'cover',
+                                backgroundAttachment:'fixed'
+                            }}/>
 
                             </div>
-
                         </Grid>
 
                     </TabPanel>
