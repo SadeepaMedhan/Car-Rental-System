@@ -61,9 +61,9 @@ export const styleSheet = {
         display:'flex',
         flexWrap: 'wrap',
         justifyContent: 'center',
-        backgroundColor: 'rgba(255,252,252,0.95)',
+        backgroundColor: 'white',
         borderRadius:'8px',
-        zIndex:'5',
+        zIndex:'3',
     },
     book__item:{
         display:'flex',
@@ -85,7 +85,7 @@ export const styleSheet = {
         // flexWrap: 'wrap',
          top:'70vh',
          width:'100vw',
-         border:'blue solid',
+         //border:'blue solid',
          right: 0,
          left: 0,
          margin: 'auto !important',
@@ -95,24 +95,34 @@ export const styleSheet = {
 
     },  suggest__result_box:{
         //backgroundColor:'black',
-        height:'80vh',
+        minHeight:'80vh',
         width:'100%',
         display:'flex',
+        flexWrap: 'wrap',
         alignItems:'center',
         justifyContent: 'center',
         border:'gray solid',
 
     },
+    info_sec:{
+        height:'40vh',
+        width:'100%',
+        backgroundColor:'#081F35',
+    },
     service_box:{
-        height:'80vh',
+        height:'60vh',
         width:'100%',
 
     },
     suggest__result:{
         margin: 'auto',
-         width:'90%',
+         width:'75vw',
          height:'200px',
-         border:'green solid',
+
+    },
+    contact_sec:{
+        height:'60vh',
+        width:'100%',
     },
 
 }

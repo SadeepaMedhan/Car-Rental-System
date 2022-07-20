@@ -4,7 +4,7 @@ export const styleSheet = {
         alignItems: 'center',
         justifyContent: 'center',
         direction: 'row',
-        boxShadow: '2px 5px #888888'
+        boxShadow: '5px 10px 8px #888888'
     },
     card_img:{
         width:'300px',

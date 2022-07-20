@@ -9,7 +9,17 @@ import SpeedDialBtn from "../../components/speedDial";
 import logo from "../../assets/images/logo4.jpg";
 import backImg from "../../assets/images/carBack.jpg";
 import Button from "@mui/material/Button";
-import {FormControl, InputLabel, Paper, Select, Stack, Typography} from "@mui/material";
+import {
+    Checkbox,
+    FormControl,
+    FormControlLabel,
+    FormGroup, FormLabel,
+    InputLabel,
+    Paper, Radio, RadioGroup,
+    Select,
+    Stack,
+    Typography
+} from "@mui/material";
 import {DesktopDatePicker} from '@mui/x-date-pickers/DesktopDatePicker';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
@@ -27,6 +37,9 @@ import SignIn from "../../components/SignIn";
 import {styled} from "@mui/material/styles";
 import Slideshow from "../../components/Slider";
 import backImg2 from "../../assets/images/carBack5.jpg";
+import backImg3 from "../../assets/images/carBack3.jpg";
+import vehicleImg1 from "../../assets/images/vehicles/v1f.jpg";
+import VehicleCard from "../../components/Card";
 
 
 function TabPanel(props) {
@@ -76,6 +89,7 @@ class HomePage extends Component {
             selectTime: new Date('2014-08-18T21:11:54'),
             anchorEl: true,
             openLogin: false,
+            vehicleTypeId:0,
         }
     }
 
@@ -113,6 +127,11 @@ class HomePage extends Component {
             console.log(this.state.openLogin)
             this.setState({openLogin: !this.state.openLogin});
         };
+        const radioBtnChange = (event) => {
+            this.setState({vehicleTypeId: event.target.value});
+        };
+
+
 
         const Item = styled(Paper)(({theme}) => ({
             backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -150,6 +169,7 @@ class HomePage extends Component {
                                     <Tab label="Vehicles" {...a11yProps(1)} />
                                     <Tab label="Service" {...a11yProps(2)} />
                                     <Tab label="About" {...a11yProps(3)} />
+
                                 </Tabs>
                             </Box>
 
@@ -299,52 +319,125 @@ class HomePage extends Component {
                                     </FormControl>
                                 </div>
                                 <div className={classes.book__item}>
+
+
                                     <Button className={classes.check__btn}
                                             color="primary"
                                             variant="contained"
+                                            href="#resultSec"
                                     >Check</Button>
+
                                 </div>
                             </LocalizationProvider>
                         </div>
 
 
-                        <Grid container
-                              direction="column"
-                              className={classes.scroll__box}
+                        <Grid container direction="column" className={classes.scroll__box}>
 
-                        >
-
-                            <div className={classes.suggest__result_box}
-                            >
+                            <div className={classes.info_sec}>
                                 <h2 style={{
                                     fontFamily:'Convergence',
                                     fontSize:'1.2em',
                                     textAlign:'center',
-                                    marginTop:'50px'
-                                }}>Suggest Results</h2>
-                                <div className={classes.suggest__result}>
+                                    marginTop:'60px',
+                                    marginBottom:'10px',
+                                    color:'white',
+                                }}>Enjoy the efficient and specialized services of  Easy car rentals private limited; Sri Lanka's leading rent-a-car company</h2>
+
+                                <div>
 
                                 </div>
                             </div>
-                            <div className={classes.service_box}
-                                ><img src={backImg} alt="" style={{
-                                width: '100vw',
-                                height:'100%',
-                                backgroundPosition: 'center',
-                                backgroundRepeat: 'no-repeat',
-                                backgroundSize: 'cover',
-                                backgroundAttachment:'fixed'
-                                }}/>
+
+
+                            <div className={classes.service_box}>
+                                <h2 style={{
+                                    fontFamily:'Convergence',
+                                    fontSize:'1.2em',
+                                    textAlign:'center',
+                                    marginTop:'15px',
+                                    marginBottom:'10px'
+                                }}>Our Business Class Vehicles</h2>
 
                             </div>
-                            <div className={classes.suggest__result_box}
+
+                            <div id="resultSec">
+                                <div className={classes.suggest__result_box} >
+                                    <h2 style={{
+                                        fontFamily:'Convergence',
+                                        fontSize:'1.2em',
+                                        textAlign:'center',
+                                        marginTop:'50px',
+                                        marginBottom:'10px'
+                                    }}>Best deals found for Sri Lanka car rentals</h2>
+                                    <div style={{display:'flex',flexWrap: 'wrap',
+                                        justifyContent: 'space-evenly', width:'100vw',
+                                        paddingTop:'25px',}}>
+
+
+                                        <div style={{ height:'100%'}}>
+                                            <div className={classes.suggest__result}>
+                                                <VehicleCard
+                                                    imgSrc={vehicleImg1}
+                                                    brand={"WagonR"}
+                                                    type={"General"}
+                                                    noOfPassenger={"4"}
+                                                    transmissionType={"Auto"}
+                                                    fuelType={"Petrol"}
+                                                    dailyRate={"vehicle.dailyRate"}
+                                                    monthlyRate={"vehicle.monthlyRate"}
+                                                    freeMileageDay={"vehicle.freeMileageDay"}
+                                                    freeMileageMonth={"vehicle.freeMileageMonth"}
+                                                    priceExtraKM={"vehicle.priceExtraKM"}
+                                                    color={"vehicle.color"}
+                                                    maintenanceMileage={"vehicle.maintenanceMileage"}
+                                                    status={"vehicle.status"}
+                                                />
+                                            </div>
+
+                                        </div>
+                                        <div style={{ height:'100%'}}>
+                                            <FormGroup>
+                                                <FormControlLabel control={<Checkbox defaultChecked />} label="With Driver" />
+                                                <FormControlLabel disabled control={<Checkbox />} label="Self Drive" />
+                                            </FormGroup>
+                                            <FormControl>
+                                                <FormLabel id="demo-controlled-radio-buttons-group">Vehicle Type</FormLabel>
+                                                <RadioGroup
+                                                    aria-labelledby="demo-controlled-radio-buttons-group"
+                                                    name="controlled-radio-buttons-group"
+                                                    value={this.state.vehicleTypeId}
+                                                    onChange={radioBtnChange}
+                                                >
+                                                    <FormControlLabel value={0} control={<Radio />} label="General" />
+                                                    <FormControlLabel value={1} control={<Radio />} label="Premium" />
+                                                    <FormControlLabel value={2} control={<Radio />} label="Luxury" />
+                                                </RadioGroup>
+                                            </FormControl>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div className={classes.info_sec}
                                 >
                                 <div className={classes.suggest__result}>
 
                                 </div>
                             </div>
-                            <div className={classes.service_box}
-                            ><img src={backImg} alt="" style={{
+                            <div className={classes.contact_sec}>
+                                <h2 style={{
+                                    position: 'absolute',
+                                    fontFamily:'Convergence',
+                                    fontSize:'1.2em',
+                                    textAlign:'center',
+                                    marginTop:'15px',
+                                    marginBottom:'10px',
+                                    color:'white',
+                                }}>Contact</h2>
+                                <img src={backImg3} alt="" style={{
                                 width: '100vw',
                                 height:'100%',
                                 backgroundPosition: 'center',
@@ -363,13 +456,15 @@ class HomePage extends Component {
                     <TabPanel value={this.state.tabValue} index={2}>
                         <Vehicle/>
                     </TabPanel>
+                    <TabPanel value={this.state.tabValue} index={3}>
+                        <Vehicle/>
+                    </TabPanel>
 
                     <SpeedDialBtn/>
+                    <footer>
+                        <span>2022 - All Right Reserved</span>
+                    </footer>
                 </div>
-
-                {/*<Login viewOpen={this.state.openLogin}/>*/}
-
-
             </div>
         )
     }
