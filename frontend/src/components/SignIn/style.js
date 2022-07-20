@@ -11,8 +11,9 @@ export const styleSheet = createUseStyles({
         borderRadius: '15px',
     },
     login__back:{
-        height: '100%',
+        height: '400px',
         alignItems: 'center',
+        width:'550px',
     },
     login__tittle:{
         textAlign: 'center',
@@ -24,6 +25,7 @@ export const styleSheet = createUseStyles({
         width:'100%',
         textAlign: 'center',
         fontFamily:'Arial',
+        fontSize:'0.75em'
     },
     login__hr:{
         width:'70%',

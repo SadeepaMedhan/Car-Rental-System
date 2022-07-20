@@ -1,24 +1,16 @@
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
 import {InputAdornment, Stack, TextField, Tooltip} from "@mui/material";
-import Grid from "@mui/material/Grid";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import GoogleIcon from "@mui/icons-material/Google";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
 import {styleSheet} from "./style";
-import Chip from '@mui/material/Chip';
-import SignUp from "../SignUp";
-
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -59,7 +51,7 @@ BootstrapDialogTitle.propTypes = {
     onClose: PropTypes.func.isRequired,
 };
 
-export default function SignIn() {
+export default function SignUp() {
     let classes = styleSheet();
     const [open, setOpen] = React.useState(false);
     const [password, setPassword] = React.useState("");
@@ -86,45 +78,79 @@ export default function SignIn() {
 
     return (
         <div>
-            <Tooltip title="Sign In" >
-                <Chip label="Sign In" onClick={handleClickOpen} />
-                </Tooltip>
+            <Tooltip title="create account" >
+                <Button onClick={handleClickOpen} style={{fontWeight:'bold', width:'95px',borderRadius:15 }} color="primary" variant="contained">Sign Up</Button>
+            </Tooltip>
             <BootstrapDialog className={classes.login__cover}
-                onClose={handleClose}
                 aria-labelledby="tittle"
                 open={open}
 
             >
                 <BootstrapDialogTitle className={classes.login__tittle} id="tittle" onClose={handleClose}>
-                    WELCOME
+                    Create Account
                 </BootstrapDialogTitle>
 
                 <Stack direction="column" justifyContent="center" alignItems="center" spacing={1}
                        width={{xs:'300px', md:'550px'}} className={classes.login__back}>
-                    <Stack>
-                        <span className={classes.login__media}>Logging Using Social Media</span>
-                    </Stack>
                     <Stack direction="row">
-                        <IconButton aria-label="fb-icon">
-                            <FacebookIcon />
+
+                        <IconButton color="primary" aria-label="upload picture" component="label">
+                            <input hidden accept="image/*" type="file" />
+                            <PhotoCamera />
                         </IconButton>
-                        <IconButton aria-label="google-icon">
-                            <GoogleIcon />
-                        </IconButton>
+
                     </Stack>
-                    <Stack direction="row" className={classes.login__hr}>
-                        <hr width={'100px'} align={'left'}/>
-                        <pre> or </pre>
-                        <hr width={'100px'} align={'left'}/>
-                    </Stack>
-                    <Stack>
-                        <TextField label="User ID" variant="outlined"
-                            helperText="Incorrect entry." size="small" color="primary"
+
+                    <Stack direction="row" spacing={4}>
+
+                        <TextField label="User Name" variant="outlined"
+                                     helperText="Incorrect entry." size="small" color="primary"
+
+                        />
+                        <TextField label="NIC" variant="outlined"
+                                   helperText="Incorrect entry." size="small" color="primary"
 
                         />
                     </Stack>
-                    <Stack>
+                    <Stack direction="row" spacing={4}>
+                        <TextField label="Address" variant="outlined"
+                                   helperText="Incorrect entry." size="small" color="primary"
+
+                        />
+                        <TextField label="Driving License No" variant="outlined"
+                                   helperText="Incorrect entry." size="small" color="primary"
+
+                        />
+                    </Stack>
+                    <Stack direction="row" spacing={4}>
+                        <TextField label="Contact" variant="outlined"
+                                   helperText="Incorrect entry." size="small" color="primary"
+
+                        />
+                        <TextField label="E-mail" variant="outlined"
+                                   helperText="Incorrect entry." size="small" color="primary"
+
+                        />
+                    </Stack>
+
+                    <Stack  direction="row" spacing={4}>
                         <TextField label="Password" variant="outlined" helperText="Incorrect entry."
+                            type="password" size="small"
+                            onChange={handleChange('password')}
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={handleClickShowPassword}
+                                        onMouseDown={handleMouseDownPassword}
+                                        edge="end"
+                                    >
+                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                </InputAdornment>
+                            }
+                        />
+                        <TextField label="Confirm Password" variant="outlined" helperText="Incorrect entry."
                             type="password" size="small"
                             onChange={handleChange('password')}
                             endAdornment={
@@ -142,9 +168,8 @@ export default function SignIn() {
                         />
                     </Stack>
                     <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={1}>
-                        <SignUp/>
-                        <Button autoFocus onClick={handleClose} style={{fontWeight:'bold', width:'95px',borderRadius:15 }} color="info" variant="contained">Sign In</Button>
-
+                        <Button autoFocus onClick={handleClose} style={{fontWeight:'bold', width:'95px',borderRadius:15 }} color="info" variant="contained">Clear</Button>
+                        <Button onClick={handleClose} style={{fontWeight:'bold', width:'95px',borderRadius:15 }} color="primary" variant="contained">Confirm</Button>
                     </Stack>
                 </Stack>
             </BootstrapDialog>

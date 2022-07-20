@@ -70,84 +70,71 @@ class Vehicle extends Component{
                                 noOfPassenger={"4"}
                                 transmissionType={"Auto"}
                                 fuelType={"Petrol"}
-                                dailyRate={"vehicle.dailyRate"}
-                                monthlyRate={"vehicle.monthlyRate"}
-                                freeMileageDay={"vehicle.freeMileageDay"}
-                                freeMileageMonth={"vehicle.freeMileageMonth"}
-                                priceExtraKM={"vehicle.priceExtraKM"}
-                                color={"vehicle.color"}
-                                maintenanceMileage={"vehicle.maintenanceMileage"}
-                                status={"vehicle.status"}
-                            />
-                        </Grid><Grid item xs={6} >
-                            <VehicleCard
-                                imgSrc={vehicleImg2}
-                                brand={"WagonR"}
-                                type={"General"}
-                                noOfPassenger={"4"}
-                                transmissionType={"Auto"}
-                                fuelType={"Petrol"}
-                                dailyRate={"vehicle.dailyRate"}
-                                monthlyRate={"vehicle.monthlyRate"}
-                                freeMileageDay={"vehicle.freeMileageDay"}
-                                freeMileageMonth={"vehicle.freeMileageMonth"}
-                                priceExtraKM={"vehicle.priceExtraKM"}
-                                color={"vehicle.color"}
-                                maintenanceMileage={"vehicle.maintenanceMileage"}
-                                status={"vehicle.status"}
-                            />
-                        </Grid><Grid item xs={6} >
-                            <VehicleCard
-                                imgSrc={vehicleImg1}
-                                brand={"WagonR"}
-                                type={"General"}
-                                noOfPassenger={"4"}
-                                transmissionType={"Auto"}
-                                fuelType={"Petrol"}
-                                dailyRate={"vehicle.dailyRate"}
-                                monthlyRate={"vehicle.monthlyRate"}
-                                freeMileageDay={"vehicle.freeMileageDay"}
-                                freeMileageMonth={"vehicle.freeMileageMonth"}
-                                priceExtraKM={"vehicle.priceExtraKM"}
-                                color={"vehicle.color"}
-                                maintenanceMileage={"vehicle.maintenanceMileage"}
-                                status={"vehicle.status"}
-                            />
-                        </Grid><Grid item xs={6} >
-                            <VehicleCard
-                                imgSrc={vehicleImg2}
-                                brand={"WagonR"}
-                                type={"General"}
-                                noOfPassenger={"4"}
-                                transmissionType={"Auto"}
-                                fuelType={"Petrol"}
-                                dailyRate={"vehicle.dailyRate"}
-                                monthlyRate={"vehicle.monthlyRate"}
-                                freeMileageDay={"vehicle.freeMileageDay"}
-                                freeMileageMonth={"vehicle.freeMileageMonth"}
-                                priceExtraKM={"vehicle.priceExtraKM"}
-                                color={"vehicle.color"}
-                                maintenanceMileage={"vehicle.maintenanceMileage"}
-                                status={"vehicle.status"}
-                            />
-                        </Grid><Grid item xs={6} >
-                            <VehicleCard
-                                imgSrc={vehicleImg1}
-                                brand={"WagonR"}
-                                type={"General"}
-                                noOfPassenger={"4"}
-                                transmissionType={"Auto"}
-                                fuelType={"Petrol"}
-                                dailyRate={"vehicle.dailyRate"}
-                                monthlyRate={"vehicle.monthlyRate"}
-                                freeMileageDay={"vehicle.freeMileageDay"}
-                                freeMileageMonth={"vehicle.freeMileageMonth"}
-                                priceExtraKM={"vehicle.priceExtraKM"}
-                                color={"vehicle.color"}
-                                maintenanceMileage={"vehicle.maintenanceMileage"}
-                                status={"vehicle.status"}
+                                dailyRate={"2500"}
+                                monthlyRate={"35000"}
+                                freeMileageDay={"100"}
+                                freeMileageMonth={"2400"}
+                                priceExtraKM={"30"}
+                                color={"Red"}
+                                maintenanceMileage={"2000"}
+                                status={"available"}
                             />
                         </Grid>
+                        <Grid item xs={6} >
+                            <VehicleCard
+                                imgSrc={vehicleImg2}
+                                brand={"WagonR"}
+                                type={"General"}
+                                noOfPassenger={"4"}
+                                transmissionType={"Auto"}
+                                fuelType={"Petrol"}
+                                dailyRate={"2500"}
+                                monthlyRate={"35000"}
+                                freeMileageDay={"100"}
+                                freeMileageMonth={"2400"}
+                                priceExtraKM={"30"}
+                                color={"Red"}
+                                maintenanceMileage={"2000"}
+                                status={"available"}
+                            />
+                        </Grid>
+                        <Grid item xs={6} >
+                            <VehicleCard
+                                imgSrc={vehicleImg1}
+                                brand={"WagonR"}
+                                type={"General"}
+                                noOfPassenger={"4"}
+                                transmissionType={"Auto"}
+                                fuelType={"Petrol"}
+                                dailyRate={"2500"}
+                                monthlyRate={"35000"}
+                                freeMileageDay={"100"}
+                                freeMileageMonth={"2400"}
+                                priceExtraKM={"30"}
+                                color={"Red"}
+                                maintenanceMileage={"2000"}
+                                status={"available"}
+                            />
+                        </Grid>
+                        <Grid item xs={6} >
+                            <VehicleCard
+                                imgSrc={vehicleImg2}
+                                brand={"WagonR"}
+                                type={"General"}
+                                noOfPassenger={"4"}
+                                transmissionType={"Auto"}
+                                fuelType={"Petrol"}
+                                dailyRate={"2500"}
+                                monthlyRate={"35000"}
+                                freeMileageDay={"100"}
+                                freeMileageMonth={"2400"}
+                                priceExtraKM={"30"}
+                                color={"Red"}
+                                maintenanceMileage={"2000"}
+                                status={"available"}
+                            />
+                        </Grid>
+
                         {this.state.vehicleList.map((vehicle) => (
                             <Grid item xs={6} >
                                 <VehicleCard

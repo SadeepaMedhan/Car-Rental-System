@@ -1,21 +1,22 @@
 export const styleSheet = {
+
     card_box:{
-        display:'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        direction: 'row',
-        boxShadow: '5px 10px 8px #888888'
+        padding:5,
+        margin: '0',
+        border:'1px solid gray',
+        borderRadius: '8px',
+        //boxShadow: '10px 10px 10px 1px #888888',
     },
     card_img:{
-        width:'300px',
+        width:'250px',
         height:'100%',
         borderRadius: '8px',
     },
     card_brand:{
-        fontFamily:'Arial',
+        fontFamily:'Convergence',
     },
     card_type:{
-        fontFamily:'Arial',
+        fontFamily:'Convergence',
         fontSize:'1.2em'
     },
     card_price:{
@@ -31,6 +32,14 @@ export const styleSheet = {
         position:'absolute',
         margin:'auto',
         bottom:'10px'
+    },
+    card_prop_id:{
+        fontFamily:'Convergence',
+        fontSize:'0.75em',
+    },
+    card_prop_value:{
+        fontFamily:'Convergence',
+        fontSize:'0.75em',
     },
 
 }

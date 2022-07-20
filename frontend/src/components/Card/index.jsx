@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea, CardActions, Rating} from '@mui/material';
+import {CardActionArea, CardActions, Rating, Stack} from '@mui/material';
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
@@ -32,83 +32,77 @@ class VehicleCard extends Component{
 
         return (
             <div /*sx={{ maxWidth: 345 }}*/>
-                <Grid container spacing={2}  className={classes.card_box}>
-                    <Grid item xs className={classes.card_btn1_box}>
-                        <img className={classes.card_img} src={this.props.imgSrc} alt=""/>
-                    </Grid>
+                <Stack className={classes.card_box}
+                       justifyContent="center" alignItems="stretch"
+                       direction={{ xs: 'column', sm: 'row' }}
+                       spacing={{ xs: 1, sm: 2, md: 4 }}>
 
-                    <Grid item xs>
-                        <Grid>
-                            <Typography className={classes.card_brand} sx={{ fontSize: { xs: '1.5em', md: '1.7em' } }} >
-                                {this.props.brand}
-                            </Typography>
-                            <p className={classes.card_type} >{this.props.type}</p>
+                        <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={2}>
                             <div>
-                                <IconButton>
-                                    <PersonOutlineOutlinedIcon /><pre style={{ fontSize:'0.75em'}}> Seating Capacity : </pre>
-                                    <span style={{ fontSize:'0.75em'}}>{this.props.noOfPassenger}</span>
-                                </IconButton>
-                                <IconButton>
-                                    <LocalGasStationIcon /><pre style={{ fontSize:'0.75em'}}> Fuel Type : </pre>
-                                    <span style={{ fontSize:'0.75em'}}>{this.props.fuelType}</span>
-                                </IconButton>
-                                <IconButton>
-                                    <SettingsSuggestIcon /><pre style={{ fontSize:'0.75em'}}> Transmission : </pre>
-                                    <span style={{ fontSize:'0.75em'}}>{this.props.fuelType}</span>
-                                </IconButton>
-                                <IconButton>
-                                    <AcUnitIcon /><pre style={{ fontSize:'0.75em'}}> Air Condition : </pre>
-                                    <span style={{ fontSize:'0.75em'}}>Yes</span>
-                                </IconButton>
+                                <Typography className={classes.card_brand} sx={{ fontSize: { xs: '1.5em', md: '1.7em' } }} >
+                                    {this.props.brand}
+                                </Typography>
+                                <p className={classes.card_type} >{this.props.type}</p>
                             </div>
-                        </Grid>
-                    </Grid>
-                    <Grid item xs className={classes.card_price}>
-                        <Grid>
                             <div>
-                                <IconButton>
-                                    <NoiseControlOffIcon /><pre style={{ fontSize:'0.75em'}}> Daily Rate : </pre>
-                                    <span style={{ fontSize:'0.75em'}}>{this.props.noOfPassenger}</span>
-                                </IconButton>
-                                <IconButton>
-                                    <NoiseControlOffIcon /><pre style={{ fontSize:'0.75em'}}> Free KM for a Day : </pre>
-                                    <span style={{ fontSize:'0.75em'}}>{this.props.fuelType}</span>
-                                </IconButton>
-                                <IconButton>
-                                    <NoiseControlOffIcon /><pre style={{ fontSize:'0.75em'}}> Monthly Rate : </pre>
-                                    <span style={{ fontSize:'0.75em'}}>{this.props.fuelType}</span>
-                                </IconButton>
-                                <IconButton>
-                                    <NoiseControlOffIcon /><pre style={{ fontSize:'0.75em'}}> Free KM for a Month : </pre>
-                                    <span style={{ fontSize:'0.75em'}}>Yes</span>
-                                </IconButton>
-                                <IconButton>
-                                    <NoiseControlOffIcon /><pre style={{ fontSize:'0.75em'}}> Price per Extra KM : </pre>
-                                    <span style={{ fontSize:'0.75em'}}>Yes</span>
-                                </IconButton>
+                                <img className={classes.card_img} src={this.props.imgSrc} alt=""/>
                             </div>
-                        </Grid>
-                    </Grid>
-                    <Grid item xs className={classes.card_btn1_box}>
-                        <Grid item className={classes.card_btn1}>
+
+                        </Stack>
+                    <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={2}>
+                        <IconButton>
+                            <PersonOutlineOutlinedIcon /><pre className={classes.card_prop_id}> Seating Capacity : </pre>
+                            <span className={classes.card_prop_value}>{this.props.noOfPassenger}</span>
+                        </IconButton>
+                        <IconButton>
+                            <LocalGasStationIcon /><pre className={classes.card_prop_id}> Fuel Type : </pre>
+                            <span className={classes.card_prop_value}>{this.props.fuelType}</span>
+                        </IconButton>
+                        <IconButton>
+                            <SettingsSuggestIcon /><pre className={classes.card_prop_id}> Transmission : </pre>
+                            <span className={classes.card_prop_value}>{this.props.fuelType}</span>
+                        </IconButton>
+                        <IconButton>
+                            <AcUnitIcon /><pre className={classes.card_prop_id}> Air Condition : </pre>
+                            <span className={classes.card_prop_value}>Yes</span>
+                        </IconButton>
+                    </Stack>
+
+
+                        <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={2}>
+                            <IconButton>
+                                <NoiseControlOffIcon /><pre className={classes.card_prop_id}> Daily Rate : </pre>
+                                <span className={classes.card_prop_value}>{this.props.dailyRate}</span>
+                            </IconButton>
+                            <IconButton>
+                                <NoiseControlOffIcon /><pre className={classes.card_prop_id}> Free KM for a Day : </pre>
+                                <span className={classes.card_prop_value}>{this.props.freeMileageDay}</span>
+                            </IconButton>
+                            <IconButton>
+                                <NoiseControlOffIcon /><pre className={classes.card_prop_id}> Monthly Rate : </pre>
+                                <span className={classes.card_prop_value}>{this.props.monthlyRate}</span>
+                            </IconButton>
+                            <IconButton>
+                                <NoiseControlOffIcon /><pre className={classes.card_prop_id}> Free KM for a Month : </pre>
+                                <span className={classes.card_prop_value}>{this.props.freeMileageMonth}</span>
+                            </IconButton>
+                            <IconButton>
+                                <NoiseControlOffIcon /><pre className={classes.card_prop_id}> Price per Extra KM : </pre>
+                                <span className={classes.card_prop_value}>{this.props.priceExtraKM}</span>
+                            </IconButton>
+                        </Stack>
+
+
+                        <Stack direction="column" justifyContent="flex-end" alignItems="flex-end" spacing={2}>
                             <Button
                                 color="primary"
                                 variant="contained"
-                                sx={{ display: { xs: 'none', md: 'block' } }}
                             >
                                 Select
                             </Button>
-                        </Grid>
-                    </Grid>
-                </Grid>
-                <Grid item xs className={classes.card_btn1_box}>
-                    <Button  color="primary"
-                             variant="contained"
-                             sx={{ display: { xs: 'block', md: 'none' } }}
-                    >
-                        Select
-                    </Button>
-                </Grid>
+                        </Stack>
+
+                </Stack>
             </div>
         );
     }

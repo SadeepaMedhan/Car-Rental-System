@@ -30,7 +30,7 @@ export const styleSheet = {
     topic__text:{
         position:'absolute',
         fontFamily:'Convergence',
-        fontSize:'2em',
+        fontSize:'3vw',
         textAlign:'center',
         zIndex:3,
         color:'white',
@@ -39,10 +39,10 @@ export const styleSheet = {
 
     },
     maintopic__text:{
-        marginTop:'50px',
+        marginTop:'6vw',
     },
     subtopic__text:{
-        marginTop:'60px',
+        marginTop:'6vw',
     },
 
     back__img:{
@@ -59,18 +59,18 @@ export const styleSheet = {
         margin: 'auto',
         top: '65%',
         display:'flex',
-        flexWrap: 'wrap',
+        //flexWrap: 'wrap',
         justifyContent: 'center',
         backgroundColor: 'white',
         borderRadius:'8px',
         zIndex:'3',
     },
+
     book__item:{
         display:'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width:'168px',
-        padding:'8px',
+        marginLeft:'12px',
 
 
     },check__btn:{
@@ -101,13 +101,18 @@ export const styleSheet = {
         flexWrap: 'wrap',
         alignItems:'center',
         justifyContent: 'center',
-        border:'gray solid',
+        //border:'gray solid',
 
     },
     info_sec:{
         height:'40vh',
         width:'100%',
         backgroundColor:'#081F35',
+    },
+    info_sec_div:{
+        height:'120px',
+        width:'200px',
+        border:'1px gray solid',
     },
     service_box:{
         height:'60vh',

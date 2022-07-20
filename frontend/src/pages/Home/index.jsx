@@ -10,6 +10,7 @@ import logo from "../../assets/images/logo4.jpg";
 import backImg from "../../assets/images/carBack.jpg";
 import Button from "@mui/material/Button";
 import {
+    CardActionArea,
     Checkbox,
     FormControl,
     FormControlLabel,
@@ -38,8 +39,15 @@ import {styled} from "@mui/material/styles";
 import Slideshow from "../../components/Slider";
 import backImg2 from "../../assets/images/carBack5.jpg";
 import backImg3 from "../../assets/images/carBack3.jpg";
+import generalCar from "../../assets/images/vehicles/prius-f.jpg";
+import premiumCar from "../../assets/images/vehicles/ToyotaAllion-f.jpg";
+import luxuryCar from "../../assets/images/vehicles/Mercedes.jpeg";
 import vehicleImg1 from "../../assets/images/vehicles/v1f.jpg";
 import VehicleCard from "../../components/Card";
+import CardMedia from "@mui/material/CardMedia";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import {Fade, Slide, Zoom} from 'react-slideshow-image';
 
 
 function TabPanel(props) {
@@ -236,9 +244,10 @@ class HomePage extends Component {
                             </div>
                         </Grid>
 
-                        <div className={classes.book__back}>
+                        <Stack className={classes.book__back}   direction={{ xs: 'column', sm: 'row' }}
+                               spacing={{ xs: 1, sm: 2, md: 4 }}  padding={2} sx={{top: {xs: '28%', md: '65%'}}} >
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                <div>
+                                <div className={classes.book__item}>
                                     <FormControl variant="outlined" sx={{m: 1, minWidth: 120}}>
                                         <InputLabel id="lblType">Vehicle Type</InputLabel>
                                         <Select
@@ -250,13 +259,13 @@ class HomePage extends Component {
                                             <MenuItem value={0}>
                                                 <em>None</em>
                                             </MenuItem>
-                                            <MenuItem value={1}>General</MenuItem>
-                                            <MenuItem value={2}>Premium</MenuItem>
-                                            <MenuItem value={3}>Luxury</MenuItem>
+                                            <MenuItem value={1} imgSrc={generalCar}>General</MenuItem>
+                                            <MenuItem value={2} imgSrc={premiumCar}>Premium</MenuItem>
+                                            <MenuItem value={3} imgSrc={luxuryCar}>Luxury</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </div>
-                                <div>
+                                <div className={classes.book__item}>
                                     <FormControl sx={{m: 1, minWidth: 220}}>
                                         <InputLabel id="demo-simple-select-filled-label">Pickup Location</InputLabel>
                                         <Select
@@ -287,6 +296,7 @@ class HomePage extends Component {
                                 </div>
                                 <div className={classes.book__item}>
                                     <TimePicker
+                                        sx={{m: 1, minWidth: 220}}
                                         label="Pickup Time"
                                         value={this.state.selectTime}
                                         onChange={timeChange}
@@ -303,7 +313,7 @@ class HomePage extends Component {
                                         renderInput={(params) => <TextField {...params} />}
                                     />
                                 </div>
-                                <div>
+                                <div className={classes.book__item}>
                                     <FormControl sx={{m: 1, minWidth: 120}}>
                                         <InputLabel id="demo-simple-select-filled-label">Self Driver</InputLabel>
                                         <Select
@@ -329,24 +339,35 @@ class HomePage extends Component {
 
                                 </div>
                             </LocalizationProvider>
-                        </div>
+                        </Stack>
 
 
                         <Grid container direction="column" className={classes.scroll__box}>
 
                             <div className={classes.info_sec}>
-                                <h2 style={{
+                                <Typography  style={{
                                     fontFamily:'Convergence',
                                     fontSize:'1.2em',
                                     textAlign:'center',
-                                    marginTop:'60px',
+                                    marginTop:'75px',
                                     marginBottom:'10px',
                                     color:'white',
-                                }}>Enjoy the efficient and specialized services of  Easy car rentals private limited; Sri Lanka's leading rent-a-car company</h2>
+                                }}>Enjoy the efficient and specialized services of
+                                    Easy car rentals private limited; Sri Lanka's
+                                    leading rent-a-car company</Typography>
 
-                                <div>
+                                <Stack direction={{ xs: 'column', sm: 'row' }}
+                                       spacing={{ xs: 1, sm: 2, md: 4 }}
+                                       justifyContent="center"
+                                       alignItems="center"
+                                       mt={2}>
+                                    <div className={classes.info_sec_div}></div>
+                                    <div className={classes.info_sec_div}></div>
+                                    <div className={classes.info_sec_div}></div>
+                                    <div className={classes.info_sec_div}></div>
 
-                                </div>
+                                </Stack>
+
                             </div>
 
 
@@ -358,6 +379,17 @@ class HomePage extends Component {
                                     marginTop:'15px',
                                     marginBottom:'10px'
                                 }}>Our Business Class Vehicles</h2>
+
+
+                                <Stack direction={{ xs: 'column', sm: 'row' }}
+                                       spacing={{ xs: 1, sm: 2, md: 4 }}
+                                       justifyContent="center"
+                                       alignItems="center"
+                                       mt={2}>
+                                    <div> <VehicleCover name="General" imgSrc={generalCar}/> </div>
+                                    <div> <VehicleCover name="Premium" imgSrc={premiumCar}/> </div>
+                                    <div> <VehicleCover name="Luxury" imgSrc={luxuryCar}/> </div>
+                                </Stack>
 
                             </div>
 
@@ -384,14 +416,14 @@ class HomePage extends Component {
                                                     noOfPassenger={"4"}
                                                     transmissionType={"Auto"}
                                                     fuelType={"Petrol"}
-                                                    dailyRate={"vehicle.dailyRate"}
-                                                    monthlyRate={"vehicle.monthlyRate"}
-                                                    freeMileageDay={"vehicle.freeMileageDay"}
-                                                    freeMileageMonth={"vehicle.freeMileageMonth"}
-                                                    priceExtraKM={"vehicle.priceExtraKM"}
-                                                    color={"vehicle.color"}
-                                                    maintenanceMileage={"vehicle.maintenanceMileage"}
-                                                    status={"vehicle.status"}
+                                                    dailyRate={"2500"}
+                                                    monthlyRate={"35000"}
+                                                    freeMileageDay={"100"}
+                                                    freeMileageMonth={"2400"}
+                                                    priceExtraKM={"30"}
+                                                    color={"Red"}
+                                                    maintenanceMileage={"2000"}
+                                                    status={"available"}
                                                 />
                                             </div>
 
@@ -471,3 +503,28 @@ class HomePage extends Component {
 }
 
 export default withStyles(styleSheet)(HomePage);
+
+
+function VehicleCover(props) {
+    return (
+        <Card sx={{ maxWidth: 345 }}>
+            <CardActionArea>
+                <CardMedia
+                    component="img"
+                    height="140"
+                    image={props.imgSrc}
+                    alt="green iguana"
+                />
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                        {props.name}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        Lizards are a widespread group of squamate reptiles, with over 6,000
+                        species, ranging across all continents except Antarctica
+                    </Typography>
+                </CardContent>
+            </CardActionArea>
+        </Card>
+    );
+}
