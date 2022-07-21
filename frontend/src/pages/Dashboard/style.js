@@ -3,7 +3,7 @@ import {createUseStyles} from 'react-jss'
 
 export const styleSheet = createUseStyles({
     card_box:{
-        width: '200px',
+        width: '210px',
         height:'120px',
         position:'relative',
         border:'1px solid #BDBDBD',
@@ -16,7 +16,6 @@ export const styleSheet = createUseStyles({
         height:'70px',
         position:'absolute',
         top:'-16px', left:'18px',
-        backgroundColor:'green',
         borderRadius:'5px',
         boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px'
     },
@@ -24,6 +23,9 @@ export const styleSheet = createUseStyles({
         right: 0, left: 0, top: 0, bottom: 0,
         margin: 'auto', position: 'absolute',
          color:'white'
+    },
+    card_mainAria:{
+        paddingRight:'5px',width: '100%', height:'100%'
     }
 
 })

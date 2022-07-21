@@ -20,7 +20,6 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
-import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import PeopleIcon from '@mui/icons-material/People';
 import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
@@ -31,35 +30,14 @@ import SmallVehicleCard from "../../components/Card/smallVehicleCard";
 import ImageIcon from '@mui/icons-material/Image';
 import { DataGrid } from '@mui/x-data-grid';
 import {styleSheet} from "./style";
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import HandymanIcon from '@mui/icons-material/Handyman';
+import BadgeIcon from '@mui/icons-material/Badge';
+import PropTypes from 'prop-types';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
-function SummaryCard(props) {
-    let classes = styleSheet();
-    return(
-        <div>
-            <Stack className={classes.card_box}>
-                <div className={classes.card_logo_box}>
-                    {props.icon}
-                </div>
-                <Stack direction="column"
-                       justifyContent="flex-start"
-                       alignItems="flex-end"
-                       spacing={1}
-                       style={{paddingRight:'5px',width: '100%', height:'100%'}}>
-                    <h3>{props.tittle}</h3>
-                    <h2>{props.tCount}</h2>
-
-                </Stack>
-                <Divider />
-                <Stack direction="row"
-                       justifyContent="flex-start" spacing={1}
-                       alignItems="center" style={{width: '100%', height:'40px'}}>
-                    {props.label}
-                </Stack>
-            </Stack>
-        </div>
-    )
-
-}
 
 const btnArray1 = [
     { name:'Dashboard', icon: <DashboardIcon />},
@@ -148,7 +126,11 @@ export default function Dashboard() {
     let classes = styleSheet();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
+    const [value, setValue] = React.useState(0);
 
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -198,30 +180,23 @@ export default function Dashboard() {
                     </IconButton>
                 </DrawerHeader>
                 <Divider />
-                <List>
-                    {btnArray1.map((element, index) => (
-                        <ListItem key={element.name} disablePadding sx={{ display: 'block' }}>
-                            <ListItemButton
-                                sx={{
-                                    minHeight: 48,
-                                    justifyContent: open ? 'initial' : 'center',
-                                    px: 2.5,
-                                }}
-                            >
-                                <ListItemIcon
-                                    sx={{
-                                        minWidth: 0,
-                                        mr: open ? 3 : 'auto',
-                                        justifyContent: 'center',
-                                    }}
-                                >
-                                    {element.icon}
-                                </ListItemIcon>
-                                <ListItemText primary={element.name} sx={{ opacity: open ? 1 : 0 }} />
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
-                </List>
+                <Tabs
+                    orientation="vertical"
+                    value={value}
+                    onChange={handleChange}
+                    aria-label="Vertical tabs example"
+                    sx={{ borderRight: 1, borderColor: 'divider' }}>
+
+
+                    <Tab icon={<DashboardIcon />} iconPosition="start" label="Dashboard" {...a11yProps(0)} />
+                    <Tab icon={<CollectionsBookmarkIcon />} iconPosition="start" label="Booking" {...a11yProps(0)} />
+                    <Tab icon={<DirectionsCarIcon />} iconPosition="start" label="Vehicle" {...a11yProps(0)} />
+                    <Tab icon={<PeopleIcon />} iconPosition="start" label="Driver" {...a11yProps(0)} />
+                    <Tab icon={<SwitchAccountIcon />} iconPosition="start" label="Customer" {...a11yProps(0)} />
+                    <Tab icon={<LeaderboardIcon />} iconPosition="start" label="Reports" {...a11yProps(0)} />
+
+
+                </Tabs>
                 <Divider />
                 <List>
                     {btnArray2.map((element, index) => (
@@ -257,8 +232,93 @@ export default function Dashboard() {
                            alignItems="center"
                            mt={2} >
 
-                        <SummaryCard icon={<CollectionsBookmarkIcon style={{fontSize: '34px'}} className={classes.card_logo} />}
-                        tittle="Bookings" tCount="550" label={<EventIcon/>}/>
+                        <Stack className={classes.card_box}>
+                            <div style={{backgroundColor: '#27ae60'}} className={classes.card_logo_box}>
+                                <PeopleAltIcon style={{fontSize: '34px'}}
+                                                         className={classes.card_logo} />
+                            </div>
+                            <Stack direction="column" justifyContent="flex-start" alignItems="flex-end" spacing={1} className={classes.card_mainAria}>
+                                <h3>Customers</h3>
+                                <h2>750</h2>
+                            </Stack><Divider />
+                            <Stack direction="row" justifyContent="flex-start" spacing={1}
+                                   alignItems="center" style={{width: '100%', height:'40px'}}>
+                                <EventIcon/><h3>Last 7 Days</h3>
+                            </Stack>
+                        </Stack>
+
+                        <Stack className={classes.card_box}>
+                            <div style={{backgroundColor: '#34495e'}} className={classes.card_logo_box}>
+                                <DirectionsCarIcon style={{fontSize: '34px'}}
+                                                         className={classes.card_logo} />
+                            </div>
+                            <Stack direction="column" justifyContent="flex-start"
+                                   alignItems="flex-end" spacing={1}
+                                   className={classes.card_mainAria}>
+                                <h3>Cars</h3>
+                                <h2>27</h2>
+                            </Stack>
+                            <Divider />
+                            <Stack direction="row" justifyContent="flex-start" spacing={1}
+                                   alignItems="center" style={{width: '100%', height:'40px'}}>
+                                <EventIcon/><h3>Last 7 Days</h3>
+                            </Stack>
+                        </Stack>
+
+                        <Stack className={classes.card_box}>
+                            <div style={{backgroundColor: '#f39c12'}} className={classes.card_logo_box}>
+                                <CollectionsBookmarkIcon style={{fontSize: '34px'}}
+                                                         className={classes.card_logo} />
+                            </div>
+                            <Stack direction="column" justifyContent="flex-start"
+                                   alignItems="flex-end" spacing={1}
+                                   className={classes.card_mainAria}>
+                                <h3>Rentals</h3>
+                                <h2>550</h2>
+                            </Stack>
+                            <Divider />
+                            <Stack direction="row" justifyContent="flex-start" spacing={1}
+                                   alignItems="center" style={{width: '100%', height:'40px'}}>
+                                <EventIcon/><h3>Last 7 Days</h3>
+                            </Stack>
+                        </Stack>
+
+                        <Stack className={classes.card_box}>
+                            <div style={{backgroundColor: '#8e44ad'}} className={classes.card_logo_box}>
+                                <BadgeIcon style={{fontSize: '34px'}}
+                                                         className={classes.card_logo} />
+                            </div>
+                            <Stack direction="column" justifyContent="flex-start"
+                                   alignItems="flex-end" spacing={1}
+                                   className={classes.card_mainAria}>
+                                <h3>Drivers</h3>
+                                <h2>27</h2>
+                            </Stack>
+                            <Divider />
+                            <Stack direction="row" justifyContent="flex-start" spacing={1}
+                                   alignItems="center" style={{width: '100%', height:'40px'}}>
+                                <EventIcon/><h3>Last 7 Days</h3>
+                            </Stack>
+                        </Stack>
+
+                        <Stack className={classes.card_box}>
+                            <div style={{backgroundColor: '#16a085'}} className={classes.card_logo_box}>
+                                <HandymanIcon style={{fontSize: '34px'}}
+                                                         className={classes.card_logo} />
+                            </div>
+                            <Stack direction="column" justifyContent="flex-start"
+                                   alignItems="flex-end" spacing={1}
+                                   className={classes.card_mainAria}>
+                                <h3>Maintain</h3>
+                                <h2>550</h2>
+                            </Stack>
+                            <Divider />
+                            <Stack direction="row" justifyContent="flex-start" spacing={1}
+                                   alignItems="center" style={{width: '100%', height:'40px'}}>
+                                <EventIcon/><h3>Last 7 Days</h3>
+                            </Stack>
+                        </Stack>
+
 
 
 
@@ -329,4 +389,37 @@ function Table() {
             />
         </Box>
     );
+}
+
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`vertical-tabpanel-${index}`}
+            aria-labelledby={`vertical-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box sx={{ p: 3 }}>
+                    <Typography>{children}</Typography>
+                </Box>
+            )}
+        </div>
+    );
+}
+
+TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+    return {
+        id: `vertical-tab-${index}`,
+        'aria-controls': `vertical-tabpanel-${index}`,
+    };
 }
