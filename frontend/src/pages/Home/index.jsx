@@ -67,7 +67,6 @@ class HomePage extends Component {
 
     render() {
         let {classes} = this.props;
-        // const open = Boolean(this.state.anchorEl);
 
         const navTabChange = (event, newValue) => {
             this.setState({tabValue: newValue});
@@ -104,13 +103,10 @@ class HomePage extends Component {
         };
 
 
-
         const Item = styled(Paper)(({theme}) => ({
             backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-            ...theme.typography.body2,
-            padding: theme.spacing(1),
-            textAlign: 'center',
-            color: theme.palette.text.secondary,
+            ...theme.typography.body2, padding: theme.spacing(1),
+            textAlign: 'center', color: theme.palette.text.secondary,
         }));
 
         return (
@@ -119,12 +115,7 @@ class HomePage extends Component {
 
                     <div className={classes.nav__bar}>
                         <div className={classes.nav__item}>
-                            <Stack direction="row"
-                                   justifyContent="center"
-                                   alignItems="center"
-                                   spacing={2}
-                                   sx={{display: {xs: 'none', md: 'block'}}}
-                            >
+                            <Stack direction="row" justifyContent="center" alignItems="center" spacing={2} sx={{display: {xs: 'none', md: 'block'}}}>
                                 <img className={classes.nav__logo} src={logo} alt=""/>
                             </Stack>
                             <h3 className={classes.nav__head}>Easy Car Rental Pvt(Ltd)</h3>
@@ -147,44 +138,26 @@ class HomePage extends Component {
 
                         </div>
                         <div className={classes.nav__item}>
-                            <IconButton
-                                size="large"
+                            <IconButton size="large"
                                 aria-label="account of current user"
                                 aria-controls="menu-appbar"
                                 aria-haspopup="true"
                                 onClick={handleOpenNavMenu}
                                 color="inherit"
-                                sx={{
-                                    display: {xs: 'block', md: 'none'},
-                                }}
-                            >
+                                sx={{display: {xs: 'block', md: 'none'},}}>
                                 <MenuIcon/>
                             </IconButton>
-                            <Menu
-                                id="menu-appbar"
+
+                            <Menu id="menu-appbar"
                                 anchorEl={this.state.anchorElNav}
-                                anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'left',
-                                }}
+                                anchorOrigin={{vertical: 'bottom', horizontal: 'left',}}
                                 keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'left',
-                                }}
+                                transformOrigin={{vertical: 'top', horizontal: 'left',}}
                                 open={Boolean(this.state.anchorElNav)}
                                 onClose={handleCloseNavMenu}
-                                sx={{
-                                    display: {xs: 'fex', md: 'none'},
-                                }}
-                            >
+                                sx={{display: {xs: 'fex', md: 'none'},}}>
 
-                                <Tabs
-                                    orientation="vertical"
-                                    value={this.state.tabValue}
-                                    onChange={navTabChange}
-                                    aria-label="menu tabs"
-                                >
+                                <Tabs orientation="vertical" value={this.state.tabValue} onChange={navTabChange} aria-label="menu tabs">
                                     <Tab label="Home" {...a11yProps(0)} />
                                     <Tab label="Vehicles" {...a11yProps(1)} />
                                     <Tab label="Service" {...a11yProps(2)} />
@@ -293,14 +266,12 @@ class HomePage extends Component {
                                     </FormControl>
                                 </div>
                                 <div className={classes.book__item}>
-
-
                                     <Button className={classes.check__btn}
                                             color="primary"
                                             variant="contained"
-                                            href="#resultSec"
-                                    >Check</Button>
-
+                                            href="#resultSec">
+                                        Check
+                                    </Button>
                                 </div>
                             </LocalizationProvider>
                         </Stack>
@@ -309,47 +280,32 @@ class HomePage extends Component {
                         <Grid container direction="column" className={classes.scroll__box}>
 
                             <div className={classes.info_sec}>
-                                <Typography  style={{
-                                    fontFamily:'Convergence',
-                                    fontSize:'1.2em',
-                                    textAlign:'center',
-                                    marginTop:'75px',
-                                    marginBottom:'10px',
-                                    color:'white',
-                                }}>Enjoy the efficient and specialized services of
+                                <Typography  style={{fontFamily:'Convergence', fontSize:'1.2em',
+                                    textAlign:'center', marginTop:'75px', marginBottom:'10px', color:'white',}}>
+                                    Enjoy the efficient and specialized services of
                                     Easy car rentals private limited; Sri Lanka's
-                                    leading rent-a-car company</Typography>
+                                    leading rent-a-car company
+                                </Typography>
 
-                                <Stack direction={{ xs: 'column', sm: 'row' }}
-                                       spacing={{ xs: 1, sm: 2, md: 4 }}
-                                       justifyContent="center"
-                                       alignItems="center"
-                                       mt={2}>
+                                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 1, sm: 2, md: 4 }}
+                                       justifyContent="center" alignItems="center" mt={2}>
                                     <div className={classes.info_sec_div}></div>
                                     <div className={classes.info_sec_div}></div>
                                     <div className={classes.info_sec_div}></div>
                                     <div className={classes.info_sec_div}></div>
-
                                 </Stack>
-
                             </div>
 
 
                             <div className={classes.service_box}>
-                                <h2 style={{
-                                    fontFamily:'Convergence',
-                                    fontSize:'1.2em',
-                                    textAlign:'center',
-                                    marginTop:'15px',
-                                    marginBottom:'10px'
-                                }}>Our Business Class Vehicles</h2>
+                                <h2 style={{fontFamily:'Convergence', fontSize:'1.2em', textAlign:'center',
+                                    marginTop:'15px', marginBottom:'10px'}}>
+                                    Our Business Class Vehicles
+                                </h2>
 
 
-                                <Stack direction={{ xs: 'column', sm: 'row' }}
-                                       spacing={{ xs: 1, sm: 2, md: 4 }}
-                                       justifyContent="center"
-                                       alignItems="center"
-                                       mt={2}>
+                                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 1, sm: 2, md: 4 }}
+                                       justifyContent="center" alignItems="center" mt={2}>
                                     <div> <SmallVehicleCard name="General" imgSrc={generalCar}/> </div>
                                     <div> <SmallVehicleCard name="Premium" imgSrc={premiumCar}/> </div>
                                     <div> <SmallVehicleCard name="Luxury" imgSrc={luxuryCar}/> </div>
@@ -359,35 +315,20 @@ class HomePage extends Component {
 
                             <div id="resultSec">
                                 <div className={classes.suggest__result_box} >
-                                    <h2 style={{
-                                        fontFamily:'Convergence',
-                                        fontSize:'1.2em',
-                                        textAlign:'center',
-                                        marginTop:'50px',
-                                        marginBottom:'10px'
-                                    }}>Best deals found for Sri Lanka car rentals</h2>
-                                    <div style={{display:'flex',flexWrap: 'wrap',
-                                        justifyContent: 'space-evenly', width:'100vw',
-                                        paddingTop:'25px',}}>
-
+                                    <h2 style={{fontFamily:'Convergence', fontSize:'1.2em',
+                                        textAlign:'center', marginTop:'50px', marginBottom:'10px'}}>
+                                        Best deals found for Sri Lanka car rentals
+                                    </h2>
+                                    <div style={{display:'flex',flexWrap: 'wrap', justifyContent: 'space-evenly',
+                                        width:'100vw', paddingTop:'25px',}}>
 
                                         <div style={{ height:'100%'}}>
                                             <div className={classes.suggest__result}>
                                                 <VehicleCard
-                                                    imgSrc={vehicleImg1}
-                                                    brand={"WagonR"}
-                                                    type={"General"}
-                                                    noOfPassenger={"4"}
-                                                    transmissionType={"Auto"}
-                                                    fuelType={"Petrol"}
-                                                    dailyRate={"2500"}
-                                                    monthlyRate={"35000"}
-                                                    freeMileageDay={"100"}
-                                                    freeMileageMonth={"2400"}
-                                                    priceExtraKM={"30"}
-                                                    color={"Red"}
-                                                    maintenanceMileage={"2000"}
-                                                    status={"available"}
+                                                    imgSrc={vehicleImg1} brand={"WagonR"} type={"General"} noOfPassenger={"4"}
+                                                    transmissionType={"Auto"} fuelType={"Petrol"} dailyRate={"2500"} monthlyRate={"35000"}
+                                                    freeMileageDay={"100"} freeMileageMonth={"2400"} priceExtraKM={"30"} color={"Red"}
+                                                    maintenanceMileage={"2000"} status={"available"}
                                                 />
                                             </div>
 
@@ -399,49 +340,31 @@ class HomePage extends Component {
                                             </FormGroup>
                                             <FormControl>
                                                 <FormLabel id="demo-controlled-radio-buttons-group">Vehicle Type</FormLabel>
-                                                <RadioGroup
-                                                    aria-labelledby="demo-controlled-radio-buttons-group"
-                                                    name="controlled-radio-buttons-group"
-                                                    value={this.state.vehicleTypeId}
-                                                    onChange={radioBtnChange}
-                                                >
+                                                <RadioGroup aria-labelledby="demo-controlled-radio-buttons-group"
+                                                    name="controlled-radio-buttons-group" value={this.state.vehicleTypeId}
+                                                    onChange={radioBtnChange}>
                                                     <FormControlLabel value={0} control={<Radio />} label="General" />
                                                     <FormControlLabel value={1} control={<Radio />} label="Premium" />
                                                     <FormControlLabel value={2} control={<Radio />} label="Luxury" />
                                                 </RadioGroup>
                                             </FormControl>
                                         </div>
-
                                     </div>
-
                                 </div>
                             </div>
 
-                            <div className={classes.info_sec}
-                                >
+                            <div className={classes.info_sec}>
                                 <div className={classes.suggest__result}>
 
                                 </div>
                             </div>
                             <div className={classes.contact_sec}>
-                                <h2 style={{
-                                    position: 'absolute',
-                                    fontFamily:'Convergence',
-                                    fontSize:'1.2em',
-                                    textAlign:'center',
-                                    marginTop:'15px',
-                                    marginBottom:'10px',
-                                    color:'white',
-                                }}>Contact</h2>
-                                <img src={backImg3} alt="" style={{
-                                width: '100vw',
-                                height:'100%',
-                                backgroundPosition: 'center',
-                                backgroundRepeat: 'no-repeat',
-                                backgroundSize: 'cover',
-                                backgroundAttachment:'fixed'
-                            }}/>
-
+                                <h2 style={{position: 'absolute', fontFamily:'Convergence', fontSize:'1.2em',
+                                    textAlign:'center', marginTop:'15px', marginBottom:'10px', color:'white',}}>
+                                    Contact
+                                </h2>
+                                <img src={backImg3} alt="" style={{width: '100vw', height:'100%', backgroundPosition: 'center',
+                                    backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundAttachment:'fixed'}}/>
                             </div>
                         </Grid>
 
@@ -473,13 +396,9 @@ function TabPanel(props) {
     const {children, value, index, ...other} = props;
 
     return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
+        <div role="tabpanel" hidden={value !== index}
             id={`simple-tabpanel-${index}`}
-            aria-labelledby={`simple-tab-${index}`}
-            {...other}
-        >
+            aria-labelledby={`simple-tab-${index}`}{...other}>
             {value === index && (
                 <Box sx={{}}>
                     {children}

@@ -33,8 +33,7 @@ class SmallVehicleCard extends Component{
                             {this.props.name}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            Lizards are a widespread group of squamate reptiles, with over 6,000
-                            species, ranging across all continents except Antarctica
+                            {this.props.description}
                         </Typography>
                     </CardContent>
                 </CardActionArea>

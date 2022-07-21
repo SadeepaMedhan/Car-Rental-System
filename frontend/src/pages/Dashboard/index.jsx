@@ -18,6 +18,32 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import PeopleIcon from '@mui/icons-material/People';
+import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
+import LeaderboardIcon from '@mui/icons-material/Leaderboard';
+import backImg2 from "../../assets/images/dashBack3.webp";
+import {Stack} from "@mui/material";
+import SmallVehicleCard from "../../components/Card/smallVehicleCard";
+import ImageIcon from '@mui/icons-material/Image';
+
+const btnArray1 = [
+    { name:'Dashboard', icon: <DashboardIcon />},
+    { name:'Booking', icon: <CollectionsBookmarkIcon />},
+    { name:'Vehicle', icon: <DirectionsCarIcon />},
+    { name:'Driver', icon: <PeopleIcon />},
+    { name:'Customer', icon: <SwitchAccountIcon />},
+    { name:'Reports', icon: <LeaderboardIcon />}
+];
+
+const btnArray2 = [
+    { name:'Requests', icon: <DashboardIcon />},
+    { name:'Maintenance', icon: <CollectionsBookmarkIcon />},
+    { name:'Damages', icon: <DirectionsCarIcon />},
+    { name:'Schedule', icon: <PeopleIcon />}
+];
 
 const drawerWidth = 240;
 
@@ -99,7 +125,16 @@ export default function Dashboard() {
     };
 
     return (
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex' }} >
+            <img src={backImg2} style={{
+                position:"fixed",
+                width: '100vw',
+                height:'100vh',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
+                opacity:'30%',
+            }}/>
             <CssBaseline />
             <AppBar position="fixed" open={open}>
                 <Toolbar>
@@ -116,10 +151,13 @@ export default function Dashboard() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap component="div">
-                        Mini variant drawer
+                        Dashboard
                     </Typography>
                 </Toolbar>
             </AppBar>
+
+
+
             <Drawer variant="permanent" open={open}>
                 <DrawerHeader>
                     <IconButton onClick={handleDrawerClose}>
@@ -128,8 +166,8 @@ export default function Dashboard() {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+                    {btnArray1.map((element, index) => (
+                        <ListItem key={element.name} disablePadding sx={{ display: 'block' }}>
                             <ListItemButton
                                 sx={{
                                     minHeight: 48,
@@ -144,17 +182,17 @@ export default function Dashboard() {
                                         justifyContent: 'center',
                                     }}
                                 >
-                                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                                    {element.icon}
                                 </ListItemIcon>
-                                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                                <ListItemText primary={element.name} sx={{ opacity: open ? 1 : 0 }} />
                             </ListItemButton>
                         </ListItem>
                     ))}
                 </List>
                 <Divider />
                 <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+                    {btnArray2.map((element, index) => (
+                        <ListItem key={element.name} disablePadding sx={{ display: 'block' }}>
                             <ListItemButton
                                 sx={{
                                     minHeight: 48,
@@ -169,9 +207,9 @@ export default function Dashboard() {
                                         justifyContent: 'center',
                                     }}
                                 >
-                                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                                    {element.icon}
                                 </ListItemIcon>
-                                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                                <ListItemText primary={element.name} sx={{ opacity: open ? 1 : 0 }} />
                             </ListItemButton>
                         </ListItem>
                     ))}
@@ -179,12 +217,16 @@ export default function Dashboard() {
             </Drawer>
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <DrawerHeader />
-                <Typography paragraph>
+                <Stack direction={{ xs: 'column', sm: 'row' }}
+                       spacing={{ xs: 1, sm: 2, md: 4 }}
+                       justifyContent="center"
+                       alignItems="center"
+                       mt={2} >
 
-                </Typography>
-                <Typography paragraph>
+                    <SmallVehicleCard imgSrc={reactIcon} name="50 Customers" description="best review"/>
 
-                </Typography>
+
+                </Stack>
             </Box>
         </Box>
     );

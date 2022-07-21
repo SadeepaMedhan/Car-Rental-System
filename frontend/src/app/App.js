@@ -12,7 +12,7 @@ function App() {
     return (
         <div>
             {/*<Login viewOpen={true}/>*/}
-            <HomePage/>
+            <Dashboard/>
 
             {/*<Routes>
                 <Route exact path='/n' element={<MyNav/>}/>
