@@ -1,7 +1,7 @@
 import React from "react";
 import {Component} from "react";
 import Grid from "@mui/material/Grid";
-import VehicleCard from "../../components/Card";
+import VehicleCard from "../../components/Card/VehicleCard";
 import vehicleImg1 from "../../assets/images/vehicles/v1f.jpg";
 import vehicleImg2 from "../../assets/images/vehicles/v2f.jpg";
 import Box from "@mui/material/Box";
@@ -49,7 +49,6 @@ class Vehicle extends Component{
     }
 
     componentDidMount() {
-        console.log('Screen Mounted!');
         this.loadData();
     }
 

@@ -1,21 +1,19 @@
-import {createUseStyles} from 'react-jss'
+
+export const styleSheet ={
 
 
-export const styleSheet = createUseStyles({
-
-
-    login__cover:{
+    signUp__cover:{
         position:'absolute',
         height: '100vh',
         width: '100vw',
         borderRadius: '15px',
     },
-    login__back:{
-        height: '400px',
+    signUp__back:{
+        height: '550px',
         alignItems: 'center',
         width:'550px',
     },
-    login__tittle:{
+    signUp__tittle:{
         textAlign: 'center',
         height: '20%',
         fontFamily:'Arial',
@@ -23,4 +21,4 @@ export const styleSheet = createUseStyles({
     },
 
 
-})
+}

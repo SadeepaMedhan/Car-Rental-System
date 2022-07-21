@@ -4,8 +4,6 @@ import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
@@ -21,7 +19,7 @@ import SignUp from "../SignUp";
 
 
 
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+const SignInForm = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
         padding: theme.spacing(2),
     },
@@ -30,7 +28,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     },
 }));
 
-const BootstrapDialogTitle = (props) => {
+const SignInFormTitle = (props) => {
     const { children, onClose, ...other } = props;
 
     return (
@@ -54,7 +52,7 @@ const BootstrapDialogTitle = (props) => {
     );
 };
 
-BootstrapDialogTitle.propTypes = {
+SignInFormTitle.propTypes = {
     children: PropTypes.node,
     onClose: PropTypes.func.isRequired,
 };
@@ -89,18 +87,19 @@ export default function SignIn() {
             <Tooltip title="Sign In" >
                 <Chip label="Sign In" onClick={handleClickOpen} />
                 </Tooltip>
-            <BootstrapDialog className={classes.login__cover}
+            <SignInForm className={classes.login__cover}
                 onClose={handleClose}
                 aria-labelledby="tittle"
                 open={open}
 
             >
-                <BootstrapDialogTitle className={classes.login__tittle} id="tittle" onClose={handleClose}>
+                <SignInFormTitle className={classes.login__tittle} id="tittle" onClose={handleClose}>
                     WELCOME
-                </BootstrapDialogTitle>
+                    <hr/>
+                </SignInFormTitle>
 
                 <Stack direction="column" justifyContent="center" alignItems="center" spacing={1}
-                       width={{xs:'300px', md:'550px'}} className={classes.login__back}>
+                       width={{xs:'300px', md:'450px'}} className={classes.login__back}>
                     <Stack>
                         <span className={classes.login__media}>Logging Using Social Media</span>
                     </Stack>
@@ -147,7 +146,7 @@ export default function SignIn() {
 
                     </Stack>
                 </Stack>
-            </BootstrapDialog>
+            </SignInForm>
         </div>
     );
 }

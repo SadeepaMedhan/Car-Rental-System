@@ -43,45 +43,9 @@ import generalCar from "../../assets/images/vehicles/prius-f.jpg";
 import premiumCar from "../../assets/images/vehicles/ToyotaAllion-f.jpg";
 import luxuryCar from "../../assets/images/vehicles/Mercedes.jpeg";
 import vehicleImg1 from "../../assets/images/vehicles/v1f.jpg";
-import VehicleCard from "../../components/Card";
-import CardMedia from "@mui/material/CardMedia";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import {Fade, Slide, Zoom} from 'react-slideshow-image';
+import VehicleCard from "../../components/Card/VehicleCard";
+import SmallVehicleCard from "../../components/Card/smallVehicleCard";
 
-
-function TabPanel(props) {
-    const {children, value, index, ...other} = props;
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`simple-tabpanel-${index}`}
-            aria-labelledby={`simple-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box sx={{}}>
-                    {children}
-                </Box>
-            )}
-        </div>
-    );
-}
-
-TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-    return {
-        id: `simple-tab-${index}`,
-        'aria-controls': `simple-tabpanel-${index}`,
-    };
-}
 
 class HomePage extends Component {
     constructor(props) {
@@ -386,9 +350,9 @@ class HomePage extends Component {
                                        justifyContent="center"
                                        alignItems="center"
                                        mt={2}>
-                                    <div> <VehicleCover name="General" imgSrc={generalCar}/> </div>
-                                    <div> <VehicleCover name="Premium" imgSrc={premiumCar}/> </div>
-                                    <div> <VehicleCover name="Luxury" imgSrc={luxuryCar}/> </div>
+                                    <div> <SmallVehicleCard name="General" imgSrc={generalCar}/> </div>
+                                    <div> <SmallVehicleCard name="Premium" imgSrc={premiumCar}/> </div>
+                                    <div> <SmallVehicleCard name="Luxury" imgSrc={luxuryCar}/> </div>
                                 </Stack>
 
                             </div>
@@ -505,26 +469,35 @@ class HomePage extends Component {
 export default withStyles(styleSheet)(HomePage);
 
 
-function VehicleCover(props) {
+function TabPanel(props) {
+    const {children, value, index, ...other} = props;
+
     return (
-        <Card sx={{ maxWidth: 345 }}>
-            <CardActionArea>
-                <CardMedia
-                    component="img"
-                    height="140"
-                    image={props.imgSrc}
-                    alt="green iguana"
-                />
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                        {props.name}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                        Lizards are a widespread group of squamate reptiles, with over 6,000
-                        species, ranging across all continents except Antarctica
-                    </Typography>
-                </CardContent>
-            </CardActionArea>
-        </Card>
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box sx={{}}>
+                    {children}
+                </Box>
+            )}
+        </div>
     );
+}
+
+TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+    return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
+    };
 }

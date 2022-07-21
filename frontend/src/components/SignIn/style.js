@@ -13,7 +13,7 @@ export const styleSheet = createUseStyles({
     login__back:{
         height: '400px',
         alignItems: 'center',
-        width:'550px',
+        width:'450px',
     },
     login__tittle:{
         textAlign: 'center',

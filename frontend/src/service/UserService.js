@@ -1,10 +1,10 @@
 import axios from "../axios";
 
-class VehicleService {
-    createVehicle = async (data) => {
+class UserService {
+    createAdmin = async (data) => {
         console.log("form data: " + data)
         const promise = new Promise((resolve, reject) => {
-            axios.post('vehicle', data)   //10s
+            axios.post('admin', data)   //10s
                 .then((res) => {
                     return resolve(res)
                 })
@@ -16,9 +16,9 @@ class VehicleService {
         return await promise
     }
 
-    fetchVehicles = async () => {
+    fetchAdmin = async () => {
         const promise = new Promise((resolve, reject) => {
-            axios.get('vehicle')
+            axios.get('admin')
                 .then((res) => {
                     return resolve(res)
                 })
@@ -29,4 +29,4 @@ class VehicleService {
         return await promise
     }
 }
-export default new VehicleService();
+export default new UserService();

@@ -1,14 +1,8 @@
 import React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import {CardActionArea, CardActions, Rating, Stack} from '@mui/material';
 import IconButton from "@mui/material/IconButton";
-import Grid from "@mui/material/Grid";
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import TransformOutlinedIcon from '@mui/icons-material/TransformOutlined';
-import SpeedOutlinedIcon from '@mui/icons-material/SpeedOutlined';
 import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
@@ -96,8 +90,7 @@ class VehicleCard extends Component{
                         <Stack direction="column" justifyContent="flex-end" alignItems="flex-end" spacing={2}>
                             <Button
                                 color="primary"
-                                variant="contained"
-                            >
+                                variant="contained">
                                 Select
                             </Button>
                         </Stack>
