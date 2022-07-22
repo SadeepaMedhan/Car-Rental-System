@@ -25,7 +25,7 @@ import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import EventIcon from '@mui/icons-material/Event';
 import backImg2 from "../../assets/images/dashBack3.webp";
-import {Stack} from "@mui/material";
+import {Avatar, InputAdornment, Stack, TextField, Tooltip} from "@mui/material";
 import SmallVehicleCard from "../../components/Card/smallVehicleCard";
 import ImageIcon from '@mui/icons-material/Image';
 import { DataGrid } from '@mui/x-data-grid';
@@ -37,6 +37,11 @@ import BadgeIcon from '@mui/icons-material/Badge';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
+import {TextValidator, ValidatorForm} from "react-material-ui-form-validator";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Visibility from "@mui/icons-material/Visibility";
+import Button from "@mui/material/Button";
 
 
 const btnArray1 = [
@@ -55,7 +60,7 @@ const btnArray2 = [
     { name:'Schedule', icon: <PeopleIcon />}
 ];
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 const openedMixin = (theme) => ({
     width: drawerWidth,
@@ -127,9 +132,35 @@ export default function Dashboard() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState(0);
+    const [vehicleFormValue, setVehicleFormValue] = React.useState(0);
+    const [tittle, setTittle] = React.useState("Dashboard");
+    const [selectImg, setSelectImg] = React.useState(null);
 
-    const handleChange = (event, newValue) => {
+    const vehicleFormHandleChange = (event, newValue) => {
+        setVehicleFormValue(newValue);
+    };
+        const handleChange = (event, newValue) => {
         setValue(newValue);
+
+        function getTittle(newValue) {
+            switch (newValue) {
+                case 0: return"Dashboard"
+                case 1: return"Booking Management"
+                case 2: return"Vehicle Management"
+                case 3: return"Driver Management"
+                case 4: return"Customer Management"
+                case 5: return"Reports"
+                case 7: return"Checking Requests"
+                case 8: return"Vehicle Maintenance"
+                case 9: return"Damages"
+                case 10: return"Schedule"
+                default: return"Dashboard"
+            }
+        }
+
+        setTittle(getTittle(newValue))
+
+
     };
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -138,6 +169,16 @@ export default function Dashboard() {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+
+    const onFileChange = (event) => {
+        setSelectImg(event.target.files[0])
+
+    };
+
+    const imageUploadHandle = () => {
+        const  formData = new FormData();
+        formData.append("CarImg", selectImg);
+    }
 
     return (
         <Box sx={{ display: 'flex' }} >
@@ -166,7 +207,7 @@ export default function Dashboard() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap component="div">
-                        Dashboard
+                        {tittle}
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -188,145 +229,227 @@ export default function Dashboard() {
                     sx={{ borderRight: 1, borderColor: 'divider' }}>
 
 
-                    <Tab icon={<DashboardIcon />} iconPosition="start" label="Dashboard" {...a11yProps(0)} />
-                    <Tab icon={<CollectionsBookmarkIcon />} iconPosition="start" label="Booking" {...a11yProps(0)} />
-                    <Tab icon={<DirectionsCarIcon />} iconPosition="start" label="Vehicle" {...a11yProps(0)} />
-                    <Tab icon={<PeopleIcon />} iconPosition="start" label="Driver" {...a11yProps(0)} />
-                    <Tab icon={<SwitchAccountIcon />} iconPosition="start" label="Customer" {...a11yProps(0)} />
-                    <Tab icon={<LeaderboardIcon />} iconPosition="start" label="Reports" {...a11yProps(0)} />
-
+                    <Tab className={classes.tab} icon={
+                        <DashboardIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start" label="Dashboard" {...a11yProps(0)} />
+                    <Tab className={classes.tab} icon={
+                        <CollectionsBookmarkIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start" label="Booking" {...a11yProps(1)} />
+                    <Tab className={classes.tab} icon={
+                        <DirectionsCarIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start" label="Vehicle" {...a11yProps(2)} />
+                    <Tab className={classes.tab} icon={
+                        <PeopleIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start" label="Driver" {...a11yProps(3)} />
+                    <Tab className={classes.tab} icon={
+                        <SwitchAccountIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start" label="Customer" {...a11yProps(4)} />
+                    <Tab className={classes.tab} icon={
+                        <LeaderboardIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start" label="Reports" {...a11yProps(5)} />
+                <Divider />
+                    <Tab className={classes.tab} icon={
+                        <DashboardIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start" label="Requests" {...a11yProps(6)} />
+                    <Tab className={classes.tab} icon={
+                        <CollectionsBookmarkIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start" label="Maintenance" {...a11yProps(7)} />
+                    <Tab className={classes.tab} icon={
+                        <DirectionsCarIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start" label="Damages" {...a11yProps(8)} />
+                    <Tab className={classes.tab} icon={
+                        <PeopleIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start" label="Schedule" {...a11yProps(9)} />
 
                 </Tabs>
-                <Divider />
-                <List>
-                    {btnArray2.map((element, index) => (
-                        <ListItem key={element.name} disablePadding sx={{ display: 'block' }}>
-                            <ListItemButton
-                                sx={{
-                                    minHeight: 48,
-                                    justifyContent: open ? 'initial' : 'center',
-                                    px: 2.5,
-                                }}
-                            >
-                                <ListItemIcon
-                                    sx={{
-                                        minWidth: 0,
-                                        mr: open ? 3 : 'auto',
-                                        justifyContent: 'center',
-                                    }}
-                                >
-                                    {element.icon}
-                                </ListItemIcon>
-                                <ListItemText primary={element.name} sx={{ opacity: open ? 1 : 0 }} />
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
-                </List>
             </Drawer>
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <DrawerHeader />
-                <Stack spacing={2}>
-                    <Stack direction={{ xs: 'column', sm: 'row' }}
-                           spacing={{ xs: 1, sm: 2, md: 4 }}
-                           justifyContent="center"
-                           alignItems="center"
-                           mt={2} >
+                <TabPanel value={value} index={0}>
 
-                        <Stack className={classes.card_box}>
-                            <div style={{backgroundColor: '#27ae60'}} className={classes.card_logo_box}>
-                                <PeopleAltIcon style={{fontSize: '34px'}}
-                                                         className={classes.card_logo} />
-                            </div>
-                            <Stack direction="column" justifyContent="flex-start" alignItems="flex-end" spacing={1} className={classes.card_mainAria}>
-                                <h3>Customers</h3>
-                                <h2>750</h2>
-                            </Stack><Divider />
-                            <Stack direction="row" justifyContent="flex-start" spacing={1}
-                                   alignItems="center" style={{width: '100%', height:'40px'}}>
-                                <EventIcon/><h3>Last 7 Days</h3>
+                    <Stack spacing={2}>
+                        <Stack direction={{ xs: 'column', sm: 'row' }}
+                               spacing={{ xs: 1, sm: 2, md: 4 }}
+                               justifyContent="center"
+                               alignItems="center"
+                               mt={2} >
+
+                            <Stack className={classes.card_box}>
+                                <div style={{backgroundColor: '#27ae60'}} className={classes.card_logo_box}>
+                                    <PeopleAltIcon style={{fontSize: '34px'}}
+                                                   className={classes.card_logo} />
+                                </div>
+                                <Stack direction="column" justifyContent="flex-start" alignItems="flex-end" spacing={1} className={classes.card_mainAria}>
+                                    <h3>Customers</h3>
+                                    <h2>750</h2>
+                                </Stack><Divider />
+                                <Stack direction="row" justifyContent="flex-start" spacing={1}
+                                       alignItems="center" style={{width: '100%', height:'40px'}}>
+                                    <EventIcon/><h3>Last 7 Days</h3>
+                                </Stack>
                             </Stack>
+
+                            <Stack className={classes.card_box}>
+                                <div style={{backgroundColor: '#34495e'}} className={classes.card_logo_box}>
+                                    <DirectionsCarIcon style={{fontSize: '34px'}}
+                                                       className={classes.card_logo} />
+                                </div>
+                                <Stack direction="column" justifyContent="flex-start"
+                                       alignItems="flex-end" spacing={1}
+                                       className={classes.card_mainAria}>
+                                    <h3>Cars</h3>
+                                    <h2>27</h2>
+                                </Stack>
+                                <Divider />
+                                <Stack direction="row" justifyContent="flex-start" spacing={1}
+                                       alignItems="center" style={{width: '100%', height:'40px'}}>
+                                    <EventIcon/><h3>Last 7 Days</h3>
+                                </Stack>
+                            </Stack>
+
+                            <Stack className={classes.card_box}>
+                                <div style={{backgroundColor: '#f39c12'}} className={classes.card_logo_box}>
+                                    <CollectionsBookmarkIcon style={{fontSize: '34px'}}
+                                                             className={classes.card_logo} />
+                                </div>
+                                <Stack direction="column" justifyContent="flex-start"
+                                       alignItems="flex-end" spacing={1}
+                                       className={classes.card_mainAria}>
+                                    <h3>Rentals</h3>
+                                    <h2>550</h2>
+                                </Stack>
+                                <Divider />
+                                <Stack direction="row" justifyContent="flex-start" spacing={1}
+                                       alignItems="center" style={{width: '100%', height:'40px'}}>
+                                    <EventIcon/><h3>Last 7 Days</h3>
+                                </Stack>
+                            </Stack>
+
+                            <Stack className={classes.card_box}>
+                                <div style={{backgroundColor: '#8e44ad'}} className={classes.card_logo_box}>
+                                    <BadgeIcon style={{fontSize: '34px'}}
+                                               className={classes.card_logo} />
+                                </div>
+                                <Stack direction="column" justifyContent="flex-start"
+                                       alignItems="flex-end" spacing={1}
+                                       className={classes.card_mainAria}>
+                                    <h3>Drivers</h3>
+                                    <h2>27</h2>
+                                </Stack>
+                                <Divider />
+                                <Stack direction="row" justifyContent="flex-start" spacing={1}
+                                       alignItems="center" style={{width: '100%', height:'40px'}}>
+                                    <EventIcon/><h3>Last 7 Days</h3>
+                                </Stack>
+                            </Stack>
+
+                            <Stack className={classes.card_box}>
+                                <div style={{backgroundColor: '#16a085'}} className={classes.card_logo_box}>
+                                    <HandymanIcon style={{fontSize: '34px'}}
+                                                  className={classes.card_logo} />
+                                </div>
+                                <Stack direction="column" justifyContent="flex-start"
+                                       alignItems="flex-end" spacing={1}
+                                       className={classes.card_mainAria}>
+                                    <h3>Maintain</h3>
+                                    <h2>550</h2>
+                                </Stack>
+                                <Divider />
+                                <Stack direction="row" justifyContent="flex-start" spacing={1}
+                                       alignItems="center" style={{width: '100%', height:'40px'}}>
+                                    <EventIcon/><h3>Last 7 Days</h3>
+                                </Stack>
+                            </Stack>
+
                         </Stack>
-
-                        <Stack className={classes.card_box}>
-                            <div style={{backgroundColor: '#34495e'}} className={classes.card_logo_box}>
-                                <DirectionsCarIcon style={{fontSize: '34px'}}
-                                                         className={classes.card_logo} />
-                            </div>
-                            <Stack direction="column" justifyContent="flex-start"
-                                   alignItems="flex-end" spacing={1}
-                                   className={classes.card_mainAria}>
-                                <h3>Cars</h3>
-                                <h2>27</h2>
-                            </Stack>
-                            <Divider />
-                            <Stack direction="row" justifyContent="flex-start" spacing={1}
-                                   alignItems="center" style={{width: '100%', height:'40px'}}>
-                                <EventIcon/><h3>Last 7 Days</h3>
-                            </Stack>
+                        <Stack>
+                            <Table/>
                         </Stack>
-
-                        <Stack className={classes.card_box}>
-                            <div style={{backgroundColor: '#f39c12'}} className={classes.card_logo_box}>
-                                <CollectionsBookmarkIcon style={{fontSize: '34px'}}
-                                                         className={classes.card_logo} />
-                            </div>
-                            <Stack direction="column" justifyContent="flex-start"
-                                   alignItems="flex-end" spacing={1}
-                                   className={classes.card_mainAria}>
-                                <h3>Rentals</h3>
-                                <h2>550</h2>
-                            </Stack>
-                            <Divider />
-                            <Stack direction="row" justifyContent="flex-start" spacing={1}
-                                   alignItems="center" style={{width: '100%', height:'40px'}}>
-                                <EventIcon/><h3>Last 7 Days</h3>
-                            </Stack>
-                        </Stack>
-
-                        <Stack className={classes.card_box}>
-                            <div style={{backgroundColor: '#8e44ad'}} className={classes.card_logo_box}>
-                                <BadgeIcon style={{fontSize: '34px'}}
-                                                         className={classes.card_logo} />
-                            </div>
-                            <Stack direction="column" justifyContent="flex-start"
-                                   alignItems="flex-end" spacing={1}
-                                   className={classes.card_mainAria}>
-                                <h3>Drivers</h3>
-                                <h2>27</h2>
-                            </Stack>
-                            <Divider />
-                            <Stack direction="row" justifyContent="flex-start" spacing={1}
-                                   alignItems="center" style={{width: '100%', height:'40px'}}>
-                                <EventIcon/><h3>Last 7 Days</h3>
-                            </Stack>
-                        </Stack>
-
-                        <Stack className={classes.card_box}>
-                            <div style={{backgroundColor: '#16a085'}} className={classes.card_logo_box}>
-                                <HandymanIcon style={{fontSize: '34px'}}
-                                                         className={classes.card_logo} />
-                            </div>
-                            <Stack direction="column" justifyContent="flex-start"
-                                   alignItems="flex-end" spacing={1}
-                                   className={classes.card_mainAria}>
-                                <h3>Maintain</h3>
-                                <h2>550</h2>
-                            </Stack>
-                            <Divider />
-                            <Stack direction="row" justifyContent="flex-start" spacing={1}
-                                   alignItems="center" style={{width: '100%', height:'40px'}}>
-                                <EventIcon/><h3>Last 7 Days</h3>
-                            </Stack>
-                        </Stack>
-
-
-
-
                     </Stack>
+                </TabPanel>
+
+                <TabPanel value={value} index={1}>
                     <Stack>
                         <Table/>
                     </Stack>
-                </Stack>
+                </TabPanel>
+
+                <TabPanel value={value} index={2}>
+                    <Stack >
+                        <Tabs
+                            value={vehicleFormValue}
+                            onChange={vehicleFormHandleChange}
+                            textColor="secondary"
+                            indicatorColor="secondary"
+                            aria-label="secondary tabs example"
+                        >
+                            <Tab value={0} label="All" />
+                            <Tab value={1} label="Add New Vehicle" />
+                            <Tab value={2} label="Other" />
+                        </Tabs>
+
+                        <TabPanel value={vehicleFormValue} index={0}>
+                            <Table/>
+                        </TabPanel>
+                        <TabPanel value={vehicleFormValue} index={1}>
+                            <Stack style={{border:'1px solid gray', padding:'10px',borderRadius:'8px'}}>
+                                <h2>Add New Vehicle</h2>
+                                <Divider />
+                                <Stack direction="row" justifyContent="flex-start"
+                                       alignItems="center"
+                                       spacing={2} style={{ height:'100px'}}>
+                                    <TextField id="outlined-basic" label="regNo" variant="outlined" />
+                                    <TextField id="outlined-basic" label="brand" variant="outlined" />
+                                    <TextField id="outlined-basic" label="type" variant="outlined" />
+                                    <TextField id="outlined-basic" label="noOfPassenger" variant="outlined" />
+
+                                </Stack>
+                                <Stack direction="row" justifyContent="flex-start"
+                                       alignItems="center"
+                                       spacing={2} style={{ height:'100px'}}>
+                                    <TextField id="outlined-basic" label="color" variant="outlined" />
+                                    <TextField id="outlined-basic" label="transmissionType" variant="outlined" />
+                                    <TextField id="outlined-basic" label="fuelType" variant="outlined" />
+                                    <TextField id="outlined-basic" label="maintenanceMileage" variant="outlined" />
+
+                                    <input
+                                        type="file"
+                                        name="myImage"
+                                        onClick={(event) => {
+                                            console.log(event.target)
+                                        }}
+                                    />
+
+                                </Stack>
+                                <Divider />
+                                <Stack direction="row" justifyContent="flex-start"
+                                       alignItems="center"
+                                       spacing={2} style={{ height:'100px'}}>
+                                    <TextField id="outlined-basic" label="dailyRate" variant="outlined" />
+                                    <TextField id="outlined-basic" label="monthlyRate" variant="outlined" />
+                                    <TextField id="outlined-basic" label="freeMileageDay" variant="outlined" />
+                                    <TextField id="outlined-basic" label="freeMileageMonth" variant="outlined" />
+                                    <TextField id="outlined-basic" label="priceExtraKM" variant="outlined" />
+                                </Stack>
+                                <Divider />
+                                <Stack direction="row" justifyContent="flex-end"
+                                       alignItems="center"
+                                       spacing={2} style={{ height:'80px'}}>
+                                    <Button autoFocus color="info" variant="contained" style={{fontWeight:'bold', width:'95px',borderRadius:15 }}>
+                                        Clear
+                                    </Button>
+                                    <Button type="submit" color="primary" variant="contained" style={{fontWeight:'bold', width:'95px',borderRadius:15 }}>
+                                        Save
+                                    </Button>
+                                </Stack>
+                            </Stack>
+                        </TabPanel>
+                        <TabPanel value={vehicleFormValue} index={2}>
+                            <Table/>
+                        </TabPanel>
+
+
+
+                    </Stack>
+                </TabPanel>
+                <TabPanel value={value} index={3}></TabPanel>
+                <TabPanel value={value} index={4}></TabPanel>
+                <TabPanel value={value} index={5}></TabPanel>
+                <TabPanel value={value} index={6}></TabPanel>
+                <TabPanel value={value} index={7}></TabPanel>
+                <TabPanel value={value} index={8}></TabPanel>
+                <TabPanel value={value} index={9}></TabPanel>
+
 
             </Box>
         </Box>

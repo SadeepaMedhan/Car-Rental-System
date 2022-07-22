@@ -2,6 +2,13 @@ import {createUseStyles} from 'react-jss'
 
 
 export const styleSheet = createUseStyles({
+
+    tab:{
+        justifyContent:'flex-start !important',
+        minHeight:'20px !important'
+    },
+
+
     card_box:{
         width: '210px',
         height:'120px',
