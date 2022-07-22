@@ -16,6 +16,8 @@ class Vehicle extends Component{
         super(props);
         this.state={
             vehicle: {
+                vehicleId:'',
+                regNo:'',
                 brand:'',
                 type:'',
                 noOfPassenger:'',

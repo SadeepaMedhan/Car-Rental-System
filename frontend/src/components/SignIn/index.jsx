@@ -35,13 +35,10 @@ const SignInFormTitle = (props) => {
         <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
             {children}
             {onClose ? (
-                <IconButton
-                    aria-label="close"
-                    onClick={onClose}
+                <IconButton aria-label="close" onClick={onClose}
                     sx={{
                         position: 'absolute',
-                        right: 8,
-                        top: 8,
+                        right: 8, top: 8,
                         color: (theme) => theme.palette.grey[500],
                     }}
                 >
@@ -87,12 +84,7 @@ export default function SignIn() {
             <Tooltip title="Sign In" >
                 <Chip label="Sign In" onClick={handleClickOpen} />
                 </Tooltip>
-            <SignInForm className={classes.login__cover}
-                onClose={handleClose}
-                aria-labelledby="tittle"
-                open={open}
-
-            >
+            <SignInForm className={classes.login__cover} onClose={handleClose} aria-labelledby="tittle" open={open}>
                 <SignInFormTitle className={classes.login__tittle} id="tittle" onClose={handleClose}>
                     WELCOME
                     <hr/>
@@ -117,10 +109,7 @@ export default function SignIn() {
                         <hr width={'100px'} align={'left'}/>
                     </Stack>
                     <Stack>
-                        <TextField label="User ID" variant="outlined"
-                            helperText="Incorrect entry." size="small" color="primary"
-
-                        />
+                        <TextField label="User ID" variant="outlined" helperText="Incorrect entry." size="small" color="primary"/>
                     </Stack>
                     <Stack>
                         <TextField label="Password" variant="outlined" helperText="Incorrect entry."
@@ -128,12 +117,9 @@ export default function SignIn() {
                             onChange={handleChange('password')}
                             endAdornment={
                                 <InputAdornment position="end">
-                                    <IconButton
-                                        aria-label="toggle password visibility"
+                                    <IconButton aria-label="toggle password visibility"
                                         onClick={handleClickShowPassword}
-                                        onMouseDown={handleMouseDownPassword}
-                                        edge="end"
-                                    >
+                                        onMouseDown={handleMouseDownPassword} edge="end">
                                         {showPassword ? <VisibilityOff /> : <Visibility />}
                                     </IconButton>
                                 </InputAdornment>
@@ -143,7 +129,6 @@ export default function SignIn() {
                     <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={1}>
                         <SignUp/>
                         <Button autoFocus onClick={handleClose} style={{fontWeight:'bold', width:'95px',borderRadius:15 }} color="info" variant="contained">Sign In</Button>
-
                     </Stack>
                 </Stack>
             </SignInForm>

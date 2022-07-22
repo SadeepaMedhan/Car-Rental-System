@@ -5,7 +5,6 @@ import {styleSheet} from "./style";
 import Divider from "@mui/material/Divider";
 import {Stack, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
-import CustomerService from "../../service/CustomerService";
 import VehicleService from "../../service/VehicleService";
 
 
@@ -15,7 +14,7 @@ class AddVehicle extends Component{
         super(props);
         this.state={
             vehicle: {
-                vehicleId:'V002',
+                vehicleId:'V001',
                 regNo:'',
                 brand:'',
                 type:'',
@@ -33,6 +32,25 @@ class AddVehicle extends Component{
             },
             vehicleList:[]
         }
+    }
+
+    async loadData() {
+        let res = await VehicleService.fetchNewId();
+        if (res.status === 200) {
+            let tempVehicle = this.state.vehicle
+            tempVehicle.vehicleId = res.data.data
+            this.setState({
+                vehicle: tempVehicle
+            })
+            console.log("res: " + JSON.stringify(res.data.data))
+
+        } else {
+            console.log("fetching error: " + res)
+        }
+    }
+
+    componentDidMount() {
+        this.loadData();
     }
 
 
@@ -53,7 +71,7 @@ class AddVehicle extends Component{
 
         return(
             <Stack style={{border:'1px solid gray', padding:'10px',borderRadius:'8px'}}>
-                <h2>Add New Vehicle</h2>
+                <h2>Add New Vehicle</h2><p>{this.state.vehicle.vehicleId}</p>
                 <Divider />
                 <Stack direction="row" justifyContent="flex-start" alignItems="center"
                        spacing={2} style={{ height:'100px'}}>
