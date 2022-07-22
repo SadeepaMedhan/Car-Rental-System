@@ -24,6 +24,7 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public void saveVehicle(VehicleDTO dto) {
+
         if (!vehicleRepo.existsById(dto.getVehicleId())){
             vehicleRepo.save(mapper.map(dto, Vehicle.class));
         }else{
@@ -71,4 +72,19 @@ public class VehicleServiceImpl implements VehicleService {
         return mapper.map(vehicleList,
                 new TypeToken<List<VehicleDTO>>(){}.getType());
     }
+
+    @Override
+    public String getNewVehicleID() {
+        Vehicle lastVehicle = vehicleRepo.getLastVehicle();
+        //System.out.println(lastVehicle);
+        if (lastVehicle!=null){
+            int tempId = Integer.parseInt(lastVehicle.getVehicleId().split("V")[1]);
+            tempId = tempId+1;
+            if(tempId <= 9){return "V00"+tempId;}
+            else if(tempId <= 99){return "V0"+tempId;}
+            else {return "V"+tempId;}
+        }else{return "V001";}
+    }
+
+
 }

@@ -42,6 +42,7 @@ import {TextValidator, ValidatorForm} from "react-material-ui-form-validator";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
 import Button from "@mui/material/Button";
+import AddVehicle from "../../components/AddVehicle";
 
 
 const btnArray1 = [
@@ -382,57 +383,7 @@ export default function Dashboard() {
                             <Table/>
                         </TabPanel>
                         <TabPanel value={vehicleFormValue} index={1}>
-                            <Stack style={{border:'1px solid gray', padding:'10px',borderRadius:'8px'}}>
-                                <h2>Add New Vehicle</h2>
-                                <Divider />
-                                <Stack direction="row" justifyContent="flex-start"
-                                       alignItems="center"
-                                       spacing={2} style={{ height:'100px'}}>
-                                    <TextField id="outlined-basic" label="regNo" variant="outlined" />
-                                    <TextField id="outlined-basic" label="brand" variant="outlined" />
-                                    <TextField id="outlined-basic" label="type" variant="outlined" />
-                                    <TextField id="outlined-basic" label="noOfPassenger" variant="outlined" />
-
-                                </Stack>
-                                <Stack direction="row" justifyContent="flex-start"
-                                       alignItems="center"
-                                       spacing={2} style={{ height:'100px'}}>
-                                    <TextField id="outlined-basic" label="color" variant="outlined" />
-                                    <TextField id="outlined-basic" label="transmissionType" variant="outlined" />
-                                    <TextField id="outlined-basic" label="fuelType" variant="outlined" />
-                                    <TextField id="outlined-basic" label="maintenanceMileage" variant="outlined" />
-
-                                    <input
-                                        type="file"
-                                        name="myImage"
-                                        onClick={(event) => {
-                                            console.log(event.target)
-                                        }}
-                                    />
-
-                                </Stack>
-                                <Divider />
-                                <Stack direction="row" justifyContent="flex-start"
-                                       alignItems="center"
-                                       spacing={2} style={{ height:'100px'}}>
-                                    <TextField id="outlined-basic" label="dailyRate" variant="outlined" />
-                                    <TextField id="outlined-basic" label="monthlyRate" variant="outlined" />
-                                    <TextField id="outlined-basic" label="freeMileageDay" variant="outlined" />
-                                    <TextField id="outlined-basic" label="freeMileageMonth" variant="outlined" />
-                                    <TextField id="outlined-basic" label="priceExtraKM" variant="outlined" />
-                                </Stack>
-                                <Divider />
-                                <Stack direction="row" justifyContent="flex-end"
-                                       alignItems="center"
-                                       spacing={2} style={{ height:'80px'}}>
-                                    <Button autoFocus color="info" variant="contained" style={{fontWeight:'bold', width:'95px',borderRadius:15 }}>
-                                        Clear
-                                    </Button>
-                                    <Button type="submit" color="primary" variant="contained" style={{fontWeight:'bold', width:'95px',borderRadius:15 }}>
-                                        Save
-                                    </Button>
-                                </Stack>
-                            </Stack>
+                            <AddVehicle/>
                         </TabPanel>
                         <TabPanel value={vehicleFormValue} index={2}>
                             <Table/>

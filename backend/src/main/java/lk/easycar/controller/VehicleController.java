@@ -44,4 +44,10 @@ public class VehicleController {
     public ResponseUtil searchVehicle(@PathVariable String id) {
         return new ResponseUtil(200,"Ok",vehicleService.searchVehicle(id));
     }
+
+    //vehicle/new
+    @GetMapping(path = "new",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil getVehicleId() {
+        return new ResponseUtil(200,"Ok",vehicleService.getNewVehicleID());
+    }
 }

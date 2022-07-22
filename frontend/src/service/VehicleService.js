@@ -1,10 +1,11 @@
 import axios from "../axios";
+import qs from "qs";
 
 class VehicleService {
     createVehicle = async (data) => {
-        console.log("form data: " + data)
+        console.log("form data: " + qs.stringify(data))
         const promise = new Promise((resolve, reject) => {
-            axios.post('vehicle', data)   //10s
+            axios.post('vehicle', qs.stringify(data))   //10s
                 .then((res) => {
                     return resolve(res)
                 })
