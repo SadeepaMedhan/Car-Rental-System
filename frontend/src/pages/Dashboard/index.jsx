@@ -137,8 +137,9 @@ export default function Dashboard() {
     const [tittle, setTittle] = React.useState("Dashboard");
     const [selectImg, setSelectImg] = React.useState(null);
     const [vehicleList, setVehicleList] = React.useState([]);
+    const [selectVehicle, setSelectVehicle] = React.useState(null);
 
-    const vehicle= {
+    let vehicle= {
         vehicleId:'',
         regNo:'',
         brand:'',
@@ -200,6 +201,14 @@ export default function Dashboard() {
     const imageUploadHandle = () => {
         const  formData = new FormData();
         formData.append("CarImg", selectImg);
+    }
+    const updateVehicle = (data) => {
+        console.log(data)
+        setSelectVehicle(data);
+        setVehicleFormValue(2);
+    }
+    const deleteVehicle = (data) => {
+        console.log(data)
     }
 
 
@@ -413,7 +422,7 @@ export default function Dashboard() {
                         >
                             <Tab value={0} label="All" />
                             <Tab value={1} label="Add New Vehicle" />
-                            <Tab value={2} label="Other" />
+                            <Tab value={2} label="Update Vehicle" />
                         </Tabs>
 
                         <TabPanel value={vehicleFormValue} index={0}>
@@ -421,10 +430,12 @@ export default function Dashboard() {
                                 <Table sx={{ minWidth: 650 }} aria-label="customer table">
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell align="left">Customer Id</TableCell>
-                                            <TableCell align="left">Customer Name</TableCell>
-                                            <TableCell align="left">Customer Address</TableCell>
-                                            <TableCell align="left">Customer Salary</TableCell>
+                                            <TableCell align="left">Reg.No</TableCell>
+                                            <TableCell align="left">Brand</TableCell>
+                                            <TableCell align="left">Type</TableCell>
+                                            <TableCell align="left">Transmission Type</TableCell>
+                                            <TableCell align="left">Fuel Type</TableCell>
+                                            <TableCell align="left">Status</TableCell>
                                             <TableCell align="left">Action</TableCell>
                                         </TableRow>
                                     </TableHead>
@@ -433,15 +444,18 @@ export default function Dashboard() {
                                             vehicleList.map((row) => (
                                                 <TableRow>
                                                     <TableCell align="left">{row.regNo}</TableCell>
-                                                    <TableCell align="left">{row.type}</TableCell>
-                                                    <TableCell align="left">{row.status}</TableCell>
                                                     <TableCell align="left">{row.brand}</TableCell>
+                                                    <TableCell align="left">{row.type}</TableCell>
+                                                    <TableCell align="left">{row.transmissionType}</TableCell>
+                                                    <TableCell align="left">{row.fuelType}</TableCell>
+                                                    <TableCell align="left">{row.status}</TableCell>
                                                     <TableCell align="left">
                                                         <Tooltip title="Edit">
                                                             <IconButton
                                                                 onClick={() => {
                                                                     console.log("edit icon clicked!")
-                                                                   // this.updateCustomer(row);
+                                                                   updateVehicle(row);
+
                                                                 }}
                                                             >
                                                                 <EditIcon color="primary" />
@@ -450,7 +464,7 @@ export default function Dashboard() {
                                                         <Tooltip title="Delete">
                                                             <IconButton
                                                                 onClick={() => {
-                                                                   // this.deleteCustomer(row.id)
+                                                                   deleteVehicle(row.vehicleId)
                                                                 }}
                                                             >
                                                                 <DeleteIcon color="error" />
@@ -465,10 +479,10 @@ export default function Dashboard() {
                             </TableContainer>
                         </TabPanel>
                         <TabPanel value={vehicleFormValue} index={1}>
-                            <AddVehicle/>
+                            <AddVehicle btnState="Save"/>
                         </TabPanel>
                         <TabPanel value={vehicleFormValue} index={2}>
-
+                            <AddVehicle vehicleData={selectVehicle} btnState="Update"/>
                         </TabPanel>
 
 

@@ -16,6 +16,26 @@ class VehicleService {
         })
         return await promise
     }
+    updateVehicle = async (data) => {
+            console.log("form data: " + JSON.stringify(data))
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+            const promise = new Promise((resolve, reject) => {
+
+                axios.put('vehicle', JSON.stringify(data),config)
+                    .then((res) => {
+                        return resolve(res)
+                    })
+                    .catch((er) => {
+                        console.log('error: ' + er);
+                        return resolve(er)
+                    })
+            })
+            return await promise
+        }
 
     fetchVehicles = async () => {
         const promise = new Promise((resolve, reject) => {

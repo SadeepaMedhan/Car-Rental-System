@@ -14,7 +14,7 @@ class AddVehicle extends Component{
         super(props);
         this.state={
             vehicle: {
-                vehicleId:'V001',
+                vehicleId:'',
                 regNo:'',
                 brand:'',
                 type:'',
@@ -30,23 +30,57 @@ class AddVehicle extends Component{
                 maintenanceMileage:'5000',
                 status:'Available'
             },
-            vehicleList:[]
+            btnState:props.btnState,
+            selectVehicle:props.vehicleData,
         }
     }
 
-    async loadData() {
-        let res = await VehicleService.fetchNewId();
-        if (res.status === 200) {
-            let tempVehicle = this.state.vehicle
-            tempVehicle.vehicleId = res.data.data
-            this.setState({
-                vehicle: tempVehicle
-            })
-            console.log("res: " + JSON.stringify(res.data.data))
+    clearData = () =>{
+        this.setState({
+            vehicle: {
+                vehicleId:'',
+                regNo:'',
+                brand:'',
+                type:'',
+                noOfPassenger:'',
+                transmissionType:'',
+                fuelType:'',
+                dailyRate:'',
+                monthlyRate:'',
+                freeMileageDay:'',
+                freeMileageMonth:'',
+                priceExtraKM:'',
+                color:'',
+                maintenanceMileage:'5000',
+                status:'Available'
+            },
+            selectVehicle:null,
+        })
+    }
 
-        } else {
-            console.log("fetching error: " + res)
+    async loadData() {
+        if(this.state.btnState === "Save"){
+            let res = await VehicleService.fetchNewId();
+            if (res.status === 200) {
+                let tempVehicle = this.state.vehicle
+                tempVehicle.vehicleId = res.data.data
+                this.setState({
+                    vehicle: tempVehicle
+                })
+                console.log("res: " + JSON.stringify(res.data.data))
+
+            } else {
+                console.log("fetching error: " + res)
+            }
+        }else{
+            if(this.state.selectVehicle !== null){
+                this.setState({
+                    vehicle: this.state.selectVehicle
+                })
+            }
+
         }
+
     }
 
     componentDidMount() {
@@ -58,20 +92,35 @@ class AddVehicle extends Component{
         let {classes} = this.props;
 
         const saveVehicle = async () => {
-            console.log(this.state.vehicle)
-            let formData = this.state.vehicle
-            let response = await VehicleService.createVehicle(formData);
-            if (response.status === 201) {
-                console.log("saved !")
-            } else {
-                console.log(response)
+            if(this.state.btnState === "Save") {
+                console.log(this.state.vehicle)
+
+                let formData = this.state.vehicle
+                let response = await VehicleService.createVehicle(formData);
+                if (response.status === 201) {
+                    console.log("saved !")
+                    this.clearData()
+                } else {
+                    console.log(response.data)
+                }
+            }else{
+                //console.log(this.state.vehicle)
+
+                let formData = this.state.vehicle
+                let response = await VehicleService.updateVehicle(formData);
+                if (response.status === 200) {
+                    console.log("updated !")
+                    this.clearData()
+                } else {
+                    console.log(response.data)
+                }
             }
         };
 
 
         return(
             <Stack style={{border:'1px solid gray', padding:'10px',borderRadius:'8px'}}>
-                <h2>Add New Vehicle</h2><p>{this.state.vehicle.vehicleId}</p>
+                <h2>{this.state.btnState} Vehicle</h2><p>{this.state.vehicle.vehicleId}</p>
                 <Divider />
                 <Stack direction="row" justifyContent="flex-start" alignItems="center"
                        spacing={2} style={{ height:'100px'}}>
@@ -167,8 +216,8 @@ class AddVehicle extends Component{
                     <Button autoFocus color="info" variant="contained" style={{fontWeight:'bold', width:'95px',borderRadius:15 }}>
                         Clear
                     </Button>
-                    <Button onClick={saveVehicle} color="primary" variant="contained" style={{fontWeight:'bold', width:'95px',borderRadius:15 }}>
-                        Save
+                    <Button onClick={saveVehicle} disabled={this.state.selectVehicle === null} color="primary" variant="contained" style={{fontWeight:'bold', width:'95px',borderRadius:15 }}>
+                        {this.state.btnState}
                     </Button>
                 </Stack>
             </Stack>
