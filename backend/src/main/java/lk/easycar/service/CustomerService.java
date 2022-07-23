@@ -11,6 +11,6 @@ public interface CustomerService {
     void updateCustomer(CustomerDTO entity);
     CustomerDTO searchCustomer(String id);
     List<CustomerDTO> getAllCustomers();
-
     List<BookingDTO> getRequestedBookings(String id);
+    String getNewCusID();
 }

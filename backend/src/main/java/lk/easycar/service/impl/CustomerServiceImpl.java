@@ -4,6 +4,7 @@ import lk.easycar.dto.BookingDTO;
 import lk.easycar.dto.CustomerDTO;
 import lk.easycar.entity.Booking;
 import lk.easycar.entity.Customer;
+import lk.easycar.entity.Driver;
 import lk.easycar.repo.BookingRepo;
 import lk.easycar.repo.CustomerRepo;
 import lk.easycar.service.CustomerService;
@@ -81,5 +82,17 @@ public class CustomerServiceImpl implements CustomerService {
         } else {
             throw new RuntimeException("No Customer For " + id + " ..!");
         }
+    }
+
+    @Override
+    public String getNewCusID() {
+        Customer lastCustomer = customerRepo.getLastCustomer();
+        if (lastCustomer!=null){
+            int tempId = Integer.parseInt(lastCustomer.getCusID().split("C")[1]);
+            tempId = tempId+1;
+            if(tempId <= 9){return "C00"+tempId;}
+            else if(tempId <= 99){return "C0"+tempId;}
+            else {return "C"+tempId;}
+        }else{return "C001";}
     }
 }

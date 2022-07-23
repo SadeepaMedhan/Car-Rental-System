@@ -10,4 +10,5 @@ public interface BookingService {
     void updateBooking(BookingDTO dto);
     BookingDTO searchBooking(String id);
     List<BookingDTO> getAllBookings();
+    String getNewBookingId();
 }

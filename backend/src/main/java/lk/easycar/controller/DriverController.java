@@ -50,4 +50,10 @@ public class DriverController {
     public ResponseUtil getSchedule(@RequestParam String id) {
         return new ResponseUtil(200,"Ok",driverService.getSchedule(id));
     }
+
+    //driver/new
+    @GetMapping(path = "new",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil getVehicleId() {
+        return new ResponseUtil(200,"Ok",driverService.getNewDriverID());
+    }
 }

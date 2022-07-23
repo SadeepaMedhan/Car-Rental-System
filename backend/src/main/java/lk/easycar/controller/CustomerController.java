@@ -50,4 +50,10 @@ public class CustomerController {
     public ResponseUtil getRequestBookings(@RequestParam String id) {
         return new ResponseUtil(200,"Ok",customerService.getRequestedBookings(id));
     }
+
+    //customer/new
+    @GetMapping(path = "new",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil getNewCusId() {
+        return new ResponseUtil(200,"Ok",customerService.getNewCusID());
+    }
 }

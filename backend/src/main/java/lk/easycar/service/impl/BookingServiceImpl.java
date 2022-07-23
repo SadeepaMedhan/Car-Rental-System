@@ -2,6 +2,7 @@ package lk.easycar.service.impl;
 
 import lk.easycar.dto.BookingDTO;
 import lk.easycar.entity.Booking;
+import lk.easycar.entity.Customer;
 import lk.easycar.entity.Driver;
 import lk.easycar.entity.Vehicle;
 import lk.easycar.repo.BookingRepo;
@@ -75,6 +76,17 @@ public class BookingServiceImpl implements BookingService {
         }.getType());
     }
 
+    @Override
+    public String getNewBookingId() {
+        Booking lastBooking = bookingRepo.getLastBooking();
+        if (lastBooking!=null){
+            int tempId = Integer.parseInt(lastBooking.getBookingId().split("B")[1]);
+            tempId = tempId+1;
+            if(tempId <= 9){return "B00"+tempId;}
+            else if(tempId <= 99){return "B0"+tempId;}
+            else {return "B"+tempId;}
+        }else{return "B001";}
+    }
 
 
 }

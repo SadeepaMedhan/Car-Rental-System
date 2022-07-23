@@ -29,4 +29,9 @@ public class BookingController {
         return new ResponseUtil(200, "Save", null);
     }
 
+    //booking/new
+    @GetMapping(path = "new",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil getNewId() {
+        return new ResponseUtil(200,"Ok",bookingService.getNewBookingId());
+    }
 }

@@ -89,4 +89,16 @@ public class DriverServiceImpl implements DriverService {
         }
     }
 
+    @Override
+    public String getNewDriverID() {
+        Driver lastDriver = driverRepo.getLastDriver();
+        if (lastDriver!=null){
+            int tempId = Integer.parseInt(lastDriver.getDriverID().split("D")[1]);
+            tempId = tempId+1;
+            if(tempId <= 9){return "D00"+tempId;}
+            else if(tempId <= 99){return "D0"+tempId;}
+            else {return "D"+tempId;}
+        }else{return "D001";}
+    }
+
 }

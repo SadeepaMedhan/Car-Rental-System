@@ -11,6 +11,6 @@ public interface DriverService {
     void updateDriver(DriverDTO entity);
     DriverDTO searchDriver(String id);
     List<DriverDTO> getAllDrivers();
-
     List<BookingDTO> getSchedule(String id);
+    String getNewDriverID();
 }
