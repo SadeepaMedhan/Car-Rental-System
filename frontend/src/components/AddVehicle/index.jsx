@@ -144,8 +144,8 @@ class AddVehicle extends Component{
                         formData.noOfPassenger = e.target.value
                         this.setState({ formData })
                     }}/>
-
                 </Stack>
+
                 <Stack direction="row" justifyContent="flex-start"
                        alignItems="center"
                        spacing={2} style={{ height:'100px'}}>

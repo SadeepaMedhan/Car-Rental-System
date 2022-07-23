@@ -60,6 +60,12 @@ import VehicleCard from "../../components/Card/VehicleCard";
 import vehicleImg1 from "../../assets/images/vehicles/v1f.jpg";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 
 const drawerWidth = 200;
 
@@ -207,8 +213,19 @@ export default function Dashboard() {
         setSelectVehicle(data);
         setVehicleFormValue(2);
     }
-    const deleteVehicle = (data) => {
+    const deleteVehicle = async (data) => {
         console.log(data)
+        let params = {
+            id: data
+        }
+        let res = await VehicleService.deleteVehicle(params);
+
+        if (res.status === 200) {
+
+            loadVehicleData();
+        } else {
+            console.log(res)
+        }
     }
 
 
