@@ -29,7 +29,7 @@ import {
     Avatar,
     InputAdornment,
     Paper,
-    Stack, TableBody, TableCell,
+    Stack, Table, TableBody, TableCell,
     TableContainer,
     TableHead,
     TableRow,
@@ -136,18 +136,39 @@ export default function Dashboard() {
     const [vehicleFormValue, setVehicleFormValue] = React.useState(0);
     const [tittle, setTittle] = React.useState("Dashboard");
     const [selectImg, setSelectImg] = React.useState(null);
+    const [vehicleList, setVehicleList] = React.useState([]);
+
+    const vehicle= {
+        vehicleId:'',
+        regNo:'',
+        brand:'',
+        type:'',
+        noOfPassenger:'',
+        transmissionType:'',
+        fuelType:'',
+        dailyRate:'',
+        monthlyRate:'',
+        freeMileageDay:'',
+        freeMileageMonth:'',
+        priceExtraKM:'',
+        color:'',
+        maintenanceMileage:'',
+        status:''
+    };
+
 
     const vehicleFormHandleChange = (event, newValue) => {
+        loadVehicleData()
         setVehicleFormValue(newValue);
     };
-        const handleChange = (event, newValue) => {
+    const handleChange = (event, newValue) => {
         setValue(newValue);
 
         function getTittle(newValue) {
             switch (newValue) {
                 case 0: return"Dashboard"
                 case 1: return"Booking Management"
-                case 2: return"Vehicle Management"
+                case 2: loadVehicleData(); return"Vehicle Management"
                 case 3: return"Driver Management"
                 case 4: return"Customer Management"
                 case 5: return"Reports"
@@ -182,13 +203,12 @@ export default function Dashboard() {
     }
 
 
-    const loadData = async () => {
-        let res = await VehicleService.fetchVehicles();
+    const loadVehicleData = async () => {
+        const res = await VehicleService.fetchVehicles();
         if (res.status === 200) {
-            vehicleList = res.data.data
+            setVehicleList( res.data.data)
 
             console.log("res: " + JSON.stringify(res.data.data))
-
 
 
         } else {
@@ -196,9 +216,7 @@ export default function Dashboard() {
         }
     }
 
-    useEffect(() =>  {
-        loadData();
-    });
+
 
     return (
         <Box sx={{ display: 'flex' }} >
@@ -261,7 +279,7 @@ export default function Dashboard() {
                         <SwitchAccountIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start" label="Customer" {...a11yProps(4)} />
                     <Tab className={classes.tab} icon={
                         <LeaderboardIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start" label="Reports" {...a11yProps(5)} />
-                <Divider />
+                    <Divider />
                     <Tab className={classes.tab} icon={
                         <DashboardIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start" label="Requests" {...a11yProps(6)} />
                     <Tab className={classes.tab} icon={
@@ -373,7 +391,7 @@ export default function Dashboard() {
 
                         </Stack>
                         <Stack>
-                            <Table/>
+
                         </Stack>
                     </Stack>
                 </TabPanel>
@@ -399,13 +417,58 @@ export default function Dashboard() {
                         </Tabs>
 
                         <TabPanel value={vehicleFormValue} index={0}>
-                            <Table/>
+                            <TableContainer component={Paper}>
+                                <Table sx={{ minWidth: 650 }} aria-label="customer table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell align="left">Customer Id</TableCell>
+                                            <TableCell align="left">Customer Name</TableCell>
+                                            <TableCell align="left">Customer Address</TableCell>
+                                            <TableCell align="left">Customer Salary</TableCell>
+                                            <TableCell align="left">Action</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {
+                                            vehicleList.map((row) => (
+                                                <TableRow>
+                                                    <TableCell align="left">{row.regNo}</TableCell>
+                                                    <TableCell align="left">{row.type}</TableCell>
+                                                    <TableCell align="left">{row.status}</TableCell>
+                                                    <TableCell align="left">{row.brand}</TableCell>
+                                                    <TableCell align="left">
+                                                        <Tooltip title="Edit">
+                                                            <IconButton
+                                                                onClick={() => {
+                                                                    console.log("edit icon clicked!")
+                                                                   // this.updateCustomer(row);
+                                                                }}
+                                                            >
+                                                                <EditIcon color="primary" />
+                                                            </IconButton>
+                                                        </Tooltip>
+                                                        <Tooltip title="Delete">
+                                                            <IconButton
+                                                                onClick={() => {
+                                                                   // this.deleteCustomer(row.id)
+                                                                }}
+                                                            >
+                                                                <DeleteIcon color="error" />
+                                                            </IconButton>
+                                                        </Tooltip>
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))
+                                        }
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
                         </TabPanel>
                         <TabPanel value={vehicleFormValue} index={1}>
                             <AddVehicle/>
                         </TabPanel>
                         <TabPanel value={vehicleFormValue} index={2}>
-                            <Table/>
+
                         </TabPanel>
 
 
@@ -427,77 +490,6 @@ export default function Dashboard() {
 }
 
 
-const vehicle= {
-        vehicleId:'',
-        regNo:'',
-        brand:'',
-        type:'',
-        noOfPassenger:'',
-        transmissionType:'',
-        fuelType:'',
-        dailyRate:'',
-        monthlyRate:'',
-        freeMileageDay:'',
-        freeMileageMonth:'',
-        priceExtraKM:'',
-        color:'',
-        maintenanceMileage:'',
-        status:''
-};
-let vehicleList=[];
-
-
-function Table() {
-    return (
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="customer table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell align="left">Customer Id</TableCell>
-                        <TableCell align="left">Customer Name</TableCell>
-                        <TableCell align="left">Customer Address</TableCell>
-                        <TableCell align="left">Customer Salary</TableCell>
-                        <TableCell align="left">Action</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {
-                        vehicleList.map((row) => (
-                            <TableRow>
-                                <TableCell align="left">aassad</TableCell>
-                                <TableCell align="left">aassad</TableCell>
-                                <TableCell align="left">aassad</TableCell>
-                                <TableCell align="left">aassad</TableCell>
-
-                                <TableCell align="left">
-                                    <Tooltip title="Edit">
-                                        <IconButton
-                                            onClick={() => {
-                                                console.log("edit icon clicked!")
-
-                                            }}
-                                        >
-                                            <EditIcon color="primary" />
-                                        </IconButton>
-                                    </Tooltip>
-                                    <Tooltip title="Delete">
-                                        <IconButton
-                                            onClick={() => {
-
-                                            }}
-                                        >
-                                            <DeleteIcon color="error" />
-                                        </IconButton>
-                                    </Tooltip>
-                                </TableCell>
-                            </TableRow>
-                        ))
-                    }
-                </TableBody>
-            </Table>
-        </TableContainer>
-    );
-}
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
