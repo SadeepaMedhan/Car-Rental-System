@@ -38,6 +38,9 @@ import {
 } from "@mui/material";
 import DriverService from "../../service/DriverService";
 import DriverManage from "../../components/DriverManage";
+import CustomerService from "../../service/CustomerService";
+import {ManageAccounts} from "@mui/icons-material";
+import CustomerManage from "../../components/CustomerManage";
 
 export default function Dashboard() {
     let classes = styleSheet();
@@ -48,10 +51,13 @@ export default function Dashboard() {
     const [selectImg, setSelectImg] = React.useState(null);
     const [vehicleList, setVehicleList] = React.useState([]);
     const [driversList, setDriversList] = React.useState([]);
+    const [customersList, setCustomersList] = React.useState([]);
     const [selectVehicle, setSelectVehicle] = React.useState(null);
     const [selectDriver, setSelectDriver] = React.useState(null);
+    const [selectCustomer, setSelectCustomer] = React.useState(null);
     const [vehicleFormValue, setVehicleFormValue] = React.useState(0);
     const [driversFormValue, setDriversFormValue] = React.useState(0);
+    const [customersFormValue, setCustomersFormValue] = React.useState(0);
 
 
 
@@ -119,6 +125,29 @@ export default function Dashboard() {
     const loadDriversData = async () => {
         const res = await DriverService.fetchDrivers();
         if (res.status === 200) {setDriversList( res.data.data)}
+        else {console.log("fetching error: " + res)}
+    }
+
+    // customer
+    const customerFormHandleChange = (event, newValue) => {
+        loadCustomersData()
+        setCustomersFormValue(newValue);
+    }
+    const updateCustomer = (data) => {
+        setSelectCustomer(data);
+        setCustomersFormValue(2);
+    }
+    const deleteCustomer = async (data) => {
+        console.log(data)
+        let params = {id: data}
+        let res = await CustomerService.deleteCustomer(params);
+        if (res.status === 200) {loadCustomersData();
+        } else {console.log(res)}
+    }
+
+    const loadCustomersData = async () => {
+        const res = await CustomerService.fetchCustomers();
+        if (res.status === 200) {setCustomersList( res.data.data)}
         else {console.log("fetching error: " + res)}
     }
 
@@ -292,13 +321,12 @@ export default function Dashboard() {
                             indicatorColor="primary"
                             aria-label="booking tabs"
                         >
-                            <Tab value={0} label="All" />
-                            <Tab value={1} label="Add New Vehicle" />
-                            <Tab value={2} label="Update Vehicle" />
+                            <Tab value={0} label="All Bookings" />
+                            <Tab value={1} label="Update Booking" />
                         </Tabs>
                     </Stack>
                 </TabPanel>
-                {/*-----------------------------------vehicle-------------------------*/}
+                {/*----------------------------------vehicle-------------------------*/}
                 <TabPanel value={value} index={2}>
                     <Stack >
                         <Tabs
@@ -374,7 +402,7 @@ export default function Dashboard() {
                         </TabPanel>
                     </Stack>
                 </TabPanel>
-                {/*-----------------------------------driver---------------------------*/}
+                {/*----------------------------------driver---------------------------*/}
                 <TabPanel value={value} index={3}>
                     <Stack >
                         <Tabs
@@ -450,51 +478,51 @@ export default function Dashboard() {
                         </TabPanel>
                     </Stack>
                 </TabPanel>
-                {/*-----------------------------------customer-------------------------*/}
+                {/*----------------------------------customer-------------------------*/}
                 <TabPanel value={value} index={4}>
                     <Stack >
                         <Tabs
-                            value={vehicleFormValue}
-                            onChange={vehicleFormHandleChange}
+                            value={customersFormValue}
+                            onChange={customerFormHandleChange}
                             textColor="secondary"
                             indicatorColor="secondary"
-                            aria-label="secondary tabs example"
+                            aria-label="customer tabs"
                         >
                             <Tab value={0} label="All" />
                             <Tab value={1} label="Add New Customer" />
                             <Tab value={2} label="Update Customer" />
                         </Tabs>
 
-                        <TabPanel value={vehicleFormValue} index={0}>
+                        <TabPanel value={customersFormValue} index={0}>
                             <TableContainer component={Paper}>
                                 <Table sx={{ minWidth: 650 }} aria-label="customer table">
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell align="left">Reg.No</TableCell>
-                                            <TableCell align="left">Brand</TableCell>
-                                            <TableCell align="left">Type</TableCell>
-                                            <TableCell align="left">Transmission Type</TableCell>
-                                            <TableCell align="left">Fuel Type</TableCell>
-                                            <TableCell align="left">Status</TableCell>
+                                            <TableCell align="left">Name</TableCell>
+                                            <TableCell align="left">Email</TableCell>
+                                            <TableCell align="left">Address</TableCell>
+                                            <TableCell align="left">Contact</TableCell>
+                                            <TableCell align="left">NIC</TableCell>
+                                            <TableCell align="left">Driving License No</TableCell>
                                             <TableCell align="left">Action</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
                                         {
-                                            vehicleList.map((row) => (
+                                            customersList.map((row) => (
                                                 <TableRow>
-                                                    <TableCell align="left">{row.regNo}</TableCell>
-                                                    <TableCell align="left">{row.brand}</TableCell>
-                                                    <TableCell align="left">{row.type}</TableCell>
-                                                    <TableCell align="left">{row.transmissionType}</TableCell>
-                                                    <TableCell align="left">{row.fuelType}</TableCell>
+                                                    <TableCell align="left">{row.cusName}</TableCell>
+                                                    <TableCell align="left">{row.cusEmail}</TableCell>
+                                                    <TableCell align="left">{row.cusAddress}</TableCell>
+                                                    <TableCell align="left">{row.cusContactNo}</TableCell>
+                                                    <TableCell align="left">{row.cusNIC}</TableCell>
+                                                    <TableCell align="left">{row.cusDrivingLicenseNo}</TableCell>
                                                     <TableCell align="left">{row.status}</TableCell>
                                                     <TableCell align="left">
                                                         <Tooltip title="Edit">
                                                             <IconButton
                                                                 onClick={() => {
-                                                                    console.log("edit icon clicked!")
-                                                                    updateVehicle(row);
+                                                                    updateCustomer(row);
 
                                                                 }}
                                                             >
@@ -504,7 +532,7 @@ export default function Dashboard() {
                                                         <Tooltip title="Delete">
                                                             <IconButton
                                                                 onClick={() => {
-                                                                    deleteVehicle(row.vehicleId)
+                                                                    deleteCustomer(row.cusID)
                                                                 }}
                                                             >
                                                                 <DeleteIcon color="error" />
@@ -518,19 +546,24 @@ export default function Dashboard() {
                                 </Table>
                             </TableContainer>
                         </TabPanel>
-                        <TabPanel value={vehicleFormValue} index={1}>
-                            <AddVehicle btnState="Save"/>
+                        <TabPanel value={customersFormValue} index={1}>
+                            <CustomerManage btnState="Save"/>
                         </TabPanel>
-                        <TabPanel value={vehicleFormValue} index={2}>
-                            <AddVehicle vehicleData={selectVehicle} btnState="Update"/>
+                        <TabPanel value={customersFormValue} index={2}>
+                            <CustomerManage customerData={selectCustomer} btnState="Update"/>
                         </TabPanel>
                     </Stack>
                 </TabPanel>
+                {/*-----------------------------------reports-------------------------*/}
                 <TabPanel value={value} index={5}></TabPanel>
-                <TabPanel value={value} index={6}></TabPanel>
+                {/*-----------------------------------request-------------------------*/}
                 <TabPanel value={value} index={7}></TabPanel>
+                {/*---------------------------------maintenance-----------------------*/}
                 <TabPanel value={value} index={8}></TabPanel>
+                {/*-----------------------------------damages-------------------------*/}
                 <TabPanel value={value} index={9}></TabPanel>
+                {/*----------------------------------schedule-------------------------*/}
+                <TabPanel value={value} index={10}></TabPanel>
 
 
             </Box>

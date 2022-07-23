@@ -17,6 +17,18 @@ class VehicleCard extends Component{
 
     constructor(props) {
         super(props);
+        this.state = {
+            vehicle:props.getVehicle,
+            isSignIn:props.userSignIn,
+        }
+    }
+
+
+    vehicleSelect = () => {
+        console.log(this.state.vehicle.vehicleId)
+        if(Boolean(this.state.isSignIn)){
+            console.log("go booking")
+        }
     }
 
 
@@ -34,9 +46,9 @@ class VehicleCard extends Component{
                         <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={2}>
                             <div>
                                 <Typography className={classes.card_brand} sx={{ fontSize: { xs: '1.5em', md: '1.7em' } }} >
-                                    {this.props.brand}
+                                    {this.vehicle.brand}
                                 </Typography>
-                                <p className={classes.card_type} >{this.props.type}</p>
+                                <p className={classes.card_type} >{this.vehicle.type}</p>
                             </div>
                             <div>
                                 <img className={classes.card_img} src={this.props.imgSrc} alt=""/>
@@ -46,15 +58,15 @@ class VehicleCard extends Component{
                     <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={2}>
                         <IconButton>
                             <PersonOutlineOutlinedIcon /><pre className={classes.card_prop_id}> Seating Capacity : </pre>
-                            <span className={classes.card_prop_value}>{this.props.noOfPassenger}</span>
+                            <span className={classes.card_prop_value}>{this.vehicle.noOfPassenger}</span>
                         </IconButton>
                         <IconButton>
                             <LocalGasStationIcon /><pre className={classes.card_prop_id}> Fuel Type : </pre>
-                            <span className={classes.card_prop_value}>{this.props.fuelType}</span>
+                            <span className={classes.card_prop_value}>{this.vehicle.fuelType}</span>
                         </IconButton>
                         <IconButton>
                             <SettingsSuggestIcon /><pre className={classes.card_prop_id}> Transmission : </pre>
-                            <span className={classes.card_prop_value}>{this.props.fuelType}</span>
+                            <span className={classes.card_prop_value}>{this.vehicle.fuelType}</span>
                         </IconButton>
                         <IconButton>
                             <AcUnitIcon /><pre className={classes.card_prop_id}> Air Condition : </pre>
@@ -66,23 +78,23 @@ class VehicleCard extends Component{
                         <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={2}>
                             <IconButton>
                                 <NoiseControlOffIcon /><pre className={classes.card_prop_id}> Daily Rate : </pre>
-                                <span className={classes.card_prop_value}>{this.props.dailyRate}</span>
+                                <span className={classes.card_prop_value}>{this.vehicle.dailyRate}</span>
                             </IconButton>
                             <IconButton>
                                 <NoiseControlOffIcon /><pre className={classes.card_prop_id}> Free KM for a Day : </pre>
-                                <span className={classes.card_prop_value}>{this.props.freeMileageDay}</span>
+                                <span className={classes.card_prop_value}>{this.vehicle.freeMileageDay}</span>
                             </IconButton>
                             <IconButton>
                                 <NoiseControlOffIcon /><pre className={classes.card_prop_id}> Monthly Rate : </pre>
-                                <span className={classes.card_prop_value}>{this.props.monthlyRate}</span>
+                                <span className={classes.card_prop_value}>{this.vehicle.monthlyRate}</span>
                             </IconButton>
                             <IconButton>
                                 <NoiseControlOffIcon /><pre className={classes.card_prop_id}> Free KM for a Month : </pre>
-                                <span className={classes.card_prop_value}>{this.props.freeMileageMonth}</span>
+                                <span className={classes.card_prop_value}>{this.vehicle.freeMileageMonth}</span>
                             </IconButton>
                             <IconButton>
                                 <NoiseControlOffIcon /><pre className={classes.card_prop_id}> Price per Extra KM : </pre>
-                                <span className={classes.card_prop_value}>{this.props.priceExtraKM}</span>
+                                <span className={classes.card_prop_value}>{this.vehicle.priceExtraKM}</span>
                             </IconButton>
                         </Stack>
 
@@ -90,7 +102,7 @@ class VehicleCard extends Component{
                         <Stack direction="column" justifyContent="flex-end" alignItems="flex-end" spacing={2}>
                             <Button
                                 color="primary"
-                                variant="contained">
+                                variant="contained" onClick={this.vehicleSelect}>
                                 Select
                             </Button>
                         </Stack>

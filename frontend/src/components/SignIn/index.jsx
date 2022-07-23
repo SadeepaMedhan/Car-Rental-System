@@ -54,7 +54,7 @@ SignInFormTitle.propTypes = {
     onClose: PropTypes.func.isRequired,
 };
 
-export default function SignIn() {
+export default function SignIn(props) {
     let classes = styleSheet();
     const [open, setOpen] = React.useState(false);
     const [password, setPassword] = React.useState("");
@@ -78,6 +78,10 @@ export default function SignIn() {
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
+
+    const sendData =()=>{
+        props.sendUserInfo("C001");
+    }
 
     return (
         <div>
@@ -128,7 +132,7 @@ export default function SignIn() {
                     </Stack>
                     <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={1}>
                         <SignUp/>
-                        <Button autoFocus onClick={handleClose} style={{fontWeight:'bold', width:'95px',borderRadius:15 }} color="info" variant="contained">Sign In</Button>
+                        <Button autoFocus onClick={sendData} style={{fontWeight:'bold', width:'95px',borderRadius:15 }} color="info" variant="contained">Sign In</Button>
                     </Stack>
                 </Stack>
             </SignInForm>

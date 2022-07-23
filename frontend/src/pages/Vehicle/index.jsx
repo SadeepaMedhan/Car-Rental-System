@@ -64,26 +64,8 @@ class Vehicle extends Component{
                 <Box  sx={{flexGrow:1,marginTop:12}}>
                     <Grid  className={classes.vehicle__card_box} container spacing={{ xs: 1, md: 2 }} columns={{ md: 8 }}>
 
-                        {this.state.vehicleList.map((vehicle) => (
-                            <Grid item xs={6} >
-                                <VehicleCard
-                                    imgSrc={vehicleImg1}
-                                    brand={vehicle.brand}
-                                    type={vehicle.type}
-                                    noOfPassenger={vehicle.noOfPassenger}
-                                    transmissionType={vehicle.transmissionType}
-                                    fuelType={vehicle.fuelType}
-                                    dailyRate={vehicle.dailyRate}
-                                    monthlyRate={vehicle.monthlyRate}
-                                    freeMileageDay={vehicle.freeMileageDay}
-                                    freeMileageMonth={vehicle.freeMileageMonth}
-                                    priceExtraKM={vehicle.priceExtraKM}
-                                    color={vehicle.color}
-                                    maintenanceMileage={vehicle.maintenanceMileage}
-                                    status={vehicle.status}
-                                />
-                            </Grid>
-                        ))}
+                        {this.state.vehicleList.map(d => <VehicleCard getVehicle={d} imgSrc={vehicleImg1}
+                                                                      userSignIn={false}/>)}
 
                     </Grid>
                 </Box>

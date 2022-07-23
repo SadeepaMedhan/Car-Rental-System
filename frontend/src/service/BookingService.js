@@ -29,4 +29,4 @@ class BookingService {
         return await promise
     }
 }
-export default new CustomerService();
+export default new BookingService();

@@ -2,24 +2,15 @@ import React from "react";
 import HomePage from "../pages/Home";
 import Dashboard from "../pages/Dashboard";
 import {Route, Routes} from "react-router-dom";
-import Vehicle from "../pages/Vehicle";
-import MyNavBar from "../components/NavBar";
-import MyNav from "../components/MyNav";
-import Login from "../pages/Login";
-import Slideshow from "../components/Slider";
 
 function App() {
     return (
         <div>
-            {/*<Login viewOpen={true}/>*/}
-            <Dashboard/>
-
-            {/*<Routes>
-                <Route exact path='/n' element={<MyNav/>}/>
+            <Routes>
+                <Route exact path='/' element={<HomePage/>}/>
                 <Route path='home' element={<HomePage/>}/>
-                <Route path='log' element={<Login/>}/>
                 <Route path='dash' element={<Dashboard/>}/>
-            </Routes>*/}
+            </Routes>
         </div>
 
     );

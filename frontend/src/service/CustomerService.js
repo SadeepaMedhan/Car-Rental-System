@@ -17,7 +17,7 @@ class CustomerService {
         return await promise
     }
 
-    fetchCustomer = async () => {
+    fetchCustomers = async () => {
         const promise = new Promise((resolve, reject) => {
             axios.get('customer')
                 .then((res) => {
@@ -29,5 +29,47 @@ class CustomerService {
         })
         return await promise
     }
+
+    updateCustomer = async (data) => {
+        console.log("form data: " + JSON.stringify(data))
+        const config = {headers: {'Content-Type': 'application/json'}}
+        const promise = new Promise((resolve, reject) => {
+
+            axios.put('customer', JSON.stringify(data),config)
+                .then((res) => {
+                    return resolve(res)
+                })
+                .catch((er) => {
+                    console.log('error: ' + er);
+                    return resolve(er)
+                })
+        })
+        return await promise
+    }
+    fetchNewId = async () => {
+        const promise = new Promise((resolve, reject) => {
+            axios.get('customer/new')
+                .then((res) => {
+                    return resolve(res)
+                })
+                .catch((er) => {
+                    return resolve(er)
+                })
+        })
+        return await promise
+    }
+
+    deleteCustomer = async (params) => {
+        const promise = new Promise((resolve, reject) => {
+            axios.delete('customer', {params: params})
+                .then((res) => {
+                    return resolve(res)
+                })
+                .catch((err) => {
+                    return resolve(err)
+                })
+        })
+        return await promise;
+    };
 }
 export default new CustomerService();

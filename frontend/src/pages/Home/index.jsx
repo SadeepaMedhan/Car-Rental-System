@@ -18,7 +18,7 @@ import {
     InputLabel,
     Paper, Radio, RadioGroup,
     Select,
-    Stack,
+    Stack, TableCell, TableRow,
     Typography
 } from "@mui/material";
 import {DesktopDatePicker} from '@mui/x-date-pickers/DesktopDatePicker';
@@ -45,6 +45,20 @@ import luxuryCar from "../../assets/images/vehicles/Mercedes.jpeg";
 import vehicleImg1 from "../../assets/images/vehicles/v1f.jpg";
 import VehicleCard from "../../components/Card/VehicleCard";
 import SmallVehicleCard from "../../components/Card/smallVehicleCard";
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import Avatar from '@mui/material/Avatar';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Divider from '@mui/material/Divider';
+import Tooltip from '@mui/material/Tooltip';
+import PersonAdd from '@mui/icons-material/PersonAdd';
+import Settings from '@mui/icons-material/Settings';
+import Logout from '@mui/icons-material/Logout';
+import Chip from '@mui/material/Chip';
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import VehicleService from "../../service/VehicleService";
+import BookingPage from "../Booking";
+
 
 
 class HomePage extends Component {
@@ -62,8 +76,20 @@ class HomePage extends Component {
             anchorEl: true,
             openLogin: false,
             vehicleTypeId:0,
+            signInIcon:null,
+            user:null,
+            vehicleList: [],
         }
     }
+
+    getUserData = (data) => {
+        console.log("get "+data)
+        this.setState({user:data})
+    }
+
+
+
+
 
     render() {
         let {classes} = this.props;
@@ -109,6 +135,22 @@ class HomePage extends Component {
             textAlign: 'center', color: theme.palette.text.secondary,
         }));
 
+
+
+
+
+
+
+
+        const signInHandleMenu = (event) => {
+            this.setState({signInIcon:event.currentTarget});
+        };
+
+        const signUpHandleClose = () => {
+            this.setState({signInIcon:null});
+        };
+
+
         return (
             <div>
                 <div className={classes.back__floor}>
@@ -129,7 +171,7 @@ class HomePage extends Component {
                                 <Tabs value={this.state.tabValue} onChange={navTabChange}
                                       aria-label="basic tabs example">
                                     <Tab label="Home" {...a11yProps(0)} />
-                                    <Tab label="Vehicles" {...a11yProps(1)} />
+                                    <Tab label="Booking" {...a11yProps(1)} />
                                     <Tab label="Service" {...a11yProps(2)} />
                                     <Tab label="About" {...a11yProps(3)} />
 
@@ -164,7 +206,61 @@ class HomePage extends Component {
                                     <Tab label="About" {...a11yProps(3)} />
                                 </Tabs>
                             </Menu>
-                            <SignIn/>
+                            <div>
+                                {this.state.user === null &&  <SignIn sendUserInfo={this.getUserData.bind(this)} />}
+                                {this.state.user !== null &&  (
+                                    <Chip icon={<AccountCircle />} label="User"
+                                        onClick={signInHandleMenu}/>)}
+                                <Menu anchorEl={this.state.signInIcon}
+                                    id="account-menu"
+                                    open={Boolean(this.state.signInIcon)}
+                                    onClose={signUpHandleClose}
+                                    onClick={signUpHandleClose}
+                                    PaperProps={{elevation: 0,
+                                        sx: {overflow: 'visible',
+                                            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))', mt: 1.5,
+                                            '& .MuiAvatar-root': {width: 32, height: 32, ml: -0.5, mr: 1,
+                                            },
+                                            '&:before': {content: '""',
+                                                display: 'block', position: 'absolute',
+                                                top: 0, right: 14, width: 10, height: 10,
+                                                bgcolor: 'background.paper',  zIndex: 0,
+                                                transform: 'translateY(-50%) rotate(45deg)',
+                                            },
+                                        },
+                                    }}
+                                    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                                >
+                                    <MenuItem>
+                                        <Avatar /> Profile
+                                    </MenuItem>
+                                    <MenuItem>
+                                        <Avatar /> My account
+                                    </MenuItem>
+                                    <Divider />
+                                    <MenuItem>
+                                        <ListItemIcon>
+                                            <PersonAdd fontSize="small" />
+                                        </ListItemIcon>
+                                        Add another account
+                                    </MenuItem>
+                                    <MenuItem>
+                                        <ListItemIcon>
+                                            <Settings fontSize="small" />
+                                        </ListItemIcon>
+                                        Settings
+                                    </MenuItem>
+                                    <MenuItem>
+                                        <ListItemIcon>
+                                            <Logout fontSize="small" />
+                                        </ListItemIcon>
+                                        Logout
+                                    </MenuItem>
+                                </Menu>
+
+                            </div>
+
                         </div>
                     </div>
 
@@ -324,12 +420,7 @@ class HomePage extends Component {
 
                                         <div style={{ height:'100%'}}>
                                             <div className={classes.suggest__result}>
-                                                <VehicleCard
-                                                    imgSrc={vehicleImg1} brand={"WagonR"} type={"General"} noOfPassenger={"4"}
-                                                    transmissionType={"Auto"} fuelType={"Petrol"} dailyRate={"2500"} monthlyRate={"35000"}
-                                                    freeMileageDay={"100"} freeMileageMonth={"2400"} priceExtraKM={"30"} color={"Red"}
-                                                    maintenanceMileage={"2000"} status={"available"}
-                                                />
+                                                {/*vehicle card area*/}
                                             </div>
 
                                         </div>
@@ -370,14 +461,10 @@ class HomePage extends Component {
 
                     </TabPanel>
                     <TabPanel value={this.state.tabValue} index={1}>
-                        <Vehicle/>
+                        <BookingPage/>
                     </TabPanel>
-                    <TabPanel value={this.state.tabValue} index={2}>
-                        <Vehicle/>
-                    </TabPanel>
-                    <TabPanel value={this.state.tabValue} index={3}>
-                        <Vehicle/>
-                    </TabPanel>
+                    <TabPanel value={this.state.tabValue} index={2}></TabPanel>
+                    <TabPanel value={this.state.tabValue} index={3}></TabPanel>
 
                     <SpeedDialBtn/>
                     <footer>
