@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import {withStyles} from "@mui/styles";
 import {styleSheet} from "./style";
 import VehicleService from "../../service/VehicleService";
+import {Stack} from "@mui/material";
 
 
 class Vehicle extends Component{
@@ -16,21 +17,21 @@ class Vehicle extends Component{
         super(props);
         this.state={
             vehicle: {
-                vehicleId:'',
-                regNo:'',
-                brand:'',
-                type:'',
-                noOfPassenger:'',
-                transmissionType:'',
-                fuelType:'',
+                vehicleId:'V002',
+                regNo:'13123',
+                brand:'Toyota',
+                type:'General',
+                noOfPassenger:'4',
+                transmissionType:'Auto',
+                fuelType:'Petrol',
                 dailyRate:'',
                 monthlyRate:'',
                 freeMileageDay:'',
                 freeMileageMonth:'',
                 priceExtraKM:'',
-                color:'',
+                color:'White',
                 maintenanceMileage:'',
-                status:''
+                status:'Available'
             },
             vehicleList:[]
         }
@@ -41,7 +42,7 @@ class Vehicle extends Component{
         let res = await VehicleService.fetchVehicles();
         if (res.status === 200) {
             this.setState({
-                vehicleList: res.data.data
+                vehicleList: JSON.stringify(res.data.data)
             })
             console.log("res: " + JSON.stringify(res.data.data))
 
@@ -51,7 +52,7 @@ class Vehicle extends Component{
     }
 
     componentDidMount() {
-        this.loadData();
+       // this.loadData();
     }
 
 
@@ -60,15 +61,14 @@ class Vehicle extends Component{
 
         return(
             <div >
-                <h2 className={classes.vehicle__tittle}>VEHICLE FLEET</h2>
-                <Box  sx={{flexGrow:1,marginTop:12}}>
-                    <Grid  className={classes.vehicle__card_box} container spacing={{ xs: 1, md: 2 }} columns={{ md: 8 }}>
+                <Stack direction="column" justifyContent="flex-start" alignItems="stretch" spacing={2}>
 
-                        {this.state.vehicleList.map(d => <VehicleCard getVehicle={d} imgSrc={vehicleImg1}
-                                                                      userSignIn={false}/>)}
-
-                    </Grid>
-                </Box>
+                    <VehicleCard setV={this.state.vehicle} imgSrc={vehicleImg1} userSignIn={false}/>
+                    <VehicleCard setV={this.state.vehicle} imgSrc={vehicleImg2} userSignIn={false}/>
+                    <VehicleCard setV={this.state.vehicle} imgSrc={vehicleImg1} userSignIn={false}/>
+                    {/*  {this.state.vehicleList.map(d => <VehicleCard getVehicle={d} imgSrc={vehicleImg1}
+                                                                      userSignIn={false}/>)}*/}
+                </Stack>
             </div>
         );
     }

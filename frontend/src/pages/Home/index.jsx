@@ -15,7 +15,7 @@ import {
     FormControl,
     FormControlLabel,
     FormGroup, FormLabel,
-    InputLabel,
+    InputLabel, Link,
     Paper, Radio, RadioGroup,
     Select,
     Stack, TableCell, TableRow,
@@ -58,6 +58,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VehicleService from "../../service/VehicleService";
 import BookingPage from "../Booking";
+import Skeleton from "@mui/material/Skeleton";
 
 
 
@@ -385,7 +386,7 @@ class HomePage extends Component {
 
                         <Grid container direction="column" className={classes.scroll__box}>
 
-                            <div className={classes.info_sec}>
+                            <Stack className={classes.info_sec}>
                                 <Typography  style={{fontFamily:'Convergence', fontSize:'1.2em',
                                     textAlign:'center', marginTop:'75px', marginBottom:'10px', color:'white',}}>
                                     Enjoy the efficient and specialized services of
@@ -400,10 +401,10 @@ class HomePage extends Component {
                                     <div className={classes.info_sec_div}></div>
                                     <div className={classes.info_sec_div}></div>
                                 </Stack>
-                            </div>
+                            </Stack>
 
 
-                            <div className={classes.service_box}>
+                            <Stack className={classes.service_box}>
                                 <h2 style={{fontFamily:'Convergence', fontSize:'1.2em', textAlign:'center',
                                     marginTop:'15px', marginBottom:'10px'}}>
                                     Our Business Class Vehicles
@@ -417,9 +418,9 @@ class HomePage extends Component {
                                     <div> <SmallVehicleCard name="Luxury" imgSrc={luxuryCar}/> </div>
                                 </Stack>
 
-                            </div>
+                            </Stack>
 
-                            <div id="resultSec">
+                            <Stack id="resultSec">
                                 <div className={classes.suggest__result_box} >
                                     <h2 style={{fontFamily:'Convergence', fontSize:'1.2em',
                                         textAlign:'center', marginTop:'50px', marginBottom:'10px'}}>
@@ -456,37 +457,122 @@ class HomePage extends Component {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </Stack>
 
-                            <div className={classes.info_sec}>
-                                <div className={classes.suggest__result}>
+                            <Stack alignItems="center" direction="row" spacing={1} sx={{backgroundColor:'#081F35',width:'100%',height:'100px',}}>
 
-                                </div>
-                            </div>
-                            <div className={classes.contact_sec}>
-                                <h2 style={{position: 'absolute', fontFamily:'Convergence', fontSize:'1.2em',
-                                    textAlign:'center', marginTop:'15px', marginBottom:'10px', color:'white',}}>
-                                    Contact
-                                </h2>
-                                <img src={backImg3} alt="" style={{width: '100vw', height:'100%', backgroundPosition: 'center',
-                                    backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundAttachment:'fixed'}}/>
-                            </div>
+                                    <h2 style={{ fontFamily:'Convergence', fontSize:'1.2em',
+                                        textAlign:'center', marginLeft:'20px', marginRight:'10px', color:'white',}}>
+                                        You have any questions or need additional information?
+                                    </h2>
+                                <input id="basic" placeholder="Enter your email here"  />
+                                <Button>Subscribe</Button>
+                            </Stack>
+                            <Stack className={classes.contact_sec}>
+                                <Stack>
+                                    <img src={backImg3} alt="" style={{width: '100vw', height:'400px', backgroundPosition: 'center',
+                                        backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundAttachment:'fixed'}}/>
+                                </Stack>
+                                <Stack sx={{position:"absolute", width: '100vw', height:'400px',}}
+                                       direction="row"
+                                       justifyContent="space-evenly"
+                                       alignItems="center"
+                                       spacing={2}>
+                                    <Stack>
+                                        <h2 style={{ fontFamily:'Convergence', fontSize:'1.2em',
+                                            textAlign:'center', color:'white',}}>
+                                            Quick Link
+                                        </h2>
+                                        <Link>Home</Link>
+                                        <Link>Home</Link>
+                                        <Link>Home</Link>
+                                    </Stack>
+                                    <Stack>
+                                        <h2 style={{ fontFamily:'Convergence', fontSize:'1.2em',
+                                            textAlign:'center', color:'white',}}>
+                                            Fallow Us
+                                        </h2>
+                                        <Link>Home</Link>
+                                        <Link>Home</Link>
+                                        <Link>Home</Link>
+                                    </Stack>
+                                    <Stack>
+                                        <h2 style={{ fontFamily:'Convergence', fontSize:'1.2em',
+                                            textAlign:'center', color:'white',}}>
+                                            Contact Us
+                                        </h2>
+                                        <Link>Home</Link>
+                                        <Link>Home</Link>
+                                        <Link>Home</Link>
+                                    </Stack>
+
+
+
+
+                                </Stack>
+                            </Stack>
+                            <Stack sx={{backgroundColor:'#080F15'}}>
+
+                            </Stack>
                         </Grid>
 
                     </TabPanel>
-                    <TabPanel value={this.state.tabValue} index={1}>
+                    <TabPanel value={this.state.tabValue} index={1} >
+                        <Stack direction="row"
+                               justifyContent="center"
+                               alignItems="stretch"
+                               spacing={2} sx={{width:'100vw',marginTop:'7%'}}>
+                            <Stack  direction="column"
+                                    justifyContent="flex-start"
+                                    alignItems="stretch"
+                                    spacing={2}>
+                                <Vehicle/>
+                            </Stack>
+                            <Stack  direction="column" justifyContent="flex-start"
+                                    alignItems="stretch"
+                                    spacing={1} sx={{height:'400px',width:'230px', border:'1px solid gray',borderRadius:'6px', marginTop:'25px' }}>
+                                <h3 align="center">Filters</h3>
+                                <Divider />
+                                <Stack direction="column"
+                                       justifyContent="flex-start"
+                                       alignItems="center"
+                                       spacing={1}>
+                                    <FormGroup>
+                                        <FormLabel id="demo-controlled-radio-buttons-group">Driver Status</FormLabel>
+                                        <FormControlLabel control={<Checkbox defaultChecked />} label="With Driver" />
+                                        <FormControlLabel disabled control={<Checkbox />} label="Self Drive" />
+                                        <Divider />
+                                    </FormGroup>
+
+                                    <FormControl>
+                                        <FormLabel id="demo-controlled-radio-buttons-group">Vehicle Type</FormLabel>
+                                        <RadioGroup aria-labelledby="demo-controlled-radio-buttons-group"
+                                                    name="controlled-radio-buttons-group" value={this.state.vehicleTypeId}
+                                                    onChange={radioBtnChange}>
+                                            <FormControlLabel value={0} control={<Radio />} label="General" />
+                                            <FormControlLabel value={1} control={<Radio />} label="Premium" />
+                                            <FormControlLabel value={2} control={<Radio />} label="Luxury" />
+                                        </RadioGroup>
+                                    </FormControl>
+                                </Stack>
+                                <Skeleton animation="wave" />
+                                <Skeleton animation="wave" />
+                                <Skeleton animation="wave" />
+
+                            </Stack>
+                        </Stack>
 
                     </TabPanel>
-                    <TabPanel value={this.state.tabValue} index={2}></TabPanel>
+                    <TabPanel value={this.state.tabValue} index={2}>
+
+                    </TabPanel>
                     <TabPanel value={this.state.tabValue} index={3}></TabPanel>
                     <TabPanel value={this.state.tabValue} index={4}>
                         <BookingPage/>
                     </TabPanel>
 
                     {/*<SpeedDialBtn/>*/}
-                    <footer>
-                        <span>2022 - All Right Reserved</span>
-                    </footer>
+
                 </div>
             </div>
         )

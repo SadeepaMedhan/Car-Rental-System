@@ -13,29 +13,13 @@ import {styleSheet} from "./style";
 import {withStyles} from "@mui/styles";
 import Button from "@mui/material/Button";
 
+
 class VehicleCard extends Component{
 
     constructor(props) {
         super(props);
         this.state = {
-            vehicle: {
-                vehicleId:'',
-                regNo:'',
-                brand:'',
-                type:'',
-                noOfPassenger:'',
-                transmissionType:'',
-                fuelType:'',
-                dailyRate:'',
-                monthlyRate:'',
-                freeMileageDay:'',
-                freeMileageMonth:'',
-                priceExtraKM:'',
-                color:'',
-                maintenanceMileage:'',
-                status:''
-            },
-
+            vehicle:props.setV,
             isSignIn:props.userSignIn,
         }
     }
@@ -49,12 +33,11 @@ class VehicleCard extends Component{
     }
 
 
+
     render() {
-
         let {classes} = this.props;
-        this.setState({vehicle:this.props.getVehicle,})
 
-        console.log("props "+this.props.getVehicle)
+
         return (
             <div /*sx={{ maxWidth: 345 }}*/>
                 <Stack className={classes.card_box}
@@ -65,9 +48,9 @@ class VehicleCard extends Component{
                         <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={2}>
                             <div>
                                 <Typography className={classes.card_brand} sx={{ fontSize: { xs: '1.5em', md: '1.7em' } }} >
-                                    {this.vehicle.brand}
+                                    {this.state.vehicle.brand}
                                 </Typography>
-                                <p className={classes.card_type} >{this.vehicle.type}</p>
+                                <p className={classes.card_type} >{this.state.vehicle.type}</p>
                             </div>
                             <div>
                                 <img className={classes.card_img} src={this.props.imgSrc} alt=""/>
@@ -77,15 +60,15 @@ class VehicleCard extends Component{
                     <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={2}>
                         <IconButton>
                             <PersonOutlineOutlinedIcon /><pre className={classes.card_prop_id}> Seating Capacity : </pre>
-                            <span className={classes.card_prop_value}>{this.vehicle.noOfPassenger}</span>
+                            <span className={classes.card_prop_value}>{this.state.vehicle.noOfPassenger}</span>
                         </IconButton>
                         <IconButton>
                             <LocalGasStationIcon /><pre className={classes.card_prop_id}> Fuel Type : </pre>
-                            <span className={classes.card_prop_value}>{this.vehicle.fuelType}</span>
+                            <span className={classes.card_prop_value}>{this.state.vehicle.fuelType}</span>
                         </IconButton>
                         <IconButton>
                             <SettingsSuggestIcon /><pre className={classes.card_prop_id}> Transmission : </pre>
-                            <span className={classes.card_prop_value}>{this.vehicle.fuelType}</span>
+                            <span className={classes.card_prop_value}>{this.state.vehicle.fuelType}</span>
                         </IconButton>
                         <IconButton>
                             <AcUnitIcon /><pre className={classes.card_prop_id}> Air Condition : </pre>
@@ -97,23 +80,23 @@ class VehicleCard extends Component{
                         <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={2}>
                             <IconButton>
                                 <NoiseControlOffIcon /><pre className={classes.card_prop_id}> Daily Rate : </pre>
-                                <span className={classes.card_prop_value}>{this.vehicle.dailyRate}</span>
+                                <span className={classes.card_prop_value}>{this.state.vehicle.dailyRate}</span>
                             </IconButton>
                             <IconButton>
                                 <NoiseControlOffIcon /><pre className={classes.card_prop_id}> Free KM for a Day : </pre>
-                                <span className={classes.card_prop_value}>{this.vehicle.freeMileageDay}</span>
+                                <span className={classes.card_prop_value}>{this.state.vehicle.freeMileageDay}</span>
                             </IconButton>
                             <IconButton>
                                 <NoiseControlOffIcon /><pre className={classes.card_prop_id}> Monthly Rate : </pre>
-                                <span className={classes.card_prop_value}>{this.vehicle.monthlyRate}</span>
+                                <span className={classes.card_prop_value}>{this.state.vehicle.monthlyRate}</span>
                             </IconButton>
                             <IconButton>
                                 <NoiseControlOffIcon /><pre className={classes.card_prop_id}> Free KM for a Month : </pre>
-                                <span className={classes.card_prop_value}>{this.vehicle.freeMileageMonth}</span>
+                                <span className={classes.card_prop_value}>{this.state.vehicle.freeMileageMonth}</span>
                             </IconButton>
                             <IconButton>
                                 <NoiseControlOffIcon /><pre className={classes.card_prop_id}> Price per Extra KM : </pre>
-                                <span className={classes.card_prop_value}>{this.vehicle.priceExtraKM}</span>
+                                <span className={classes.card_prop_value}>{this.state.vehicle.priceExtraKM}</span>
                             </IconButton>
                         </Stack>
 

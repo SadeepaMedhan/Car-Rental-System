@@ -14,6 +14,7 @@ import AddVehicle from "../../components/AddVehicle";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
+import Vehicle from "../Vehicle";
 
 const steps = [
     'Search Results',
@@ -79,14 +80,13 @@ class BookingPage extends Component {
                         <TabPanel value={this.state.bookingTabValue} index={0} sx={{width:'100vw',}}>
                             <Stack  direction="row" justifyContent="flex-start"
                                     alignItems="stretch"
-                                    spacing={2} sx={{width:'80vw',}}>
+                                    spacing={2} sx={{width:'88vw',}}>
                                 <Stack  direction="column" justifyContent="flex-start"
                                         alignItems="stretch"
-                                        spacing={2}  sx={{padding:'15px', height:'400px',width:'100%', border:'1px solid gray',borderRadius:'6px'}}>
+                                        spacing={2}  sx={{padding:'15px', height:'100%',width:'100%', border:'1px solid gray',borderRadius:'6px'}}>
                                     <h2 style={{marginLeft:'20px'}}>Search Results</h2>
                                     <Divider />
-                                    <Skeleton variant="rectangular" width={600} height={250} />
-                                    <Skeleton variant="rectangular" width={600} height={250} />
+                                        <Vehicle/>
                                     <Divider />
                                     <Stack direction="row"
                                            justifyContent="center"
@@ -98,15 +98,20 @@ class BookingPage extends Component {
                                 </Stack>
                                 <Stack  direction="column" justifyContent="flex-start"
                                         alignItems="stretch"
-                                        spacing={2} sx={{height:'400px',width:'200px', border:'1px solid gray',borderRadius:'6px', marginTop:'25px' }}>
-                                    <h2 align="center">Filters</h2>
+                                        spacing={1} sx={{height:'400px',width:'230px', border:'1px solid gray',borderRadius:'6px', marginTop:'25px' }}>
+                                    <h3 align="center">Filters</h3>
                                     <Divider />
-                                    <div style={{paddingLeft:'10px', height:'100%',width:'100%'}}>
+                                    <Stack direction="column"
+                                           justifyContent="flex-start"
+                                           alignItems="center"
+                                           spacing={1}>
                                         <FormGroup>
+                                            <FormLabel id="demo-controlled-radio-buttons-group">Driver Status</FormLabel>
                                             <FormControlLabel control={<Checkbox defaultChecked />} label="With Driver" />
                                             <FormControlLabel disabled control={<Checkbox />} label="Self Drive" />
+                                            <Divider />
                                         </FormGroup>
-                                        <Divider />
+
                                         <FormControl>
                                             <FormLabel id="demo-controlled-radio-buttons-group">Vehicle Type</FormLabel>
                                             <RadioGroup aria-labelledby="demo-controlled-radio-buttons-group"
@@ -117,7 +122,7 @@ class BookingPage extends Component {
                                                 <FormControlLabel value={2} control={<Radio />} label="Luxury" />
                                             </RadioGroup>
                                         </FormControl>
-                                    </div>
+                                    </Stack>
                                     <Skeleton animation="wave" />
                                     <Skeleton animation="wave" />
                                     <Skeleton animation="wave" />
