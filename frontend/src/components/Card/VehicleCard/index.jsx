@@ -35,7 +35,7 @@ class VehicleCard extends Component{
     render() {
 
         let {classes} = this.props;
-
+        console.log("props "+this.props.getVehicle)
         return (
             <div /*sx={{ maxWidth: 345 }}*/>
                 <Stack className={classes.card_box}

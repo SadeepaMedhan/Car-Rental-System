@@ -87,8 +87,20 @@ class HomePage extends Component {
         this.setState({user:data})
     }
 
+     loadVehicleData = async () => {
+        const res = await VehicleService.fetchVehicles();
+        if (res.status === 200) {
+            this.setState({
+                vehicleList : JSON.stringify(res.data.data)
+            } )
+            console.log(this.state.vehicleList)
+        }
+        else {console.log("fetching error: " + res)}
+    }
 
-
+    componentDidMount() {
+        this.loadVehicleData();
+    }
 
 
     render() {
@@ -139,7 +151,11 @@ class HomePage extends Component {
 
 
 
+        let newArr = this.state.vehicleList.map((vehicle) => {
 
+            return  <VehicleCard getVehicle={vehicle} userSignIn={true} imgSrc={vehicleImg1}/>;
+
+        });
 
 
         const signInHandleMenu = (event) => {
@@ -421,6 +437,8 @@ class HomePage extends Component {
                                         <div style={{ height:'100%'}}>
                                             <div className={classes.suggest__result}>
                                                 {/*vehicle card area*/}
+                                                {/*{this.state.vehicleList.length > 0 && newArr}*/}
+
                                             </div>
 
                                         </div>
