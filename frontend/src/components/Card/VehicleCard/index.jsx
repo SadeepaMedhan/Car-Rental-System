@@ -18,7 +18,24 @@ class VehicleCard extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            vehicle:props.getVehicle,
+            vehicle: {
+                vehicleId:'',
+                regNo:'',
+                brand:'',
+                type:'',
+                noOfPassenger:'',
+                transmissionType:'',
+                fuelType:'',
+                dailyRate:'',
+                monthlyRate:'',
+                freeMileageDay:'',
+                freeMileageMonth:'',
+                priceExtraKM:'',
+                color:'',
+                maintenanceMileage:'',
+                status:''
+            },
+
             isSignIn:props.userSignIn,
         }
     }
@@ -35,6 +52,8 @@ class VehicleCard extends Component{
     render() {
 
         let {classes} = this.props;
+        this.setState({vehicle:this.props.getVehicle,})
+
         console.log("props "+this.props.getVehicle)
         return (
             <div /*sx={{ maxWidth: 345 }}*/>

@@ -109,6 +109,9 @@ class HomePage extends Component {
         const navTabChange = (event, newValue) => {
             this.setState({tabValue: newValue});
         };
+        const searchResult = (event, newValue) => {
+            this.setState({tabValue: 4});
+        };
         const driverChange = (event) => {
             this.setState({driverStatus: event.target.value});
         };
@@ -149,15 +152,6 @@ class HomePage extends Component {
 
 
 
-
-
-        let newArr = this.state.vehicleList.map((vehicle) => {
-
-            return  <VehicleCard getVehicle={vehicle} userSignIn={true} imgSrc={vehicleImg1}/>;
-
-        });
-
-
         const signInHandleMenu = (event) => {
             this.setState({signInIcon:event.currentTarget});
         };
@@ -187,7 +181,7 @@ class HomePage extends Component {
                                 <Tabs value={this.state.tabValue} onChange={navTabChange}
                                       aria-label="basic tabs example">
                                     <Tab label="Home" {...a11yProps(0)} />
-                                    <Tab label="Booking" {...a11yProps(1)} />
+                                    <Tab label="Vehicles" {...a11yProps(1)} />
                                     <Tab label="Service" {...a11yProps(2)} />
                                     <Tab label="About" {...a11yProps(3)} />
 
@@ -381,7 +375,7 @@ class HomePage extends Component {
                                     <Button className={classes.check__btn}
                                             color="primary"
                                             variant="contained"
-                                            href="#resultSec">
+                                            onClick={searchResult}>
                                         Check
                                     </Button>
                                 </div>
@@ -438,7 +432,9 @@ class HomePage extends Component {
                                             <div className={classes.suggest__result}>
                                                 {/*vehicle card area*/}
                                                 {/*{this.state.vehicleList.length > 0 && newArr}*/}
-
+                                                {/*{this.state.vehicleList.length > 0 && this.state.vehicleList.map((item) => (
+                                                    <VehicleCard getVehicle={item} imgSrc={vehicleImg1} userSignIn={false}/>
+                                                ))}*/}
                                             </div>
 
                                         </div>
@@ -479,12 +475,15 @@ class HomePage extends Component {
 
                     </TabPanel>
                     <TabPanel value={this.state.tabValue} index={1}>
-                        <BookingPage/>
+
                     </TabPanel>
                     <TabPanel value={this.state.tabValue} index={2}></TabPanel>
                     <TabPanel value={this.state.tabValue} index={3}></TabPanel>
+                    <TabPanel value={this.state.tabValue} index={4}>
+                        <BookingPage/>
+                    </TabPanel>
 
-                    <SpeedDialBtn/>
+                    {/*<SpeedDialBtn/>*/}
                     <footer>
                         <span>2022 - All Right Reserved</span>
                     </footer>
