@@ -8,4 +8,7 @@ public interface CustomerRepo extends JpaRepository<Customer, String> {
     @Query(value = "SELECT * FROM `customer` ORDER BY cusID DESC LIMIT 1", nativeQuery = true)
     Customer getLastCustomer();
 
+    boolean existsByCusEmail(String email);
+    Customer findCustomerByCusEmail(String email);
+
 }

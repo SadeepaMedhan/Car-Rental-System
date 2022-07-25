@@ -4,7 +4,6 @@ import lk.easycar.dto.BookingDTO;
 import lk.easycar.dto.CustomerDTO;
 import lk.easycar.entity.Booking;
 import lk.easycar.entity.Customer;
-import lk.easycar.entity.Driver;
 import lk.easycar.repo.BookingRepo;
 import lk.easycar.repo.CustomerRepo;
 import lk.easycar.service.CustomerService;
@@ -61,6 +60,8 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDTO searchCustomer(String id) {
         if (customerRepo.existsById(id)) {
             return mapper.map(customerRepo.findById(id).get(), CustomerDTO.class);
+        }else if(customerRepo.existsByCusEmail(id)){
+            return mapper.map(customerRepo.findCustomerByCusEmail(id), CustomerDTO.class);
         } else {
             throw new RuntimeException("No Customer For " + id + " ..!");
         }

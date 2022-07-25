@@ -41,6 +41,7 @@ import DriverManage from "../../components/DriverManage";
 import CustomerService from "../../service/CustomerService";
 import {ManageAccounts} from "@mui/icons-material";
 import CustomerManage from "../../components/CustomerManage";
+import swal from 'sweetalert';
 
 export default function Dashboard() {
     let classes = styleSheet();
@@ -380,7 +381,23 @@ export default function Dashboard() {
                                                         <Tooltip title="Delete">
                                                             <IconButton
                                                                 onClick={() => {
-                                                                   deleteVehicle(row.vehicleId)
+                                                                    swal({
+                                                                        title: "Are you sure?",
+                                                                        text: "Once deleted, you will not be able to recover this imaginary file!",
+                                                                        icon: "warning",
+                                                                        buttons: true,
+                                                                        dangerMode: true,
+                                                                    })
+                                                                        .then((willDelete) => {
+                                                                            if (willDelete) {
+                                                                                deleteVehicle(row.vehicleId);
+                                                                                swal("Poof! Your imaginary file has been deleted!", {
+                                                                                    icon: "success",
+                                                                                });
+                                                                            } else {
+                                                                                swal("Your imaginary file is safe!");
+                                                                            }
+                                                                        });
                                                                 }}
                                                             >
                                                                 <DeleteIcon color="error" />
@@ -456,7 +473,24 @@ export default function Dashboard() {
                                                         <Tooltip title="Delete">
                                                             <IconButton
                                                                 onClick={() => {
-                                                                    deleteDrivers(row.driverID)
+                                                                    swal({
+                                                                        title: "Are you sure?",
+                                                                        text: "Once deleted, you will not be able to recover this imaginary file!",
+                                                                        icon: "warning",
+                                                                        buttons: true,
+                                                                        dangerMode: true,
+                                                                    })
+                                                                        .then((willDelete) => {
+                                                                            if (willDelete) {
+                                                                                deleteDrivers(row.driverID)
+                                                                                swal("Poof! Your imaginary file has been deleted!", {
+                                                                                    icon: "success",
+                                                                                });
+                                                                            } else {
+                                                                                swal("Your imaginary file is safe!");
+                                                                            }
+                                                                        });
+
                                                                 }}
                                                             >
                                                                 <DeleteIcon color="error" />
@@ -532,7 +566,23 @@ export default function Dashboard() {
                                                         <Tooltip title="Delete">
                                                             <IconButton
                                                                 onClick={() => {
-                                                                    deleteCustomer(row.cusID)
+                                                                    swal({
+                                                                        title: "Are you sure?",
+                                                                        text: "Once deleted, you will not be able to recover this imaginary file!",
+                                                                        icon: "warning",
+                                                                        buttons: true,
+                                                                        dangerMode: true,
+                                                                    })
+                                                                        .then((willDelete) => {
+                                                                            if (willDelete) {
+                                                                                deleteCustomer(row.cusID)
+                                                                                swal("Poof! Your imaginary file has been deleted!", {
+                                                                                    icon: "success",
+                                                                                });
+                                                                            } else {
+                                                                                swal("Your imaginary file is safe!");
+                                                                            }
+                                                                        })
                                                                 }}
                                                             >
                                                                 <DeleteIcon color="error" />

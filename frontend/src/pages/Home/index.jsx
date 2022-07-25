@@ -59,8 +59,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import VehicleService from "../../service/VehicleService";
 import BookingPage from "../Booking";
 import Skeleton from "@mui/material/Skeleton";
-
-
+import swal from 'sweetalert';
+import withReactContent from 'sweetalert2-react-content'
 
 class HomePage extends Component {
     constructor(props) {
@@ -88,20 +88,27 @@ class HomePage extends Component {
         this.setState({user:data})
     }
 
-     loadVehicleData = async () => {
-        const res = await VehicleService.fetchVehicles();
+    getVehicle = (data) => {
+        this.setState({tabValue: 4});
+    }
+
+    async loadData() {
+        let res = await VehicleService.fetchVehicles();
         if (res.status === 200) {
             this.setState({
-                vehicleList : JSON.stringify(res.data.data)
-            } )
-            console.log(this.state.vehicleList)
+                vehicleList: JSON.stringify(res.data.data)
+            })
+            console.log("res: " + JSON.stringify(res.data.data))
+
+        } else {
+            console.log("fetching error: " + res)
         }
-        else {console.log("fetching error: " + res)}
     }
 
     componentDidMount() {
-        this.loadVehicleData();
+        this.loadData();
     }
+
 
 
     render() {
@@ -113,6 +120,7 @@ class HomePage extends Component {
         const searchResult = (event, newValue) => {
             this.setState({tabValue: 4});
         };
+
         const driverChange = (event) => {
             this.setState({driverStatus: event.target.value});
         };
@@ -136,10 +144,10 @@ class HomePage extends Component {
         const handleCloseNavMenu = (event, newValue) => {
             this.setState({anchorElNav: null});
         };
-        const handleOpenDash = (event) => {
-            console.log(this.state.openLogin)
-            this.setState({openLogin: !this.state.openLogin});
-        };
+
+
+
+
         const radioBtnChange = (event) => {
             this.setState({vehicleTypeId: event.target.value});
         };
@@ -433,9 +441,8 @@ class HomePage extends Component {
                                             <div className={classes.suggest__result}>
                                                 {/*vehicle card area*/}
                                                 {/*{this.state.vehicleList.length > 0 && newArr}*/}
-                                                {this.state.vehicleList.length > 0 && this.state.vehicleList.map((item) => (
-                                                    <VehicleCard setV={item} imgSrc={vehicleImg1} userSignIn={false}/>
-                                                ))}
+                                                {/*{this.state.vehicleList.length > 0 && this.state.vehicleList.map(ve => <VehicleCard setV={ve} imgSrc={vehicleImg1} userSignIn={this.state.user} setVehicleId={this.getVehicleData.bind(this)} />)}*/}
+                                                <Vehicle signInUser={this.state.user}  setVehicle={this.getVehicle.bind(this)} />
                                             </div>
 
                                         </div>

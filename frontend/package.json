@@ -17,13 +17,17 @@
     "dayjs": "^1.11.3",
     "luxon": "^2.5.0",
     "moment": "^2.29.4",
+    "notistack": "^2.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-jss": "^10.9.0",
     "react-material-ui-form-validator": "^3.0.1",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1",
-    "react-slideshow-image": "^4.0.3"
+    "react-slideshow-image": "^4.0.3",
+    "sweetalert": "^2.1.2",
+    "sweetalert2": "^11.4.24",
+    "sweetalert2-react-content": "^5.0.2"
   },
   "scripts": {
     "start": "react-scripts start",

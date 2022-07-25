@@ -30,7 +30,7 @@ class VehicleCard extends Component{
         if(this.state.user !== undefined){
             console.log(this.state.user)
             console.log("go booking")
-            this.props.setVehicleId(this.state.vehicle.vehicleId)
+            this.props.setVehicleId(this.state.vehicle)
         }
     }
 
@@ -70,7 +70,7 @@ class VehicleCard extends Component{
                         </IconButton>
                         <IconButton>
                             <SettingsSuggestIcon /><pre className={classes.card_prop_id}> Transmission : </pre>
-                            <span className={classes.card_prop_value}>{this.state.vehicle.fuelType}</span>
+                            <span className={classes.card_prop_value}>{this.state.vehicle.transmissionType}</span>
                         </IconButton>
                         <IconButton>
                             <AcUnitIcon /><pre className={classes.card_prop_id}> Air Condition : </pre>

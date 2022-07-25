@@ -64,6 +64,8 @@ public class AdminServiceImpl implements AdminService {
     public AdminDTO searchAdmin(String id) {
         if (repo.existsById(id)){
             return mapper.map(repo.findById(id).get(), AdminDTO.class);
+        }else if(repo.existsByEmail(id)){
+            return mapper.map(repo.findAdminByEmail(id), AdminDTO.class);
         }else{
             throw new RuntimeException("No Admin For "+id+" ..!");
         }
