@@ -218,7 +218,7 @@ class HomePage extends Component {
                                 </Tabs>
                             </Menu>
                             <div>
-                                {this.state.user === null &&  <SignIn sendUserInfo={this.getUserData.bind(this)} />}
+                                {this.state.user === null &&  <SignIn getUserInfo={this.getUserData.bind(this)} />}
                                 {this.state.user !== null &&  (
                                     <Chip icon={<AccountCircle />} label="User"
                                         onClick={signInHandleMenu}/>)}
@@ -433,9 +433,9 @@ class HomePage extends Component {
                                             <div className={classes.suggest__result}>
                                                 {/*vehicle card area*/}
                                                 {/*{this.state.vehicleList.length > 0 && newArr}*/}
-                                                {/*{this.state.vehicleList.length > 0 && this.state.vehicleList.map((item) => (
-                                                    <VehicleCard getVehicle={item} imgSrc={vehicleImg1} userSignIn={false}/>
-                                                ))}*/}
+                                                {this.state.vehicleList.length > 0 && this.state.vehicleList.map((item) => (
+                                                    <VehicleCard setV={item} imgSrc={vehicleImg1} userSignIn={false}/>
+                                                ))}
                                             </div>
 
                                         </div>
@@ -526,7 +526,7 @@ class HomePage extends Component {
                                     justifyContent="flex-start"
                                     alignItems="stretch"
                                     spacing={2}>
-                                <Vehicle/>
+                                <Vehicle signInUser={this.state.user} />
                             </Stack>
                             <Stack  direction="column" justifyContent="flex-start"
                                     alignItems="stretch"
@@ -568,7 +568,7 @@ class HomePage extends Component {
                     </TabPanel>
                     <TabPanel value={this.state.tabValue} index={3}></TabPanel>
                     <TabPanel value={this.state.tabValue} index={4}>
-                        <BookingPage/>
+                        <BookingPage signInUser={this.state.user}/>
                     </TabPanel>
 
                     {/*<SpeedDialBtn/>*/}

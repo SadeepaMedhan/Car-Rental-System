@@ -33,7 +33,9 @@ class Vehicle extends Component{
                 maintenanceMileage:'',
                 status:'Available'
             },
-            vehicleList:[]
+            vehicleList:[],
+            user:props.signInUser,
+            selectVehicleId:'',
         }
     }
 
@@ -55,6 +57,11 @@ class Vehicle extends Component{
        // this.loadData();
     }
 
+    getVehicleData = (data) => {
+        console.log("get v "+data)
+        this.setState({selectVehicleId:data})
+        this.props.setVehicle(data)
+    }
 
     render() {
         let {classes} = this.props;
@@ -63,9 +70,9 @@ class Vehicle extends Component{
             <div >
                 <Stack direction="column" justifyContent="flex-start" alignItems="stretch" spacing={2}>
 
-                    <VehicleCard setV={this.state.vehicle} imgSrc={vehicleImg1} userSignIn={false}/>
-                    <VehicleCard setV={this.state.vehicle} imgSrc={vehicleImg2} userSignIn={false}/>
-                    <VehicleCard setV={this.state.vehicle} imgSrc={vehicleImg1} userSignIn={false}/>
+                    <VehicleCard setV={this.state.vehicle} imgSrc={vehicleImg1} userSignIn={this.state.user} setVehicleId={this.getVehicleData.bind(this)} />
+                    <VehicleCard setV={this.state.vehicle} imgSrc={vehicleImg2} userSignIn={this.state.user} setVehicleId={this.getVehicleData.bind(this)} />
+                    <VehicleCard setV={this.state.vehicle} imgSrc={vehicleImg1} userSignIn={this.state.user} setVehicleId={this.getVehicleData.bind(this)} />
                     {/*  {this.state.vehicleList.map(d => <VehicleCard getVehicle={d} imgSrc={vehicleImg1}
                                                                       userSignIn={false}/>)}*/}
                 </Stack>

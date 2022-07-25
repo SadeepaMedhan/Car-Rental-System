@@ -15,6 +15,8 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
 import Vehicle from "../Vehicle";
+import VehicleCard from "../../components/Card/VehicleCard";
+import vehicleImg1 from "../../assets/images/vehicles/v1f.jpg";
 
 const steps = [
     'Search Results',
@@ -30,7 +32,16 @@ class BookingPage extends Component {
             bookingTabValue:0,
             stepperValue:0,
             vehicleTypeId:0,
+            user:props.signInUser,
+            selectVehicle:'',
         }
+    }
+
+    getVehicle = (data) => {
+        console.log("get booking "+data)
+        this.setState({selectVehicle:data})
+        this.setState({stepperValue: 1});
+        this.setState({bookingTabValue: 1});
     }
 
     render() {
@@ -56,6 +67,10 @@ class BookingPage extends Component {
         const radioBtnChange = (event) => {
             this.setState({vehicleTypeId: event.target.value});
         };
+
+
+
+
         return (
             <div>
 
@@ -86,7 +101,7 @@ class BookingPage extends Component {
                                         spacing={2}  sx={{padding:'15px', height:'100%',width:'100%', border:'1px solid gray',borderRadius:'6px'}}>
                                     <h2 style={{marginLeft:'20px'}}>Search Results</h2>
                                     <Divider />
-                                        <Vehicle/>
+                                        <Vehicle signInUser={this.state.user}  setVehicle={this.getVehicle.bind(this)} />
                                     <Divider />
                                     <Stack direction="row"
                                            justifyContent="center"
@@ -140,8 +155,8 @@ class BookingPage extends Component {
                                     spacing={2}  sx={{padding:'15px', height:'400px',width:'100%', border:'1px solid gray',borderRadius:'6px'}}>
                                 <h2 style={{marginLeft:'20px'}}>More Car Details</h2>
                                 <Divider />
-                                <Skeleton variant="rectangular" width={600} height={250} />
-                                <Skeleton variant="rectangular" width={600} height={250} />
+                                <VehicleCard setV={this.state.selectVehicle} imgSrc={vehicleImg1} userSignIn={this.state.user}  />
+
                                 <Divider />
                                 <Stack direction="row"
                                        justifyContent="center"

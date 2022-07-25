@@ -20,15 +20,17 @@ class VehicleCard extends Component{
         super(props);
         this.state = {
             vehicle:props.setV,
-            isSignIn:props.userSignIn,
+            user:props.userSignIn,
         }
     }
 
 
     vehicleSelect = () => {
         console.log(this.state.vehicle.vehicleId)
-        if(Boolean(this.state.isSignIn)){
+        if(this.state.user !== undefined){
+            console.log(this.state.user)
             console.log("go booking")
+            this.props.setVehicleId(this.state.vehicle.vehicleId)
         }
     }
 

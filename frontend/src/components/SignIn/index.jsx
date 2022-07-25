@@ -80,7 +80,7 @@ export default function SignIn(props) {
     };
 
     const sendData =()=>{
-        props.sendUserInfo("C001");
+        props.getUserInfo("C001");
     }
 
     return (
