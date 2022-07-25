@@ -16,6 +16,8 @@ import Chip from '@mui/material/Chip';
 import SignUp from "../SignUp";
 import swal from 'sweetalert';
 import {TextValidator, ValidatorForm} from 'react-material-ui-form-validator';
+import CustomerService from "../../service/CustomerService";
+import UserService from "../../service/UserService";
 
 
 const SignInForm = styled(Dialog)(({theme}) => ({
@@ -59,6 +61,8 @@ export default function SignIn(props) {
     const [userName, setUserName] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [showPassword, setShowPassword] = React.useState(false);
+    const [customer, setCustomer] = React.useState(null);
+    const [admin, setAdmin] = React.useState(null);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -70,9 +74,7 @@ export default function SignIn(props) {
     const handleChangePassword = (prop) => (event) => {
         setPassword(event.target.value);
     };
-    const handleChangeUserName = (prop) => (event) => {
-        setUserName(event.target.value);
-    };
+
 
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
@@ -82,10 +84,37 @@ export default function SignIn(props) {
         event.preventDefault();
     };
 
-    const sendData = (e) => {
-        e.preventDefault()
-        props.getUserInfo("C001");
-        swal("Sign In Successful!", "Welcome", "success");
+    const clearData=()=>{
+        setCustomer(null);
+        setAdmin(null);
+    }
+
+
+    const findUser = async (id) => {
+        clearData();
+        console.log("type "+id)
+        const cusResponse = await CustomerService.findCustomer(id);
+        const adResponse = await UserService.findAdmin(id);
+        if (cusResponse.status === 200) {setCustomer( cusResponse.data.data);
+            console.log(cusResponse.data.data); }
+        else if (adResponse.status === 200) {setAdmin( adResponse.data.data);
+            console.log(adResponse.data.data);}
+        else {console.log("error: " +cusResponse+", "+adResponse)}
+    }
+
+
+    const sendData = () => {
+        if(customer !== null){
+            props.getUserInfo(customer);
+            swal("Sign In Successful!", "Customer", "success");
+        }else if(admin !== null){
+            swal("Sign In Successful!", "Admin", "success");
+            window.location.assign('/dash');
+        }else{
+            swal("Sign In Unsuccessful!", "Error", "error");
+        }
+
+
     }
 
     return (
@@ -126,6 +155,7 @@ export default function SignIn(props) {
                                            value={userName}
                                            onChange={(e) => {
                                                setUserName(e.target.value)
+                                               findUser(e.target.value)
                                            }} validators={['required',]}
                             />
                         </Stack>

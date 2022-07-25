@@ -29,9 +29,9 @@ class UserService {
         return await promise
     }
 
-    findById = async () => {
+    findAdmin = async (data) => {
         const promise = new Promise((resolve, reject) => {
-            axios.get('vehicle/new')
+            axios.get('admin/'+data)
                 .then((res) => {
                     return resolve(res)
                 })
