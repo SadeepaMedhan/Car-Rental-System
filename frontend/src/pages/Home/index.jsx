@@ -115,10 +115,22 @@ class HomePage extends Component {
         let {classes} = this.props;
 
         const navTabChange = (event, newValue) => {
+            if(newValue === 4){
+                if (this.state.user !==null){
+                    this.setState({tabValue: 4});
+                }else{
+                    swal("Sign In Unsuccessful!", "Please Sign In", "error")
+                }
+
+            }
             this.setState({tabValue: newValue});
         };
         const searchResult = (event, newValue) => {
-            this.setState({tabValue: 4});
+            if (this.state.user !==null){
+                this.setState({tabValue: 4});
+            }else{
+                swal("Sign In Unsuccessful!", "Please Sign In", "error")
+            }
         };
 
         const driverChange = (event) => {
@@ -143,6 +155,9 @@ class HomePage extends Component {
 
         const handleCloseNavMenu = (event, newValue) => {
             this.setState({anchorElNav: null});
+        };
+        const logout = (event, newValue) => {
+            this.setState({user: null});
         };
 
 
@@ -270,7 +285,7 @@ class HomePage extends Component {
                                         </ListItemIcon>
                                         Settings
                                     </MenuItem>
-                                    <MenuItem>
+                                    <MenuItem onClick={logout}>
                                         <ListItemIcon>
                                             <Logout fontSize="small" />
                                         </ListItemIcon>

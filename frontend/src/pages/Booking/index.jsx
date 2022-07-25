@@ -26,6 +26,13 @@ import NoiseControlOffIcon from "@mui/icons-material/NoiseControlOff";
 import Alert from "../../components/Alert";
 import AlertSnackBar from "../../components/Alert";
 import {SnackbarProvider} from "notistack";
+import swal from "sweetalert";
+import CardMedia from "@mui/material/CardMedia";
+import pay1 from "../../assets/images/payP.png";
+import pay2 from "../../assets/images/payM.png";
+import pay3 from "../../assets/images/payV.png";
+import pay4 from "../../assets/images/payA.png";
+import {TextValidator, ValidatorForm} from "react-material-ui-form-validator";
 
 const steps = [
     'Search Results',
@@ -55,8 +62,10 @@ class BookingPage extends Component {
         this.setState({bookingTabValue: 1});
     }
 
+
     render() {
         let {classes} = this.props;
+
 
         const goResults = (e) => {
             this.setState({stepperValue: 0});
@@ -67,8 +76,13 @@ class BookingPage extends Component {
             this.setState({bookingTabValue: 1});
         }
         const goDetails = (e) => {
-            this.setState({stepperValue: 2});
-            this.setState({bookingTabValue: 2});
+            if(this.user!==null){
+                this.setState({stepperValue: 2});
+                this.setState({bookingTabValue: 2});
+            }else{
+                swal("Sign In Unsuccessful!", "Please Sign In", "error")
+            }
+
         }
         const goConfirmation = (e) => {
             this.setState({stepperValue: 3});
@@ -109,7 +123,7 @@ class BookingPage extends Component {
                                     spacing={2} sx={{width:'88vw',}}>
                                 <Stack  direction="column" justifyContent="flex-start"
                                         alignItems="stretch"
-                                        spacing={2}  sx={{padding:'15px', height:'100%',width:'100%', border:'1px solid gray',borderRadius:'6px'}}>
+                                        spacing={2}  sx={{padding:'15px', height:'100%',width:'100%', border:'1px solid #E0E0E0',borderRadius:'6px'}}>
                                     <h2 style={{marginLeft:'20px',fontFamily:'Convergence'}}>Search Results</h2>
                                     <Divider />
                                         <Vehicle signInUser={this.state.user}  setVehicle={this.getVehicle.bind(this)} />
@@ -123,7 +137,7 @@ class BookingPage extends Component {
                                 </Stack>
                                 <Stack  direction="column" justifyContent="flex-start"
                                         alignItems="stretch"
-                                        spacing={1} sx={{height:'400px',width:'230px', border:'1px solid gray',borderRadius:'6px', marginTop:'25px' }}>
+                                        spacing={1} sx={{height:'400px',width:'230px', border:'1px solid #E0E0E0',borderRadius:'6px', marginTop:'25px' }}>
                                     <h3 align="center" >Filters</h3>
                                     <Divider />
                                     <Stack direction="column"
@@ -162,7 +176,7 @@ class BookingPage extends Component {
                                     spacing={2} sx={{width:'80vw',}}>
                             <Stack  direction="column" justifyContent="flex-start"
                                     alignItems="stretch"
-                                    spacing={2}  sx={{padding:'15px', height:'400px',width:'100%', border:'1px solid gray',borderRadius:'6px'}}>
+                                    spacing={2}  sx={{padding:'15px', height:'400px',width:'100%', border:'1px solid #E0E0E0',borderRadius:'6px'}}>
                                 <h2 style={{marginLeft:'20px',fontFamily:'Convergence'}}>More Car Details</h2>
                                 <Divider />
 
@@ -225,7 +239,7 @@ class BookingPage extends Component {
                             </Stack>
                             <Stack  direction="column" justifyContent="flex-start"
                                     alignItems="stretch"
-                                    spacing={2} sx={{height:'400px',width:'300px', border:'1px solid gray',borderRadius:'6px', marginTop:'25px' }}>
+                                    spacing={2} sx={{height:'400px',width:'300px', border:'1px solid #E0E0E0',borderRadius:'6px', marginTop:'25px' }}>
                                 <h2 align="center">Summary</h2>
                                 <Divider />
                                 <Skeleton animation="wave" />
@@ -239,47 +253,50 @@ class BookingPage extends Component {
                             <Stack  direction="row" justifyContent="flex-start"
                                     alignItems="stretch"
                                     spacing={2} sx={{width:'80vw',}}>
-                            <Stack  direction="column" justifyContent="flex-start"
-                                    alignItems="stretch"
-                                    spacing={2}  sx={{padding:'15px', height:'400px',width:'100%', border:'1px solid gray',borderRadius:'6px'}}>
-                                <h2 style={{marginLeft:'20px',fontFamily:'Convergence'}}>Your Details</h2>
-                                <Divider />
-                                <Stack direction="row"
-                                       justifyContent="flex-start"
-                                       alignItems="flex-start"
-                                       spacing={2}>
-                                   <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={1}>
-                                        <IconButton>
-                                            <NoiseControlOffIcon /><pre className={classes.card_prop_id}> Full Name : </pre>
-                                            <span className={classes.card_prop_value}>{this.state.user.cusName}</span>
-                                        </IconButton>
-                                        <IconButton>
-                                            <NoiseControlOffIcon /><pre className={classes.card_prop_id}> Address : </pre>
-                                            <span className={classes.card_prop_value}>{this.state.user.address}</span>
-                                        </IconButton>
-                                        <IconButton>
-                                            <NoiseControlOffIcon /><pre className={classes.card_prop_id}> Contact : </pre>
-                                            <span className={classes.card_prop_value}>{this.state.user.name}</span>
-                                        </IconButton>
-                                        <IconButton>
-                                            <NoiseControlOffIcon /><pre className={classes.card_prop_id}> E-mail : </pre>
-                                            <span className={classes.card_prop_value}>{this.state.user.name}</span>
-                                        </IconButton>
+                                {this.state.user !== null &&
+                                <Stack  direction="column" justifyContent="flex-start"
+                                        alignItems="stretch"
+                                        spacing={2}  sx={{padding:'15px', height:'400px',width:'100%', border:'1px solid #E0E0E0',borderRadius:'6px'}}>
+                                    <h2 style={{marginLeft:'20px',fontFamily:'Convergence'}}>Your Details</h2>
+                                    <Divider />
+                                    <Stack direction="row"
+                                           justifyContent="flex-start"
+                                           alignItems="flex-start"
+                                           spacing={2}>
+                                        <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={1}>
+                                            <IconButton>
+                                                <NoiseControlOffIcon /><pre className={classes.card_prop_id}> Full Name : </pre>
+                                                <span className={classes.card_prop_value}>{this.state.user.cusName}</span>
+                                            </IconButton>
+                                            <IconButton>
+                                                <NoiseControlOffIcon /><pre className={classes.card_prop_id}> Address : </pre>
+                                                <span className={classes.card_prop_value}>{this.state.user.cusAddress}</span>
+                                            </IconButton>
+                                            <IconButton>
+                                                <NoiseControlOffIcon /><pre className={classes.card_prop_id}> Contact : </pre>
+                                                <span className={classes.card_prop_value}>{this.state.user.cusContactNo}</span>
+                                            </IconButton>
+                                            <IconButton>
+                                                <NoiseControlOffIcon /><pre className={classes.card_prop_id}> E-mail : </pre>
+                                                <span className={classes.card_prop_value}>{this.state.user.cusEmail}</span>
+                                            </IconButton>
 
+                                        </Stack>
+                                    </Stack>
+                                    <Divider />
+                                    <Stack direction="row"
+                                           justifyContent="center"
+                                           alignItems="center"
+                                           spacing={4}>
+                                        <Button onClick={goOptions} color="primary" variant="contained" style={{fontWeight:'bold', width:'95px',borderRadius:15 }}>Back</Button>
+                                        <Button  onClick={goConfirmation} color="primary" variant="contained" style={{fontWeight:'bold', width:'95px',borderRadius:15 }}>Next</Button>
                                     </Stack>
                                 </Stack>
-                                <Divider />
-                                <Stack direction="row"
-                                       justifyContent="center"
-                                       alignItems="center"
-                                       spacing={4}>
-                                    <Button onClick={goOptions} color="primary" variant="contained" style={{fontWeight:'bold', width:'95px',borderRadius:15 }}>Back</Button>
-                                    <Button  onClick={goConfirmation} color="primary" variant="contained" style={{fontWeight:'bold', width:'95px',borderRadius:15 }}>Next</Button>
-                                </Stack>
-                            </Stack>
+                                }
+                                {this.state.user === null && swal("Sign In Unsuccessful!", "Please Sign In", "error")}
                             <Stack  direction="column" justifyContent="flex-start"
                                     alignItems="stretch"
-                                    spacing={2} sx={{height:'400px',width:'300px', border:'1px solid gray',borderRadius:'6px', marginTop:'25px' }}>
+                                    spacing={2} sx={{height:'400px',width:'300px', border:'1px solid #E0E0E0',borderRadius:'6px', marginTop:'25px' }}>
                                 <h2 align="center">Summary</h2>
                                 <Divider />
                                 <Skeleton animation="wave" />
@@ -295,23 +312,70 @@ class BookingPage extends Component {
                                     spacing={2} sx={{width:'80vw',}}>
                             <Stack  direction="column" justifyContent="flex-start"
                                     alignItems="stretch"
-                                    spacing={2}  sx={{padding:'15px', height:'400px',width:'100%', border:'1px solid gray',borderRadius:'6px'}}>
-                                <h2 style={{marginLeft:'20px',fontFamily:'Convergence'}}>Request to Booking</h2>
+                                    spacing={2}  sx={{padding:'15px', height:'400px',width:'100%', border:'1px solid #E0E0E0',borderRadius:'6px'}}>
+                                <h2 style={{marginLeft:'20px',fontFamily:'Convergence'}}>Payment</h2>
                                 <Divider />
-                                <Skeleton variant="rectangular" width={600} height={250} />
-                                <Skeleton variant="rectangular" width={600} height={250} />
+                                <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={1}>
+                                    <Stack direction="row" justifyContent="center" spacing={2} sx={{alignSelf: 'center'}}>
+                                        <Stack>
+                                            <CardMedia component="img" height="60px" image={pay1} alt="paypal"/>
+                                        </Stack>
+                                        <Stack>
+                                            <CardMedia component="img" height="60px" image={pay2} alt="master"/>
+                                        </Stack>
+                                        <Stack>
+                                            <CardMedia component="img" height="60px" image={pay3} alt="visa"/>
+                                        </Stack>
+                                        <Stack>
+                                            <CardMedia component="img" height="60px" image={pay4} alt="am"/>
+                                        </Stack>
+
+                                    </Stack>
+
+
+                                    <ValidatorForm  onError={errors => console.log(errors)}>
+                                    <Stack width="100%" direction="column" justifyContent="center" alignItems="center" spacing={2}>
+                                        <Divider />
+                                            <TextValidator width="60%" label="Caed Number" variant="outlined" helperText="" size="small"
+                                                           color="primary"
+                                                           errorMessages="Incorrect entry !"
+                                                            validators={['required',]}
+                                            />
+
+                                        <Stack direction="row" justifyContent="center" alignItems="stretch" spacing={2}>
+                                            <TextValidator label="Name on Card" variant="outlined" helperText="" size="small"
+                                                           color="primary"
+                                                           errorMessages="Incorrect entry !"
+                                                           validators={['required',]}
+                                            />
+                                            <TextValidator label="Expire Date" variant="outlined" helperText="" size="small"
+                                                             color="primary"
+                                                             errorMessages="Incorrect entry !"
+                                                             validators={['required',]}
+                                             />
+                                            <TextValidator label="CVV Code" variant="outlined" helperText="" size="small"
+                                                         color="primary"
+                                                         errorMessages="Incorrect entry !"
+                                                         validators={['required',]}
+                                             />
+                                        </Stack>
+                                        <Stack></Stack>
+
+                                    </Stack>
+                                    </ValidatorForm>
+                                </Stack>
                                 <Divider />
                                 <Stack direction="row"
                                        justifyContent="center"
                                        alignItems="center"
                                        spacing={4}>
                                     <Button onClick={goDetails} color="primary" variant="contained" style={{fontWeight:'bold', width:'95px',borderRadius:15 }}>Cancel</Button>
-                                    <Button  onClick={goConfirmation} color="primary" variant="contained" style={{fontWeight:'bold', width:'95px',borderRadius:15 }}>Request</Button>
+                                    <Button  onClick={goConfirmation} color="primary" variant="contained" style={{fontWeight:'bold', width:'95px',borderRadius:15 }}>Request to Booking</Button>
                                 </Stack>
                             </Stack>
                             <Stack  direction="column" justifyContent="flex-start"
                                     alignItems="stretch"
-                                    spacing={2} sx={{height:'400px',width:'300px', border:'1px solid gray',borderRadius:'6px', marginTop:'25px' }}>
+                                    spacing={2} sx={{height:'400px',width:'300px', border:'1px solid #E0E0E0',borderRadius:'6px', marginTop:'25px' }}>
                                 <h2 align="center">Summary</h2>
                                 <Divider />
                                 <Skeleton animation="wave" />
