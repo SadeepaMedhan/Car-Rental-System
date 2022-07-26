@@ -39,8 +39,10 @@ import pay2 from "../../assets/images/payM.png";
 import pay3 from "../../assets/images/payV.png";
 import pay4 from "../../assets/images/payA.png";
 import {TextValidator, ValidatorForm} from "react-material-ui-form-validator";
-import vehicleImg1 from "../../assets/images/vehicles/v1f.jpg";
-import vehicleImg2 from "../../assets/images/vehicles/v2f.jpg";
+import vehicleImg1 from "../../assets/images/vehicles/Suzuki-Alto-R (1).png";
+import vehicleImg2 from "../../assets/images/vehicles/Suzuki-Alto-R (2).png";
+import vehicleImg3 from "../../assets/images/vehicles/Suzuki-Alto-R (3).PNG";
+import vehicleImg4 from "../../assets/images/vehicles/Suzuki-Alto-R (4).PNG";
 
 const steps = [
     'Search Results',
@@ -137,7 +139,7 @@ class BookingPage extends Component {
                                     height: '400px',
                                     width: '230px',
                                     border: '1px solid #E0E0E0',
-                                    borderRadius: '6px'
+                                    borderRadius: '6px', fontFamily: 'Convergence'
                                 }}>
                                     <h3 align="center">Filters</h3>
                                     <Divider/>
@@ -146,8 +148,8 @@ class BookingPage extends Component {
                                            alignItems="center"
                                            spacing={1}>
                                         <FormGroup>
-                                            <FormLabel id="demo-controlled-radio-buttons-group">Driver
-                                                Status</FormLabel>
+                                            <FormLabel id="demo-controlled-radio-buttons-group">
+                                                Driver Status</FormLabel>
                                             <FormControlLabel control={<Checkbox defaultChecked/>} label="With Driver"/>
                                             <FormControlLabel disabled control={<Checkbox/>} label="Self Drive"/>
                                             <Divider/>
@@ -212,10 +214,10 @@ class BookingPage extends Component {
                             </Stack>
 
                         </TabPanel>
-                        <TabPanel value={this.state.bookingTabValue} index={1}>
+                        <TabPanel value={this.state.bookingTabValue} index={1} >
                             <Stack direction="row" justifyContent="flex-start"
                                    alignItems="stretch"
-                                   spacing={2} sx={{width: '80vw',}}>
+                                   spacing={2} sx={{width: '88vw',}}>
 
                                 <Stack direction="column" justifyContent="flex-start"
                                        alignItems="stretch"
@@ -224,18 +226,61 @@ class BookingPage extends Component {
                                     width: '400px',
                                     border: '1px solid #E0E0E0',
                                     borderRadius: '6px',
+                                    padding:'6px',fontFamily: 'Convergence'
                                 }}>
-                                    <h2 align="center">Price Summary</h2>
+                                    <h3 align="center" style={{fontFamily: 'Convergence'}}>Booking Details</h3>
                                     <Divider/>
-                                    <h4>Great value</h4>
-                                    <p>You got an excellent deal with a leading brand based on 1031 reviews.</p>
+                                    <h4>Time and Place</h4>
+                                    <Stack direction="row"
+                                           justifyContent="space-between"
+                                           alignItems="flex-start"
+                                           spacing={1}>
+                                        <p>Pickup :</p>
+                                        <Stack>
+                                            <p>{toString(this.state.searchData.leavingDate)}</p>
+                                            <p>{this.state.searchData.location}</p>
+                                        </Stack>
+                                    </Stack>
+                                    <Stack direction="row"
+                                           justifyContent="space-between"
+                                           alignItems="flex-start"
+                                           spacing={1}>
+                                        <p>Return :</p>
+                                        <Stack>
+                                            <p>{toString(this.state.searchData.returnDate)}</p>
+                                            <p>{this.state.searchData.location}</p>
+                                        </Stack>
+                                    </Stack>
+                                    <Stack direction="row"
+                                           justifyContent="flex-start"
+                                           alignItems="flex-start"
+                                           spacing={1}>
+                                        <p>Rental Duration :</p>
+                                        <Stack>
+                                            <p>1 day 12 hours</p>
+                                        </Stack>
+                                    </Stack>
                                     <Divider/>
-                                    <h4>Efficient fuel</h4>
-                                    <p>Get a full tank at pick-up and fill it back up on return.</p>
+
+                                    <Stack direction="row"
+                                           justifyContent="flex-start"
+                                           alignItems="flex-start"
+                                           spacing={1}>
+                                        <p>Fuel policy :</p>
+                                        <Stack>
+                                            <p>Full to full</p>
+                                        </Stack>
+                                    </Stack>
                                     <Divider/>
-                                    <h4>Great value</h4>
-                                    <p>You got an excellent deal with a leading brand based on 1031 reviews.</p>
-                                    <Divider/>
+
+                                    <Stack direction="row"
+                                           justifyContent="flex-start"
+                                           alignItems="flex-start"
+                                           spacing={1}>
+                                        <p>Rental cost :</p>
+                                        <p>{this.state.selectVehicle.dailyRate}</p>
+
+                                    </Stack>
                                 </Stack>
                                 <Stack direction="column" justifyContent="flex-start"
                                        alignItems="stretch"
@@ -245,8 +290,12 @@ class BookingPage extends Component {
                                     width: '100%',
                                     border: '1px solid #E0E0E0',
                                     borderRadius: '6px'
-                                }}>
+                                }}> <Stack direction="row"
+                                           justifyContent="space-between"
+                                           alignItems="center">
                                     <h2 style={{marginLeft: '20px', fontFamily: 'Convergence'}}>More Car Details</h2>
+                                    <h3 style={{ fontFamily: 'Convergence'}}>{this.state.selectVehicle.brand}</h3>
+                                </Stack>
                                     <Divider/>
 
                                     <Stack direction="row"
@@ -315,11 +364,24 @@ class BookingPage extends Component {
                                             </IconButton>
                                         </Stack>
 
-                                        <Stack>
+                                        <Stack direction="column"
+                                               justifyContent="center"
+                                               alignItems="center"
+                                               spacing={1}>
                                             <img style={{width:'220px',
                                                 height:'100px',}} src={vehicleImg1} alt=""/>
                                             <img style={{width:'220px',
                                                 height:'100px',}} src={vehicleImg2} alt=""/>
+                                        </Stack>
+                                        <Stack direction="column"
+                                               justifyContent="center"
+                                               alignItems="center"
+                                               spacing={1}>
+                                            <img style={{width:'220px',
+                                                height:'100px',}} src={vehicleImg3} alt=""/>
+                                            <img style={{width:'220px',
+                                                height:'100px',}} src={vehicleImg4} alt=""/>
+
                                         </Stack>
                                     </Stack>
 
@@ -345,8 +407,60 @@ class BookingPage extends Component {
                         <TabPanel value={this.state.bookingTabValue} index={2}>
                             <Stack direction="row" justifyContent="flex-start"
                                    alignItems="stretch"
-                                   spacing={2} sx={{width: '80vw',}}>
+                                   spacing={2} sx={{width: '88vw',}}>
                                 {this.state.user !== null &&
+                                <Stack direction="column" justifyContent="flex-start"
+                                       alignItems="stretch"
+                                       spacing={2} sx={{
+                                    height: '400px',
+                                    width: '400px',
+                                    border: '1px solid #E0E0E0',
+                                    borderRadius: '6px',
+                                    padding:'6px',fontFamily: 'Convergence'
+                                }}>
+                                    <Stack direction="row"
+                                           justifyContent="space-between"
+                                           alignItems="center">
+                                        <h3 style={{marginLeft: '20px', fontFamily: 'Convergence'}}>Your Details</h3>
+                                        <Button >Edit</Button>
+                                    </Stack>
+                                    <Divider/>
+                                    <Stack direction="column" justifyContent="center" alignItems="flex-start"
+                                           spacing={1}>
+                                        <IconButton>
+                                            <NoiseControlOffIcon/>
+                                            <pre className={classes.card_prop_id}> Full Name : </pre>
+                                            <span
+                                                className={classes.card_prop_value}>{this.state.searchData.customer.cusName}</span>
+                                        </IconButton>
+                                        <IconButton>
+                                            <NoiseControlOffIcon/>
+                                            <pre className={classes.card_prop_id}> Address : </pre>
+                                            <span
+                                                className={classes.card_prop_value}>{this.state.searchData.customer.cusAddress}</span>
+                                        </IconButton>
+                                        <IconButton>
+                                            <NoiseControlOffIcon/>
+                                            <pre className={classes.card_prop_id}> Contact : </pre>
+                                            <span
+                                                className={classes.card_prop_value}>{this.state.searchData.customer.cusContactNo}</span>
+                                        </IconButton>
+                                        <IconButton>
+                                            <NoiseControlOffIcon/>
+                                            <pre className={classes.card_prop_id}> NIC : </pre>
+                                            <span
+                                                className={classes.card_prop_value}>{this.state.searchData.customer.cusNIC}</span>
+                                        </IconButton>
+                                        <IconButton>
+                                            <NoiseControlOffIcon/>
+                                            <pre className={classes.card_prop_id}> E-mail : </pre>
+                                            <span
+                                                className={classes.card_prop_value}>{this.state.searchData.customer.cusEmail}</span>
+                                        </IconButton>
+                                    </Stack>
+                                </Stack>
+                                }
+                                {this.state.user === null && swal("Sign In Unsuccessful!", "Please Sign In", "error")}
                                 <Stack direction="column" justifyContent="flex-start"
                                        alignItems="stretch"
                                        spacing={2} sx={{
@@ -356,7 +470,13 @@ class BookingPage extends Component {
                                     border: '1px solid #E0E0E0',
                                     borderRadius: '6px'
                                 }}>
-                                    <h2 style={{marginLeft: '20px', fontFamily: 'Convergence'}}>Your Details</h2>
+                                    <Stack direction="row"
+                                          justifyContent="space-between"
+                                          alignItems="center">
+                                    <h2 style={{marginLeft: '20px', fontFamily: 'Convergence'}}>Booking Details</h2>
+                                    <Button >Edit</Button>
+                                </Stack>
+
                                     <Divider/>
                                     <Stack direction="row"
                                            justifyContent="flex-start"
@@ -366,28 +486,104 @@ class BookingPage extends Component {
                                                spacing={1}>
                                             <IconButton>
                                                 <NoiseControlOffIcon/>
-                                                <pre className={classes.card_prop_id}> Full Name : </pre>
+                                                <pre className={classes.card_prop_id}> Brand : </pre>
                                                 <span
-                                                    className={classes.card_prop_value}>{this.state.searchData.customer.cusName}</span>
+                                                    className={classes.card_prop_value}>{this.state.selectVehicle.brand}</span>
                                             </IconButton>
                                             <IconButton>
                                                 <NoiseControlOffIcon/>
-                                                <pre className={classes.card_prop_id}> Address : </pre>
+                                                <pre className={classes.card_prop_id}> Type : </pre>
                                                 <span
-                                                    className={classes.card_prop_value}>{this.state.searchData.customer.cusAddress}</span>
+                                                    className={classes.card_prop_value}>{this.state.selectVehicle.type}</span>
                                             </IconButton>
                                             <IconButton>
                                                 <NoiseControlOffIcon/>
-                                                <pre className={classes.card_prop_id}> Contact : </pre>
+                                                <pre className={classes.card_prop_id}> Driver : </pre>
                                                 <span
-                                                    className={classes.card_prop_value}>{this.state.searchData.customer.cusContactNo}</span>
+                                                    className={classes.card_prop_value}>{this.state.searchData.driverState}</span>
+                                            </IconButton>
+                                            <Stack direction="row"
+                                                   justifyContent="flex-start"
+                                                   alignItems="flex-start"
+                                                   spacing={1}>
+                                                <IconButton>
+                                                    <PersonOutlineOutlinedIcon/>
+                                                    <pre className={classes.card_prop_id}> : </pre>
+                                                    <span
+                                                        className={classes.card_prop_value}>{this.state.selectVehicle.noOfPassenger}</span>
+                                                </IconButton>
+                                                <IconButton>
+                                                    <LocalGasStationIcon/>
+                                                    <pre className={classes.card_prop_id}> : </pre>
+                                                    <span
+                                                        className={classes.card_prop_value}>{this.state.selectVehicle.fuelType}</span>
+                                                </IconButton>
+                                            </Stack>
+                                            <Stack direction="row"
+                                                   justifyContent="flex-start"
+                                                   alignItems="flex-start"
+                                                   spacing={1}>
+                                                <IconButton>
+                                                    <SettingsSuggestIcon/>
+                                                    <pre className={classes.card_prop_id}> : </pre>
+                                                    <span
+                                                        className={classes.card_prop_value}>{this.state.selectVehicle.transmissionType}</span>
+                                                </IconButton>
+                                                <IconButton>
+                                                    <AcUnitIcon/>
+                                                    <pre className={classes.card_prop_id}> : </pre>
+                                                    <span className={classes.card_prop_value}>Yes</span>
+                                                </IconButton>
+                                            </Stack>
+                                        </Stack>
+                                        <Stack direction="column" justifyContent="center" alignItems="flex-start"
+                                               spacing={1}>
+                                            <IconButton>
+                                                <NoiseControlOffIcon/>
+                                                <pre className={classes.card_prop_id}> Pickup Date : </pre>
+                                                <span
+                                                    className={classes.card_prop_value}>{toString(this.state.searchData.returnDate)}</span>
                                             </IconButton>
                                             <IconButton>
                                                 <NoiseControlOffIcon/>
-                                                <pre className={classes.card_prop_id}> E-mail : </pre>
+                                                <pre className={classes.card_prop_id}> Return Date : </pre>
                                                 <span
-                                                    className={classes.card_prop_value}>{this.state.searchData.customer.cusEmail}</span>
+                                                    className={classes.card_prop_value}>{toString(this.state.searchData.returnDate)}</span>
                                             </IconButton>
+                                            <IconButton>
+                                                <NoiseControlOffIcon/>
+                                                <pre className={classes.card_prop_id}> Rental Duration : </pre>
+                                                <span
+                                                    className={classes.card_prop_value}>1 day</span>
+                                            </IconButton>
+                                            <IconButton>
+                                                <NoiseControlOffIcon/>
+                                                <pre className={classes.card_prop_id}> Rental cost : </pre>
+                                                <span
+                                                    className={classes.card_prop_value}>{this.state.selectVehicle.dailyRate}</span>
+                                            </IconButton>
+                                        </Stack>
+                                        <Stack sx={{height:'100%'}} direction="column" justifyContent="space-around" alignItems="flex-start"
+                                               spacing={4}>
+                                            <Stack direction="column" justifyContent="center" alignItems="flex-start"
+                                               spacing={1}>
+                                                <IconButton>
+                                                    <NoiseControlOffIcon/>
+                                                    <pre className={classes.card_prop_id}> Loss Damage Waiver  : </pre>
+                                                    <span
+                                                        className={classes.card_prop_value}>10000.00</span>
+                                                </IconButton>
+                                                <IconButton>
+                                                    <NoiseControlOffIcon/>
+                                                    <pre className={classes.card_prop_id}> Extra Price   : </pre>
+                                                    <span
+                                                        className={classes.card_prop_value}>0.00</span>
+                                                </IconButton>
+                                            </Stack>
+                                            <Stack sx={{paddingLeft:'10px'}} spacing={4} direction="row">
+                                                <h3 style={{ fontFamily: 'Convergence'}}>Total Price</h3>
+                                                <h3 style={{ fontFamily: 'Convergence'}}>LKR.10000.00</h3>
+                                            </Stack>
 
                                         </Stack>
                                     </Stack>
@@ -408,24 +604,8 @@ class BookingPage extends Component {
                                         }}>Next</Button>
                                     </Stack>
                                 </Stack>
-                                }
-                                {this.state.user === null && swal("Sign In Unsuccessful!", "Please Sign In", "error")}
-                                <Stack direction="column" justifyContent="flex-start"
-                                       alignItems="stretch"
-                                       spacing={2} sx={{
-                                    height: '400px',
-                                    width: '300px',
-                                    border: '1px solid #E0E0E0',
-                                    borderRadius: '6px',
-                                    marginTop: '25px'
-                                }}>
-                                    <h2 align="center">Summary</h2>
-                                    <Divider/>
-                                    <Skeleton animation="wave"/>
-                                    <Skeleton animation="wave"/>
-                                    <Skeleton animation="wave"/>
 
-                                </Stack>
+
                             </Stack>
                         </TabPanel>
                         <TabPanel value={this.state.bookingTabValue} index={3}>
@@ -502,17 +682,27 @@ class BookingPage extends Component {
                                     </Stack>
                                     <Divider/>
                                     <Stack direction="row"
-                                           justifyContent="center"
+                                           justifyContent="space-between"
                                            alignItems="center"
                                            spacing={4}>
-                                        <Button onClick={goDetails} color="primary" variant="contained" style={{
-                                            fontWeight: 'bold',
-                                            width: '95px',
-                                            borderRadius: 15
-                                        }}>Cancel</Button>
-                                        <Button onClick={goConfirmation} color="primary" variant="contained"
-                                                style={{fontWeight: 'bold', width: '95px', borderRadius: 15}}>Request to
-                                            Booking</Button>
+                                        <Stack sx={{paddingLeft:'10px'}} spacing={4} direction="row">
+                                            <h3 style={{ fontFamily: 'Convergence'}}>Total Price</h3>
+                                            <h3 style={{ fontFamily: 'Convergence'}}>LKR.10000.00</h3>
+                                        </Stack>
+                                        <Stack sx={{paddingLeft:'10px'}} spacing={4} direction="row">
+                                            <Button
+                                                Button onClick={goDetails} color="primary" variant="contained" style={{
+                                                fontWeight: 'bold',
+                                                width: '95px',
+                                                borderRadius: 15
+                                                 }}>
+                                                 Cancel
+                                            </Button>
+                                            <Button onClick={goConfirmation} color="primary" variant="contained"
+                                                style={{fontWeight: 'bold', width: '200px', borderRadius: 15}}>
+                                                Request to
+                                                Booking</Button>
+                                         </Stack>
                                     </Stack>
                                 </Stack>
                                 <Stack direction="column" justifyContent="flex-start"
@@ -523,12 +713,48 @@ class BookingPage extends Component {
                                     border: '1px solid #E0E0E0',
                                     borderRadius: '6px',
                                     marginTop: '25px'
-                                }}>
-                                    <h2 align="center">Summary</h2>
+                                }}><h3 align="center" style={{fontFamily: 'Convergence'}}>Booking Details</h3>
                                     <Divider/>
-                                    <Skeleton animation="wave"/>
-                                    <Skeleton animation="wave"/>
-                                    <Skeleton animation="wave"/>
+
+                                    <Stack direction="column" justifyContent="center" alignItems="flex-start"
+                                           spacing={1}>
+                                        <IconButton>
+                                            <NoiseControlOffIcon/>
+                                            <pre className={classes.card_prop_id}> Full Name : </pre>
+                                            <span
+                                                className={classes.card_prop_value}>{this.state.searchData.customer.cusName}</span>
+                                        </IconButton>
+                                        <IconButton>
+                                            <NoiseControlOffIcon/>
+                                            <pre className={classes.card_prop_id}> Brand : </pre>
+                                            <span
+                                                className={classes.card_prop_value}>{this.state.selectVehicle.brand}</span>
+                                        </IconButton>
+                                        <IconButton>
+                                            <NoiseControlOffIcon/>
+                                            <pre className={classes.card_prop_id}> Pickup Date : </pre>
+                                            <span
+                                                className={classes.card_prop_value}>{toString(this.state.searchData.returnDate)}</span>
+                                        </IconButton>
+                                        <IconButton>
+                                            <NoiseControlOffIcon/>
+                                            <pre className={classes.card_prop_id}> Return Date : </pre>
+                                            <span
+                                                className={classes.card_prop_value}>{toString(this.state.searchData.returnDate)}</span>
+                                        </IconButton>
+                                        <IconButton>
+                                            <NoiseControlOffIcon/>
+                                            <pre className={classes.card_prop_id}> Rental Duration : </pre>
+                                            <span
+                                                className={classes.card_prop_value}>1 day</span>
+                                        </IconButton>
+                                        <IconButton>
+                                            <NoiseControlOffIcon/>
+                                            <pre className={classes.card_prop_id}> Rental cost : </pre>
+                                            <span
+                                                className={classes.card_prop_value}>{this.state.selectVehicle.dailyRate}</span>
+                                        </IconButton>
+                                    </Stack>
 
                                 </Stack>
                             </Stack>
