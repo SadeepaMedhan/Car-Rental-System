@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
+import {styled, useTheme} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
@@ -31,25 +31,30 @@ import VehicleService from "../../service/VehicleService";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {
-    Avatar, InputAdornment, Paper,
-    Stack, Table, TableBody, TableCell,
-    TableContainer, TableHead, TableRow,
-    TextField, Tooltip
+    Avatar,
+    Paper,
+    Stack,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    TextField,
+    Tooltip
 } from "@mui/material";
 import DriverService from "../../service/DriverService";
 import DriverManage from "../../components/DriverManage";
 import CustomerService from "../../service/CustomerService";
-import {ManageAccounts} from "@mui/icons-material";
 import CustomerManage from "../../components/CustomerManage";
 import swal from 'sweetalert';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
+import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
+import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
+import {StaticDatePicker} from '@mui/x-date-pickers/StaticDatePicker';
 import '@mobiscroll/react-lite/dist/css/mobiscroll.min.css';
-import { ViewState } from '@devexpress/dx-react-scheduler';
-import {Scheduler, DayView, Appointments} from '@devexpress/dx-react-scheduler';
 import BookingService from "../../service/BookingService";
-
+import vehicleImg1 from "../../assets/images/vehicles/v1f.jpg";
+import Chip from "@mui/material/Chip";
 
 
 export default function Dashboard() {
@@ -72,76 +77,12 @@ export default function Dashboard() {
     const [customersFormValue, setCustomersFormValue] = React.useState(0);
     const [bookingFormValue, setBookingFormValue] = React.useState(0);
     const [date, setDate] = React.useState(() => new Date(2022, 1, 1, 1, 1));
+    React.useEffect(() => {
+        loadBookingData();
+    },[]);
 
     const now = new Date();
 
-    const [marked] = React.useState([
-        { recurring: { repeat: 'yearly', month: 5, day: 1 }, color: '#ffc400' },
-        { recurring: { repeat: 'yearly', month: 12, day: 24 }, color: '#ffee00' },
-        { recurring: { repeat: 'yearly', month: 12, day: 25 }, color: 'red' },
-        { date: new Date(now.getFullYear(), now.getMonth() + 1, 4) },
-        { date: new Date(now.getFullYear(), now.getMonth() - 2, 13) },
-        { date: new Date(now.getFullYear(), now.getMonth(), 2), color: '#46c4f3' },
-        { date: new Date(now.getFullYear(), now.getMonth(), 6), color: '#7e56bd' },
-        { date: new Date(now.getFullYear(), now.getMonth(), 11), color: '#7e56bd' },
-        { date: new Date(now.getFullYear(), now.getMonth(), 19), color: '#89d7c9' },
-        { date: new Date(now.getFullYear(), now.getMonth(), 28), color: '#ea4986' },
-        { date: new Date(now.getFullYear(), now.getMonth(), 13), color: '#7e56bd' },
-        { date: new Date(now.getFullYear(), now.getMonth(), 13), color: '#f13f77' },
-        { date: new Date(now.getFullYear(), now.getMonth(), 13), color: '#89d7c9' },
-        { date: new Date(now.getFullYear(), now.getMonth(), 13), color: '#8dec7d' },
-        { date: new Date(now.getFullYear(), now.getMonth(), 21), color: '#ffc400' },
-        { date: new Date(now.getFullYear(), now.getMonth(), 21), color: '#8dec7d' },
-        { start: new Date(now.getFullYear(), now.getMonth() + 1, 15), end: new Date(now.getFullYear(), now.getMonth() + 1, 18), color: '#f4511e' }
-    ]);
-
-    const [colors] = React.useState([
-        { recurring: { repeat: 'yearly', month: 12, day: 8 }, background: '#9ccc65' },
-        { recurring: { repeat: 'yearly', month: 5, day: 1 }, background: 'red' },
-        { recurring: { repeat: 'yearly', month: 12, day: 24 }, background: '#fff568' },
-        { recurring: { repeat: 'yearly', month: 12, day: 25 }, background: '#e88080' },
-        { date: new Date(now.getFullYear(), now.getMonth() + 1, 4), background: '#cfd8dc' },
-        { date: new Date(now.getFullYear(), now.getMonth() + 2, 24), background: '#9575cd' },
-        { date: new Date(now.getFullYear(), now.getMonth() - 2, 13), background: '#d4e157' },
-        { date: new Date(now.getFullYear(), now.getMonth() - 1, 6), background: "#f4511e" },
-        { date: new Date(now.getFullYear(), now.getMonth() + 1, 6), background: '#46c4f3' },
-        { date: new Date(now.getFullYear(), now.getMonth() + 1, 22), background: '#7e56bd' },
-        { date: new Date(now.getFullYear(), now.getMonth() - 1, 11), background: '#46c4f3' },
-        { date: new Date(now.getFullYear(), now.getMonth() - 1, 29), background: '#7e56bd' },
-        { date: new Date(now.getFullYear(), now.getMonth(), 2), background: '#46c4f3' },
-        { date: new Date(now.getFullYear(), now.getMonth(), 3), background: '#7e56bd' },
-        { date: new Date(now.getFullYear(), now.getMonth(), 11), background: '#f13f77' },
-        { date: new Date(now.getFullYear(), now.getMonth(), 19), background: '#8dec7d' },
-        { date: new Date(now.getFullYear(), now.getMonth(), 28), background: '#ea4986' },
-        { start: new Date(now.getFullYear(), now.getMonth() + 1, 15), end: new Date(now.getFullYear(), now.getMonth() + 1, 18), text: 'Conference', background: '#f4511e' }
-    ]);
-
-    const [labels] = React.useState([
-        { recurring: { repeat: 'yearly', month: 12, day: 25 }, title: 'Christmas', color: '#f48fb1' },
-        { recurring: { repeat: 'yearly', month: 1, day: 1 }, title: 'New year' },
-        { recurring: { repeat: 'yearly', month: 12, day: 1 }, title: 'Meeting', color: '#ffc400' },
-        { date: new Date(now.getFullYear(), now.getMonth() + 1, 4), text: 'Spa day', color: '#cfd8dc' },
-        { date: new Date(now.getFullYear(), now.getMonth() + 2, 24), text: 'BD Party', color: '#9ccc65' },
-        { date: new Date(now.getFullYear(), now.getMonth() - 2, 13), text: 'Exams', color: '#d4e157' },
-        { date: new Date(now.getFullYear(), now.getMonth() - 1, 6), text: 'Trip', color: "#f4511e" },
-        { date: new Date(now.getFullYear(), now.getMonth() + 1, 6), color: '#46c4f3', text: 'Pizza Night' },
-        { date: new Date(now.getFullYear(), now.getMonth() + 1, 22), color: '#7e56bd', text: 'Beerpong' },
-        { date: new Date(now.getFullYear(), now.getMonth() - 1, 11), color: '#46c4f3', text: 'Anniversary' },
-        { date: new Date(now.getFullYear(), now.getMonth() - 1, 29), color: '#7e56bd', text: 'Pete BD' },
-        { date: new Date(now.getFullYear(), now.getMonth(), 2), color: '#46c4f3', text: 'Ana BD' },
-        { date: new Date(now.getFullYear(), now.getMonth(), 3), color: '#7e56bd', text: 'Concert' },
-        { date: new Date(now.getFullYear(), now.getMonth(), 11), color: '#f13f77', text: 'Trip' },
-        { date: new Date(now.getFullYear(), now.getMonth(), 19), color: '#8dec7d', text: 'Math exam' },
-        { date: new Date(now.getFullYear(), now.getMonth(), 28), color: '#ea4986', text: 'Party' },
-        { start: new Date(now.getFullYear(), now.getMonth() + 1, 15), end: new Date(now.getFullYear(), now.getMonth() + 1, 18), text: 'Conference', color: '#f4511e' }
-    ]);
-
-
-    const currentDate = '2018-11-01';
-    const schedulerData = [
-        { startDate: '2018-11-01T09:45', endDate: '2018-11-01T11:00', title: 'Meeting' },
-        { startDate: '2018-11-01T12:00', endDate: '2018-11-01T13:30', title: 'Go to a gym' },
-    ];
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -151,7 +92,7 @@ export default function Dashboard() {
                 case 1: loadBookingData(); return"Booking Management"
                 case 2: loadVehicleData(); return"Vehicle Management"
                 case 3: loadDriversData(); return"Driver Management"
-                case 4: return"Customer Management"
+                case 4: loadCustomersData(); return"Customer Management"
                 case 5: return"Reports"
                 case 7: return"Checking Requests"
                 case 8: return"Vehicle Maintenance"
@@ -242,6 +183,15 @@ export default function Dashboard() {
         const res = await BookingService.fetchBooking();
         if (res.status === 200) {setBookingList( res.data.data)}
         else {console.log("fetching error: " + res)}
+    }
+    const updateBookingData = async (data) => {
+        let response = await BookingService.updateBooking(data);
+        if (response.status === 200) {
+            console.log("updated !")
+            loadBookingData()
+        } else {
+            console.log(response.data)
+        }
     }
 
     return (
@@ -554,11 +504,11 @@ export default function Dashboard() {
                                         <TableRow>
                                             <TableCell align="left">Status</TableCell>
                                             <TableCell align="left">Vehicle</TableCell>
-                                            <TableCell align="left">Leaving Date</TableCell>
-                                            <TableCell align="left">Return Date</TableCell>
+                                            <TableCell align="left">Pickup</TableCell>
+                                            <TableCell align="left">Return</TableCell>
                                             <TableCell align="left">Location</TableCell>
+                                            <TableCell align="left">Customer</TableCell>
                                             <TableCell align="left">Pay</TableCell>
-                                            <TableCell align="left">Damage</TableCell>
                                             <TableCell align="left">Rental Fee</TableCell>
                                             <TableCell align="left">Action</TableCell>
                                         </TableRow>
@@ -567,13 +517,37 @@ export default function Dashboard() {
                                         {
                                             bookingList.map((row) => (
                                                 <TableRow>
-                                                    <TableCell align="left">{row.status}</TableCell>
-                                                    <TableCell align="left">{row.vehicle.brand}</TableCell>
+                                                    <TableCell align="left">
+                                                        <Chip label={row.status} color={row.status === "Pending"? "warning":"success"} clickable onClick={() => {
+                                                            swal({
+                                                                title: "Are you sure?",
+                                                                text: "Accept this Rental!",
+                                                                icon: "info",
+                                                                buttons: true,
+                                                            })
+                                                                .then((a) => {
+                                                                    if (a) {
+                                                                        row.status="Accept";
+                                                                        updateBookingData(row)
+                                                                        swal("This Rental has been accept!", {
+                                                                            icon: "success",
+                                                                        });
+                                                                    }
+                                                                });
+                                                        }} />
+                                                    </TableCell>
+                                                    <TableCell align="left">
+                                                        <Avatar alt="img" src={vehicleImg1} />
+                                                        {row.vehicle.brand}
+                                                    </TableCell>
                                                     <TableCell align="left">{row.leavingDate}</TableCell>
                                                     <TableCell align="left">{row.returnDate}</TableCell>
                                                     <TableCell align="left">{row.location}</TableCell>
+                                                    <TableCell align="left">
+                                                        <Avatar alt="user" />
+                                                        {row.customer.cusName}
+                                                    </TableCell>
                                                     <TableCell align="left">{row.payment}</TableCell>
-                                                    <TableCell align="left">{row.lossDamageFee}</TableCell>
                                                     <TableCell align="left">{row.rentalFee}</TableCell>
                                                     <TableCell align="left">
                                                         <Tooltip title="Edit">

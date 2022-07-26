@@ -105,14 +105,20 @@ export const styleSheet = {
 
     },
     info_sec:{
-        height:'40vh',
+        height:'60vh',
         width:'100%',
         backgroundColor:'#081F35',
     },
     info_sec_div:{
+        direction:"column",
+        justifyContent:"center",
+        alignItems:"center",
+        fontFamily:'Convergence',
+        color:'white',
         height:'120px',
         width:'200px',
         border:'1px gray solid',
+        borderRadius: '4px',
     },
     service_box:{
         height:'60vh',

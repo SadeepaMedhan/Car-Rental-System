@@ -34,4 +34,10 @@ public class BookingController {
     public ResponseUtil getNewId() {
         return new ResponseUtil(200,"Ok",bookingService.getNewBookingId());
     }
+
+    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil updateBooking(@RequestBody BookingDTO booking) {
+        bookingService.updateBooking(booking);
+        return new ResponseUtil(200,"Updated",null);
+    }
 }

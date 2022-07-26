@@ -62,8 +62,12 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public void updateBooking(BookingDTO dto) {
-
+    public void updateBooking(BookingDTO bookingData) {
+        if (bookingRepo.existsById(bookingData.getBookingId())){
+            bookingRepo.save(mapper.map(bookingData, Booking.class));
+        }else{
+            throw new RuntimeException("No Such Booking To Update..! Please Check the ID..!");
+        }
     }
 
     @Override

@@ -61,6 +61,10 @@ import BookingPage from "../Booking";
 import Skeleton from "@mui/material/Skeleton";
 import swal from 'sweetalert';
 import {TextValidator, ValidatorForm} from 'react-material-ui-form-validator';
+import CarRentalIcon from '@mui/icons-material/CarRental';
+import ElectricCarIcon from '@mui/icons-material/ElectricCar';
+import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
+import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined';
 
 class HomePage extends Component {
     constructor(props) {
@@ -276,8 +280,8 @@ class HomePage extends Component {
                                     <MenuItem>
                                         <Avatar /> Profile
                                     </MenuItem>
-                                    <MenuItem>
-                                        <Avatar /> My account
+                                    <MenuItem href="/cb">
+                                        <CarRentalIcon /> My Bookings
                                     </MenuItem>
                                     <Divider />
                                     <MenuItem>
@@ -408,7 +412,7 @@ class HomePage extends Component {
 
                             <Stack className={classes.info_sec}>
                                 <Typography  style={{fontFamily:'Convergence', fontSize:'1.2em',
-                                    textAlign:'center', marginTop:'75px', marginBottom:'10px', color:'white',}}>
+                                    textAlign:'center', marginTop:'150px', marginBottom:'10px', color:'white',}}>
                                     Enjoy the efficient and specialized services of
                                     Easy car rentals private limited; Sri Lanka's
                                     leading rent-a-car company
@@ -416,17 +420,25 @@ class HomePage extends Component {
 
                                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 1, sm: 2, md: 4 }}
                                        justifyContent="center" alignItems="center" mt={2}>
-                                    <div className={classes.info_sec_div}></div>
-                                    <div className={classes.info_sec_div}></div>
-                                    <div className={classes.info_sec_div}></div>
-                                    <div className={classes.info_sec_div}></div>
+                                    <Stack className={classes.info_sec_div}>
+                                        <ElectricCarIcon/>
+                                        <h3>Modern Fleet</h3>
+                                    </Stack>
+                                    <Stack className={classes.info_sec_div}>
+                                        <AccountBalanceWalletOutlinedIcon/>
+                                        <h3>Special Prices</h3>
+                                    </Stack>
+                                    <Stack className={classes.info_sec_div}>
+                                        <VerifiedUserOutlinedIcon/>
+                                        <h3>Full Insurance Plan</h3>
+                                    </Stack>
                                 </Stack>
                             </Stack>
 
 
                             <Stack className={classes.service_box}>
                                 <h2 style={{fontFamily:'Convergence', fontSize:'1.2em', textAlign:'center',
-                                    marginTop:'15px', marginBottom:'10px'}}>
+                                    marginTop:'80px', marginBottom:'10px'}}>
                                     Our Business Class Vehicles
                                 </h2>
 
@@ -443,7 +455,7 @@ class HomePage extends Component {
                             <Stack id="resultSec">
                                 <div className={classes.suggest__result_box} >
                                     <h2 style={{fontFamily:'Convergence', fontSize:'1.2em',
-                                        textAlign:'center', marginTop:'50px', marginBottom:'10px'}}>
+                                        textAlign:'center', marginTop:'30px', marginBottom:'10px'}}>
                                         Best deals found for Sri Lanka car rentals
                                     </h2>
                                     <div style={{display:'flex',flexWrap: 'wrap', justifyContent: 'space-evenly',
@@ -451,29 +463,48 @@ class HomePage extends Component {
 
                                         <div style={{ height:'100%'}}>
                                             <div className={classes.suggest__result}>
-                                                {/*vehicle card area*/}
-                                                {/*{this.state.vehicleList.length > 0 && newArr}*/}
-                                                {/*{this.state.vehicleList.length > 0 && this.state.vehicleList.map(ve => <VehicleCard setV={ve} imgSrc={vehicleImg1} userSignIn={this.state.user} setVehicleId={this.getVehicleData.bind(this)} />)}*/}
                                                 <Vehicle signInUser={this.state.user}  setVehicle={this.getVehicle.bind(this)} />
                                             </div>
 
                                         </div>
-                                        <div style={{ height:'100%'}}>
-                                            <FormGroup>
-                                                <FormControlLabel control={<Checkbox defaultChecked />} label="With Driver" />
-                                                <FormControlLabel disabled control={<Checkbox />} label="Self Drive" />
-                                            </FormGroup>
-                                            <FormControl>
-                                                <FormLabel id="demo-controlled-radio-buttons-group">Vehicle Type</FormLabel>
-                                                <RadioGroup aria-labelledby="demo-controlled-radio-buttons-group"
-                                                    name="controlled-radio-buttons-group" value={this.state.vehicleTypeId}
-                                                    onChange={radioBtnChange}>
-                                                    <FormControlLabel value={0} control={<Radio />} label="General" />
-                                                    <FormControlLabel value={1} control={<Radio />} label="Premium" />
-                                                    <FormControlLabel value={2} control={<Radio />} label="Luxury" />
-                                                </RadioGroup>
-                                            </FormControl>
-                                        </div>
+                                        <Stack direction="column" justifyContent="flex-start"
+                                               alignItems="stretch"
+                                               spacing={1} sx={{
+                                            height: '400px',
+                                            width: '230px',
+                                            border: '1px solid #E0E0E0',
+                                            borderRadius: '6px', fontFamily: 'Convergence'
+                                        }}>
+                                            <h3 align="center">Filters</h3>
+                                            <Divider/>
+                                            <Stack direction="column"
+                                                   justifyContent="flex-start"
+                                                   alignItems="center"
+                                                   spacing={1}>
+                                                <FormGroup>
+                                                    <FormLabel id="demo-controlled-radio-buttons-group">
+                                                        Driver Status</FormLabel>
+                                                    <FormControlLabel control={<Checkbox defaultChecked/>} label="With Driver"/>
+                                                    <FormControlLabel disabled control={<Checkbox/>} label="Self Drive"/>
+                                                    <Divider/>
+                                                </FormGroup>
+
+                                                <FormControl>
+                                                    <FormLabel id="demo-controlled-radio-buttons-group">Vehicle Type</FormLabel>
+                                                    <RadioGroup aria-labelledby="demo-controlled-radio-buttons-group"
+                                                                name="controlled-radio-buttons-group"
+                                                                value={this.state.vehicleTypeId}
+                                                                onChange={radioBtnChange}>
+                                                        <FormControlLabel value={0} control={<Radio/>} label="General"/>
+                                                        <FormControlLabel value={1} control={<Radio/>} label="Premium"/>
+                                                        <FormControlLabel value={2} control={<Radio/>} label="Luxury"/>
+                                                    </RadioGroup>
+                                                </FormControl>
+
+                                            </Stack>
+                                            <Skeleton animation="wave"/>
+
+                                        </Stack>
                                     </div>
                                 </div>
                             </Stack>
