@@ -7,6 +7,7 @@ import {Stack, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import VehicleService from "../../service/VehicleService";
 import {useTheme} from "@mui/material/styles";
+import UploadImages from "../ImageUpload/UploadImages";
 
 
 class AddVehicle extends Component{
@@ -171,13 +172,7 @@ class AddVehicle extends Component{
                         this.setState({ formData })
                     }}/>
 
-                    <input
-                        type="file"
-                        name="myImage"
-                        onClick={(event) => {
-                            console.log(event.target)
-                        }}
-                    />
+                    <UploadImages/>
 
                 </Stack>
                 <Divider />

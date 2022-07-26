@@ -28,11 +28,11 @@ export const styleSheet = {
     },
     card_prop_id:{
         fontFamily:'Convergence',
-        fontSize:'0.75em',
+        fontSize:'0.6em',
     },
     card_prop_value:{
         fontFamily:'Convergence',
-        fontSize:'0.75em',
+        fontSize:'0.6em',
     },
 
 }

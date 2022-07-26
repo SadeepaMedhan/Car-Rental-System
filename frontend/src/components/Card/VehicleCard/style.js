@@ -3,14 +3,14 @@ export const styleSheet = {
     card_box:{
         padding:5,
         margin: '0',
-        border:'1px solid gray',
-        borderRadius: '8px',
+        border:'1px solid #E0E0E0',
+        borderRadius: '3px',
         //boxShadow: '10px 10px 10px 1px #888888',
     },
     card_img:{
-        width:'250px',
-        height:'100%',
-        borderRadius: '8px',
+        width:'200px',
+        height:'120px',
+        borderRadius: '5px',
     },
     card_brand:{
         fontFamily:'Convergence',
@@ -35,11 +35,11 @@ export const styleSheet = {
     },
     card_prop_id:{
         fontFamily:'Convergence',
-        fontSize:'0.75em',
+        fontSize:'0.6em',
     },
     card_prop_value:{
         fontFamily:'Convergence',
-        fontSize:'0.75em',
+        fontSize:'0.7em',
     },
 
 }

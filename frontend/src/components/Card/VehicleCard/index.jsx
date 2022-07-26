@@ -12,6 +12,7 @@ import {Component} from "react";
 import {styleSheet} from "./style";
 import {withStyles} from "@mui/styles";
 import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
 
 
 class VehicleCard extends Component{
@@ -79,7 +80,7 @@ class VehicleCard extends Component{
                     </Stack>
 
 
-                        <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={2}>
+                        <Stack direction="column" justifyContent="center" alignItems="flex-start" spacing={1}>
                             <IconButton>
                                 <NoiseControlOffIcon /><pre className={classes.card_prop_id}> Daily Rate : </pre>
                                 <span className={classes.card_prop_value}>{this.state.vehicle.dailyRate}</span>
@@ -101,13 +102,19 @@ class VehicleCard extends Component{
                                 <span className={classes.card_prop_value}>{this.state.vehicle.priceExtraKM}</span>
                             </IconButton>
                         </Stack>
+                    <hr style={{ border: '1px solid #E0E0E0'}}/>
 
-
-                        <Stack direction="column" justifyContent="flex-end" alignItems="flex-end" spacing={2}>
+                        <Stack direction="column" justifyContent="center" alignItems="flex-end" spacing={2}>
+                            <p className={classes.card_type} >LKR.{this.state.vehicle.dailyRate}</p>
+                            <Button
+                                color="primary"
+                                variant="outlined" onClick={this.vehicleSelect}>
+                                View more
+                            </Button>
                             <Button
                                 color="primary"
                                 variant="contained" onClick={this.vehicleSelect}>
-                                Select
+                                Select Car
                             </Button>
                         </Stack>
 
