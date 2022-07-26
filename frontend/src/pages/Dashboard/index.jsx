@@ -48,6 +48,7 @@ import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import '@mobiscroll/react-lite/dist/css/mobiscroll.min.css';
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import {Scheduler, DayView, Appointments} from '@devexpress/dx-react-scheduler';
+import BookingService from "../../service/BookingService";
 
 
 
@@ -61,12 +62,15 @@ export default function Dashboard() {
     const [vehicleList, setVehicleList] = React.useState([]);
     const [driversList, setDriversList] = React.useState([]);
     const [customersList, setCustomersList] = React.useState([]);
+    const [bookingList, setBookingList] = React.useState([]);
     const [selectVehicle, setSelectVehicle] = React.useState(null);
     const [selectDriver, setSelectDriver] = React.useState(null);
     const [selectCustomer, setSelectCustomer] = React.useState(null);
+    const [selectBooking, setSelectBooking] = React.useState(null);
     const [vehicleFormValue, setVehicleFormValue] = React.useState(0);
     const [driversFormValue, setDriversFormValue] = React.useState(0);
     const [customersFormValue, setCustomersFormValue] = React.useState(0);
+    const [bookingFormValue, setBookingFormValue] = React.useState(0);
     const [date, setDate] = React.useState(() => new Date(2022, 1, 1, 1, 1));
 
     const now = new Date();
@@ -144,7 +148,7 @@ export default function Dashboard() {
         function getTittle(newValue) {
             switch (newValue) {
                 case 0: return"Dashboard"
-                case 1: return"Booking Management"
+                case 1: loadBookingData(); return"Booking Management"
                 case 2: loadVehicleData(); return"Vehicle Management"
                 case 3: loadDriversData(); return"Driver Management"
                 case 4: return"Customer Management"
@@ -226,6 +230,17 @@ export default function Dashboard() {
     const loadCustomersData = async () => {
         const res = await CustomerService.fetchCustomers();
         if (res.status === 200) {setCustomersList( res.data.data)}
+        else {console.log("fetching error: " + res)}
+    }
+    // booking
+    const bookingFormHandleChange = (event, newValue) => {
+        loadBookingData()
+        setBookingFormValue(newValue);
+    }
+
+    const loadBookingData = async () => {
+        const res = await BookingService.fetchBooking();
+        if (res.status === 200) {setBookingList( res.data.data)}
         else {console.log("fetching error: " + res)}
     }
 
@@ -382,118 +397,149 @@ export default function Dashboard() {
                                     <EventIcon/><h3>Last 7 Days</h3>
                                 </Stack>
                             </Stack>
-
                         </Stack>
-                        <Stack>
-                            <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                <StaticDatePicker
-                                    onChange={(newValue) => setDate(newValue)}
-                                    value={date}
-                                    renderInput={(params) => <TextField {...params} />}
-                                    componentsProps={{
-                                        actionBar: {
-                                            actions: ['today'],
-                                        },
-                                    }}
-                                    /*marked={[
-                                        {
-                                            date: new Date(year, month, 2),
-                                            color: '#46c4f3',
-                                            markCssClass: 'square-mark'
-                                        }, {
-                                            date: new Date(year, month, 4),
-                                            color: '#159833',
-                                            markCssClass: 'triangle-mark'
-                                        }, {
-                                            date: new Date(year, month, 6),
-                                            color: '#b05cbf',
-                                            markCssClass: 'square-mark'
-                                        }, {
-                                            date: new Date(year, month, 6),
-                                            color: '#3adecf',
-                                            markCssClass: 'triangle-mark'
-                                        }, {
-                                            date: new Date(year, month, 6),
-                                            color: '#c8d235'
-                                        }, {
-                                            date: new Date(year, month, 8),
-                                            color: '#46c4f3'
-                                        }, {
-                                            date: new Date(year, month, 10),
-                                            color: '#7e56bd',
-                                            markCssClass: 'square-mark'
-                                        }, {
-                                            date: new Date(year, month, 13),
-                                            color: '#f13f77'
-                                        }, {
-                                            date: new Date(year, month, 16),
-                                            color: '#21b326',
-                                            markCssClass: 'square-mark'
-                                        }, {
-                                            date: new Date(year, month, 16),
-                                            color: '#ffa93a',
-                                            markCssClass: 'triangle-mark'
-                                        },{
-                                            date: new Date(year, month, 18),
-                                            color: '#89d7c9',
-                                            markCssClass: 'triangle-mark'
-                                        }, {
-                                            date: new Date(year, month, 21),
-                                            color: '#ffc400',
-                                            markCssClass: 'square-mark'
-                                        }, {
-                                            date: new Date(year, month, 26),
-                                            color: '#8dec7d',
-                                            markCssClass: 'triangle-mark'
-                                        }
-                                    ]}*/
-                                />
-                            </LocalizationProvider>
+                        <Stack direction="row"  alignItems="center">
                             <Stack>
-                                {/*<div className="mbsc-grid">
-                                    <div className="mbsc-row">
-                                        <div className="mbsc-col-sm-12 mbsc-col-md-4">
-                                            <div className="mbsc-form-group">
-                                                <div className="mbsc-form-group-title">Marked days</div>
-                                                <Datepicker controls={['calendar']} display="inline" marked={marked} />
-                                            </div>
-                                        </div>
-                                        <div className="mbsc-col-sm-12 mbsc-col-md-4">
-                                            <div className="mbsc-form-group">
-                                                <div className="mbsc-form-group-title">Colored days</div>
-                                                <Datepicker controls={['calendar']} display="inline" colors={colors} />
-                                            </div>
-                                        </div>
-                                        <div className="mbsc-col-sm-12 mbsc-col-md-4">
-                                            <div className="mbsc-form-group">
-                                                <div className="mbsc-form-group-title">Labels</div>
-                                                <Datepicker controls={['calendar']} display="inline" labels={labels} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>*/}
-                                {/*<Scheduler
-                                    data={schedulerData}
-                                >
-                                    <ViewState
-                                        currentDate={currentDate}
+                                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                    <StaticDatePicker
+                                        onChange={(newValue) => setDate(newValue)}
+                                        value={date}
+                                        renderInput={(params) => <TextField {...params} />}
+                                        componentsProps={{
+                                            actionBar: {
+                                                actions: ['today'],
+                                            },
+                                        }}
+                                        /*marked={[
+                                            {
+                                                date: new Date(year, month, 2),
+                                                color: '#46c4f3',
+                                                markCssClass: 'square-mark'
+                                            }, {
+                                                date: new Date(year, month, 4),
+                                                color: '#159833',
+                                                markCssClass: 'triangle-mark'
+                                            }, {
+                                                date: new Date(year, month, 6),
+                                                color: '#b05cbf',
+                                                markCssClass: 'square-mark'
+                                            }, {
+                                                date: new Date(year, month, 6),
+                                                color: '#3adecf',
+                                                markCssClass: 'triangle-mark'
+                                            }, {
+                                                date: new Date(year, month, 6),
+                                                color: '#c8d235'
+                                            }, {
+                                                date: new Date(year, month, 8),
+                                                color: '#46c4f3'
+                                            }, {
+                                                date: new Date(year, month, 10),
+                                                color: '#7e56bd',
+                                                markCssClass: 'square-mark'
+                                            }, {
+                                                date: new Date(year, month, 13),
+                                                color: '#f13f77'
+                                            }, {
+                                                date: new Date(year, month, 16),
+                                                color: '#21b326',
+                                                markCssClass: 'square-mark'
+                                            }, {
+                                                date: new Date(year, month, 16),
+                                                color: '#ffa93a',
+                                                markCssClass: 'triangle-mark'
+                                            },{
+                                                date: new Date(year, month, 18),
+                                                color: '#89d7c9',
+                                                markCssClass: 'triangle-mark'
+                                            }, {
+                                                date: new Date(year, month, 21),
+                                                color: '#ffc400',
+                                                markCssClass: 'square-mark'
+                                            }, {
+                                                date: new Date(year, month, 26),
+                                                color: '#8dec7d',
+                                                markCssClass: 'triangle-mark'
+                                            }
+                                        ]}*/
                                     />
-                                    <DayView
-                                        startDayHour={9}
-                                        endDayHour={14}
-                                    />
-                                    <Appointments />
-                                </Scheduler>*/}
+                                </LocalizationProvider>
+                            </Stack>
+                            <Stack>
+                                <TableContainer component={Paper}>
+                                    <Table sx={{ minWidth: 650 }} aria-label="booking table">
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell align="left">Status</TableCell>
+                                                <TableCell align="left">Vehicle</TableCell>
+                                                <TableCell align="left">Leaving Date</TableCell>
+                                                <TableCell align="left">Return Date</TableCell>
+                                                <TableCell align="left">Location</TableCell>
+                                                <TableCell align="left">Pay</TableCell>
+                                                <TableCell align="left">Damage</TableCell>
+                                                <TableCell align="left">Rental Fee</TableCell>
+                                                <TableCell align="left">Action</TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {
+                                                bookingList.map((row) => (
+                                                    <TableRow>
+                                                        <TableCell align="left">{row.status}</TableCell>
+                                                        <TableCell align="left">{row.vehicle.brand}</TableCell>
+                                                        <TableCell align="left">{row.leavingDate}</TableCell>
+                                                        <TableCell align="left">{row.returnDate}</TableCell>
+                                                        <TableCell align="left">{row.location}</TableCell>
+                                                        <TableCell align="left">{row.payment}</TableCell>
+                                                        <TableCell align="left">{row.lossDamageFee}</TableCell>
+                                                        <TableCell align="left">{row.rentalFee}</TableCell>
+                                                        <TableCell align="left">
+                                                            <Tooltip title="Edit">
+                                                                <IconButton>
+                                                                    <EditIcon color="primary" />
+                                                                </IconButton>
+                                                            </Tooltip>
+                                                            <Tooltip title="Delete">
+                                                                <IconButton
+                                                                    onClick={() => {
+                                                                        swal({
+                                                                            title: "Are you sure?",
+                                                                            text: "Once deleted, you will not be able to recover this imaginary file!",
+                                                                            icon: "warning",
+                                                                            buttons: true,
+                                                                            dangerMode: true,
+                                                                        })
+                                                                            .then((willDelete) => {
+                                                                                if (willDelete) {
+                                                                                    swal("Poof! Your imaginary file has been deleted!", {
+                                                                                        icon: "success",
+                                                                                    });
+                                                                                } else {
+                                                                                    swal("Your imaginary file is safe!");
+                                                                                }
+                                                                            });
+                                                                    }}
+                                                                >
+                                                                    <DeleteIcon color="error" />
+                                                                </IconButton>
+                                                            </Tooltip>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                ))
+                                            }
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
                             </Stack>
                         </Stack>
                     </Stack>
                 </TabPanel>
                 {/*-----------------------------------booking-------------------------*/}
-                <TabPanel value={value} index={1}> {/*-----------booking------------*/}
+                <TabPanel value={value} index={1}>
                     <Stack>
                         <Tabs
-                            value={vehicleFormValue}
-                            onChange={vehicleFormHandleChange}
+                            value={bookingFormValue}
+                            onChange={bookingFormHandleChange}
                             textColor="primary"
                             indicatorColor="primary"
                             aria-label="booking tabs"
@@ -501,6 +547,75 @@ export default function Dashboard() {
                             <Tab value={0} label="All Bookings" />
                             <Tab value={1} label="Update Booking" />
                         </Tabs>
+                        <TabPanel value={bookingFormValue} index={0}>
+                            <TableContainer component={Paper}>
+                                <Table sx={{ minWidth: 650 }} aria-label="booking table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell align="left">Status</TableCell>
+                                            <TableCell align="left">Vehicle</TableCell>
+                                            <TableCell align="left">Leaving Date</TableCell>
+                                            <TableCell align="left">Return Date</TableCell>
+                                            <TableCell align="left">Location</TableCell>
+                                            <TableCell align="left">Pay</TableCell>
+                                            <TableCell align="left">Damage</TableCell>
+                                            <TableCell align="left">Rental Fee</TableCell>
+                                            <TableCell align="left">Action</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {
+                                            bookingList.map((row) => (
+                                                <TableRow>
+                                                    <TableCell align="left">{row.status}</TableCell>
+                                                    <TableCell align="left">{row.vehicle.brand}</TableCell>
+                                                    <TableCell align="left">{row.leavingDate}</TableCell>
+                                                    <TableCell align="left">{row.returnDate}</TableCell>
+                                                    <TableCell align="left">{row.location}</TableCell>
+                                                    <TableCell align="left">{row.payment}</TableCell>
+                                                    <TableCell align="left">{row.lossDamageFee}</TableCell>
+                                                    <TableCell align="left">{row.rentalFee}</TableCell>
+                                                    <TableCell align="left">
+                                                        <Tooltip title="Edit">
+                                                            <IconButton>
+                                                                <EditIcon color="primary" />
+                                                            </IconButton>
+                                                        </Tooltip>
+                                                        <Tooltip title="Delete">
+                                                            <IconButton
+                                                                onClick={() => {
+                                                                    swal({
+                                                                        title: "Are you sure?",
+                                                                        text: "Once deleted, you will not be able to recover this imaginary file!",
+                                                                        icon: "warning",
+                                                                        buttons: true,
+                                                                        dangerMode: true,
+                                                                    })
+                                                                        .then((willDelete) => {
+                                                                            if (willDelete) {
+                                                                                swal("Poof! Your imaginary file has been deleted!", {
+                                                                                    icon: "success",
+                                                                                });
+                                                                            } else {
+                                                                                swal("Your imaginary file is safe!");
+                                                                            }
+                                                                        });
+                                                                }}
+                                                            >
+                                                                <DeleteIcon color="error" />
+                                                            </IconButton>
+                                                        </Tooltip>
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))
+                                        }
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </TabPanel>
+                        <TabPanel value={bookingFormValue} index={1}>
+
+                        </TabPanel>
                     </Stack>
                 </TabPanel>
                 {/*----------------------------------vehicle-------------------------*/}

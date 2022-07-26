@@ -31,7 +31,6 @@ import LocalGasStationIcon from "@mui/icons-material/LocalGasStation";
 import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
 import AcUnitIcon from "@mui/icons-material/AcUnit";
 import NoiseControlOffIcon from "@mui/icons-material/NoiseControlOff";
-import AlertSnackBar from "../../components/Alert";
 import swal from "sweetalert";
 import CardMedia from "@mui/material/CardMedia";
 import pay1 from "../../assets/images/payP.png";
@@ -43,6 +42,8 @@ import vehicleImg1 from "../../assets/images/vehicles/Suzuki-Alto-R (1).png";
 import vehicleImg2 from "../../assets/images/vehicles/Suzuki-Alto-R (2).png";
 import vehicleImg3 from "../../assets/images/vehicles/Suzuki-Alto-R (3).PNG";
 import vehicleImg4 from "../../assets/images/vehicles/Suzuki-Alto-R (4).PNG";
+import BookingService from "../../service/BookingService";
+import VehicleService from "../../service/VehicleService";
 
 const steps = [
     'Search Results',
@@ -62,6 +63,11 @@ class BookingPage extends Component {
             selectVehicle: '',
             alertState: false,
             sortValue: 'Recommended',
+            bookingId: '',
+            payCardNo: '',
+            payDate: '',
+            payName: '',
+            payCode: '',
         }
     }
 
@@ -73,6 +79,47 @@ class BookingPage extends Component {
         this.setState({bookingTabValue: 1});
     }
 
+
+    /*async getBookingId() {
+        let res = await BookingService.fetchNewId();
+        if (res.status === 200) {
+            this.setState({
+                bookingId: res.data.data
+            })
+            this.saveVehicle()
+            console.log("res: " + res.data.data)
+        } else {
+            console.log("fetching error: " + res)
+        }
+    }*/
+
+    saveVehicle = async () => {
+
+        let formData = {
+            bookingId:"b",
+            leavingDate:this.state.searchData.leavingDate,
+            returnDate:this.state.searchData.returnDate,
+            location:this.state.searchData.location,
+            payment:"10000",
+            lossDamageFee:0,
+            rentalFee:2500,
+            status:"Pending",
+            customer:this.state.searchData.customer,
+            vehicle:this.state.selectVehicle,
+            driver:null
+        }
+        let response = await BookingService.createBooking(formData);
+        console.log("res "+response)
+        if (response.status === 201) {
+            swal("Payment successful!", "Your Booking is pending", "success").then((value) => {
+                window.location.assign('/');
+            });
+            //this.clearData()
+        } else {
+            swal("Unsuccessful!", response.data, "error")
+            console.log(response.data)
+        }
+    };
 
     render() {
         let {classes} = this.props;
@@ -106,6 +153,10 @@ class BookingPage extends Component {
 
         const sortChange = (event, newAlignment) => {
             this.setState({sortValue: newAlignment})
+        };
+
+        const confirmPayment = () => {
+            this.saveVehicle()
         };
 
         return (
@@ -214,7 +265,7 @@ class BookingPage extends Component {
                             </Stack>
 
                         </TabPanel>
-                        <TabPanel value={this.state.bookingTabValue} index={1} >
+                        <TabPanel value={this.state.bookingTabValue} index={1}>
                             <Stack direction="row" justifyContent="flex-start"
                                    alignItems="stretch"
                                    spacing={2} sx={{width: '88vw',}}>
@@ -226,7 +277,7 @@ class BookingPage extends Component {
                                     width: '400px',
                                     border: '1px solid #E0E0E0',
                                     borderRadius: '6px',
-                                    padding:'6px',fontFamily: 'Convergence'
+                                    padding: '6px', fontFamily: 'Convergence'
                                 }}>
                                     <h3 align="center" style={{fontFamily: 'Convergence'}}>Booking Details</h3>
                                     <Divider/>
@@ -294,7 +345,7 @@ class BookingPage extends Component {
                                            justifyContent="space-between"
                                            alignItems="center">
                                     <h2 style={{marginLeft: '20px', fontFamily: 'Convergence'}}>More Car Details</h2>
-                                    <h3 style={{ fontFamily: 'Convergence'}}>{this.state.selectVehicle.brand}</h3>
+                                    <h3 style={{fontFamily: 'Convergence'}}>{this.state.selectVehicle.brand}</h3>
                                 </Stack>
                                     <Divider/>
 
@@ -368,19 +419,27 @@ class BookingPage extends Component {
                                                justifyContent="center"
                                                alignItems="center"
                                                spacing={1}>
-                                            <img style={{width:'220px',
-                                                height:'100px',}} src={vehicleImg1} alt=""/>
-                                            <img style={{width:'220px',
-                                                height:'100px',}} src={vehicleImg2} alt=""/>
+                                            <img style={{
+                                                width: '220px',
+                                                height: '100px',
+                                            }} src={vehicleImg1} alt=""/>
+                                            <img style={{
+                                                width: '220px',
+                                                height: '100px',
+                                            }} src={vehicleImg2} alt=""/>
                                         </Stack>
                                         <Stack direction="column"
                                                justifyContent="center"
                                                alignItems="center"
                                                spacing={1}>
-                                            <img style={{width:'220px',
-                                                height:'100px',}} src={vehicleImg3} alt=""/>
-                                            <img style={{width:'220px',
-                                                height:'100px',}} src={vehicleImg4} alt=""/>
+                                            <img style={{
+                                                width: '220px',
+                                                height: '100px',
+                                            }} src={vehicleImg3} alt=""/>
+                                            <img style={{
+                                                width: '220px',
+                                                height: '100px',
+                                            }} src={vehicleImg4} alt=""/>
 
                                         </Stack>
                                     </Stack>
@@ -416,13 +475,13 @@ class BookingPage extends Component {
                                     width: '400px',
                                     border: '1px solid #E0E0E0',
                                     borderRadius: '6px',
-                                    padding:'6px',fontFamily: 'Convergence'
+                                    padding: '6px', fontFamily: 'Convergence'
                                 }}>
                                     <Stack direction="row"
                                            justifyContent="space-between"
                                            alignItems="center">
                                         <h3 style={{marginLeft: '20px', fontFamily: 'Convergence'}}>Your Details</h3>
-                                        <Button >Edit</Button>
+                                        <Button>Edit</Button>
                                     </Stack>
                                     <Divider/>
                                     <Stack direction="column" justifyContent="center" alignItems="flex-start"
@@ -471,11 +530,11 @@ class BookingPage extends Component {
                                     borderRadius: '6px'
                                 }}>
                                     <Stack direction="row"
-                                          justifyContent="space-between"
-                                          alignItems="center">
-                                    <h2 style={{marginLeft: '20px', fontFamily: 'Convergence'}}>Booking Details</h2>
-                                    <Button >Edit</Button>
-                                </Stack>
+                                           justifyContent="space-between"
+                                           alignItems="center">
+                                        <h2 style={{marginLeft: '20px', fontFamily: 'Convergence'}}>Booking Details</h2>
+                                        <Button>Edit</Button>
+                                    </Stack>
 
                                     <Divider/>
                                     <Stack direction="row"
@@ -563,10 +622,11 @@ class BookingPage extends Component {
                                                     className={classes.card_prop_value}>{this.state.selectVehicle.dailyRate}</span>
                                             </IconButton>
                                         </Stack>
-                                        <Stack sx={{height:'100%'}} direction="column" justifyContent="space-around" alignItems="flex-start"
+                                        <Stack sx={{height: '100%'}} direction="column" justifyContent="space-around"
+                                               alignItems="flex-start"
                                                spacing={4}>
                                             <Stack direction="column" justifyContent="center" alignItems="flex-start"
-                                               spacing={1}>
+                                                   spacing={1}>
                                                 <IconButton>
                                                     <NoiseControlOffIcon/>
                                                     <pre className={classes.card_prop_id}> Loss Damage Waiver  : </pre>
@@ -580,9 +640,9 @@ class BookingPage extends Component {
                                                         className={classes.card_prop_value}>0.00</span>
                                                 </IconButton>
                                             </Stack>
-                                            <Stack sx={{paddingLeft:'10px'}} spacing={4} direction="row">
-                                                <h3 style={{ fontFamily: 'Convergence'}}>Total Price</h3>
-                                                <h3 style={{ fontFamily: 'Convergence'}}>LKR.10000.00</h3>
+                                            <Stack sx={{paddingLeft: '10px'}} spacing={4} direction="row">
+                                                <h3 style={{fontFamily: 'Convergence'}}>Total Price</h3>
+                                                <h3 style={{fontFamily: 'Convergence'}}>LKR.10000.00</h3>
                                             </Stack>
 
                                         </Stack>
@@ -623,87 +683,108 @@ class BookingPage extends Component {
                                 }}>
                                     <h2 style={{marginLeft: '20px', fontFamily: 'Convergence'}}>Payment</h2>
                                     <Divider/>
-                                    <Stack direction="column" justifyContent="center" alignItems="flex-start"
-                                           spacing={1}>
-                                        <Stack direction="row" justifyContent="center" spacing={2}
-                                               sx={{alignSelf: 'center'}}>
-                                            <Stack>
-                                                <CardMedia component="img" height="60px" image={pay1} alt="paypal"/>
-                                            </Stack>
-                                            <Stack>
-                                                <CardMedia component="img" height="60px" image={pay2} alt="master"/>
-                                            </Stack>
-                                            <Stack>
-                                                <CardMedia component="img" height="60px" image={pay3} alt="visa"/>
-                                            </Stack>
-                                            <Stack>
-                                                <CardMedia component="img" height="60px" image={pay4} alt="am"/>
+                                    <ValidatorForm onSubmit={confirmPayment} onError={errors => console.log(errors)}>
+                                        <Stack direction="column" justifyContent="center" alignItems="flex-start"
+                                               spacing={1}>
+                                            <Stack direction="row" justifyContent="center" spacing={2}
+                                                   sx={{alignSelf: 'center'}}>
+                                                <Stack>
+                                                    <CardMedia component="img" height="60px" image={pay1} alt="paypal"/>
+                                                </Stack>
+                                                <Stack>
+                                                    <CardMedia component="img" height="60px" image={pay2} alt="master"/>
+                                                </Stack>
+                                                <Stack>
+                                                    <CardMedia component="img" height="60px" image={pay3} alt="visa"/>
+                                                </Stack>
+                                                <Stack>
+                                                    <CardMedia component="img" height="60px" image={pay4} alt="am"/>
+                                                </Stack>
+
                                             </Stack>
 
-                                        </Stack>
 
-
-                                        <ValidatorForm onError={errors => console.log(errors)}>
                                             <Stack width="100%" direction="column" justifyContent="center"
                                                    alignItems="center" spacing={2}>
                                                 <Divider/>
-                                                <TextValidator width="60%" label="Caed Number" variant="outlined"
-                                                               helperText="" size="small"
-                                                               color="primary"
-                                                               errorMessages="Incorrect entry !"
-                                                               validators={['required',]}
-                                                />
 
                                                 <Stack direction="row" justifyContent="center" alignItems="stretch"
                                                        spacing={2}>
+                                                    <TextValidator label="Card Number" variant="outlined"
+                                                                   helperText="" size="small"
+                                                                   color="primary"
+                                                                   errorMessages="Incorrect entry !"
+                                                                   validators={['required',]}
+                                                                   value={this.state.payCardNo}
+                                                                   onChange={(e) => {
+                                                                       this.setState({payCardNo:e.target.value})
+                                                                   }}
+                                                    />
                                                     <TextValidator label="Name on Card" variant="outlined" helperText=""
                                                                    size="small"
                                                                    color="primary"
                                                                    errorMessages="Incorrect entry !"
                                                                    validators={['required',]}
+                                                                   value={this.state.payName}
+                                                                   onChange={(e) => {
+                                                                       this.setState({payName:e.target.value})
+                                                                   }}
                                                     />
+                                                </Stack>
+                                                <Stack direction="row" justifyContent="center" alignItems="stretch"
+                                                       spacing={2}>
+
                                                     <TextValidator label="Expire Date" variant="outlined" helperText=""
                                                                    size="small"
                                                                    color="primary"
                                                                    errorMessages="Incorrect entry !"
                                                                    validators={['required',]}
+                                                                   value={this.state.payDate}
+                                                                   onChange={(e) => {
+                                                                       this.setState({payDate:e.target.value})
+                                                                   }}
                                                     />
                                                     <TextValidator label="CVV Code" variant="outlined" helperText=""
                                                                    size="small"
                                                                    color="primary"
                                                                    errorMessages="Incorrect entry !"
                                                                    validators={['required',]}
+                                                                   value={this.state.payCode}
+                                                                   onChange={(e) => {
+                                                                       this.setState({payCode:e.target.value})
+                                                                   }}
                                                     />
                                                 </Stack>
-                                                <Stack></Stack>
 
                                             </Stack>
-                                        </ValidatorForm>
-                                    </Stack>
+
+                                        </Stack>
+
                                     <Divider/>
                                     <Stack direction="row"
                                            justifyContent="space-between"
                                            alignItems="center"
                                            spacing={4}>
-                                        <Stack sx={{paddingLeft:'10px'}} spacing={4} direction="row">
-                                            <h3 style={{ fontFamily: 'Convergence'}}>Total Price</h3>
-                                            <h3 style={{ fontFamily: 'Convergence'}}>LKR.10000.00</h3>
+                                        <Stack sx={{paddingLeft: '10px'}} spacing={4} direction="row">
+                                            <h3 style={{fontFamily: 'Convergence'}}>Total Price</h3>
+                                            <h3 style={{fontFamily: 'Convergence'}}>LKR.10000.00</h3>
                                         </Stack>
-                                        <Stack sx={{paddingLeft:'10px'}} spacing={4} direction="row">
+                                        <Stack sx={{paddingLeft: '10px'}} spacing={4} direction="row">
                                             <Button
                                                 Button onClick={goDetails} color="primary" variant="contained" style={{
                                                 fontWeight: 'bold',
                                                 width: '95px',
                                                 borderRadius: 15
-                                                 }}>
-                                                 Cancel
+                                            }}>
+                                                Cancel
                                             </Button>
-                                            <Button onClick={goConfirmation} color="primary" variant="contained"
-                                                style={{fontWeight: 'bold', width: '200px', borderRadius: 15}}>
+                                            <Button type="submit" color="primary" variant="contained"
+                                                    style={{fontWeight: 'bold', width: '200px', borderRadius: 15}}>
                                                 Request to
                                                 Booking</Button>
-                                         </Stack>
+                                        </Stack>
                                     </Stack>
+                                    </ValidatorForm>
                                 </Stack>
                                 <Stack direction="column" justifyContent="flex-start"
                                        alignItems="stretch"
@@ -761,7 +842,6 @@ class BookingPage extends Component {
                         </TabPanel>
                     </Stack>
                 </Stack>
-                <AlertSnackBar open={this.state.alertState} message="message!"/>
 
             </div>
         )
