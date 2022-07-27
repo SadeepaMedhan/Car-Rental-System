@@ -55,6 +55,7 @@ import '@mobiscroll/react-lite/dist/css/mobiscroll.min.css';
 import BookingService from "../../service/BookingService";
 import vehicleImg1 from "../../assets/images/vehicles/v1f.jpg";
 import Chip from "@mui/material/Chip";
+import Calendar from "react-calendar";
 
 
 export default function Dashboard() {
@@ -76,36 +77,59 @@ export default function Dashboard() {
     const [driversFormValue, setDriversFormValue] = React.useState(0);
     const [customersFormValue, setCustomersFormValue] = React.useState(0);
     const [bookingFormValue, setBookingFormValue] = React.useState(0);
+    const [requestFormValue, setRquestFormValue] = React.useState(0);
     const [driverSelectDate, setDriverSelectDate] = React.useState(new Date());
     const [date, setDate] = React.useState(() => new Date(2022, 1, 1, 1, 1));
     React.useEffect(() => {
         loadBookingData();
-    },[]);
+    }, []);
 
     const now = new Date();
 
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
+
         function getTittle(newValue) {
             switch (newValue) {
-                case 0: return"Dashboard"
-                case 1: loadBookingData(); return"Booking Management"
-                case 2: loadVehicleData(); return"Vehicle Management"
-                case 3: loadDriversData(); return"Driver Management"
-                case 4: loadCustomersData(); return"Customer Management"
-                case 5: return"Reports"
-                case 7: return"Checking Requests"
-                case 8: return"Vehicle Maintenance"
-                case 9: return"Damages"
-                case 10: return"Schedule"
-                default: return"Dashboard"
+                case 0:
+                    return "Dashboard"
+                case 1:
+                    loadBookingData();
+                    return "Booking Management"
+                case 2:
+                    loadVehicleData();
+                    return "Vehicle Management"
+                case 3:
+                    loadDriversData();
+                    return "Driver Management"
+                case 4:
+                    loadCustomersData();
+                    return "Customer Management"
+                case 5:
+                    return "Reports"
+                case 7:
+                    return "Checking Requests"
+                case 8:
+                    return "Vehicle Maintenance"
+                case 9:
+                    return "Damages"
+                case 10:
+                    return "Schedule"
+                default:
+                    return "Dashboard"
             }
-        }setTittle(getTittle(newValue))
+        }
+
+        setTittle(getTittle(newValue))
     }
 
-    const handleDrawerOpen = () => {setOpen(true)}
-    const handleDrawerClose = () => {setOpen(false)}
+    const handleDrawerOpen = () => {
+        setOpen(true)
+    }
+    const handleDrawerClose = () => {
+        setOpen(false)
+    }
 
 
     const vehicleFormHandleChange = (event, newValue) => {
@@ -120,14 +144,20 @@ export default function Dashboard() {
         console.log(data)
         let params = {id: data}
         let res = await VehicleService.deleteVehicle(params);
-        if (res.status === 200) {loadVehicleData();
-        } else {console.log(res)}
+        if (res.status === 200) {
+            loadVehicleData();
+        } else {
+            console.log(res)
+        }
     }
 
     const loadVehicleData = async () => {
         const res = await VehicleService.fetchVehicles();
-        if (res.status === 200) {setVehicleList( res.data.data)}
-        else {console.log("fetching error: " + res)}
+        if (res.status === 200) {
+            setVehicleList(res.data.data)
+        } else {
+            console.log("fetching error: " + res)
+        }
     }
     // driver
     const driverFormHandleChange = (event, newValue) => {
@@ -142,14 +172,20 @@ export default function Dashboard() {
         console.log(data)
         let params = {id: data}
         let res = await DriverService.deleteDriver(params);
-        if (res.status === 200) {loadDriversData();
-        } else {console.log(res)}
+        if (res.status === 200) {
+            loadDriversData();
+        } else {
+            console.log(res)
+        }
     }
 
     const loadDriversData = async () => {
         const res = await DriverService.fetchDrivers();
-        if (res.status === 200) {setDriversList( res.data.data)}
-        else {console.log("fetching error: " + res)}
+        if (res.status === 200) {
+            setDriversList(res.data.data)
+        } else {
+            console.log("fetching error: " + res)
+        }
     }
 
     // customer
@@ -165,14 +201,20 @@ export default function Dashboard() {
         console.log(data)
         let params = {id: data}
         let res = await CustomerService.deleteCustomer(params);
-        if (res.status === 200) {loadCustomersData();
-        } else {console.log(res)}
+        if (res.status === 200) {
+            loadCustomersData();
+        } else {
+            console.log(res)
+        }
     }
 
     const loadCustomersData = async () => {
         const res = await CustomerService.fetchCustomers();
-        if (res.status === 200) {setCustomersList( res.data.data)}
-        else {console.log("fetching error: " + res)}
+        if (res.status === 200) {
+            setCustomersList(res.data.data)
+        } else {
+            console.log("fetching error: " + res)
+        }
     }
     // booking
     const bookingFormHandleChange = (event, newValue) => {
@@ -182,8 +224,11 @@ export default function Dashboard() {
 
     const loadBookingData = async () => {
         const res = await BookingService.fetchBooking();
-        if (res.status === 200) {setBookingList( res.data.data)}
-        else {console.log("fetching error: " + res)}
+        if (res.status === 200) {
+            setBookingList(res.data.data)
+        } else {
+            console.log("fetching error: " + res)
+        }
     }
     const updateBookingData = async (data) => {
         let response = await BookingService.updateBooking(data);
@@ -194,19 +239,24 @@ export default function Dashboard() {
             console.log(response.data)
         }
     }
-
+    const requestFormHandleChange = (event, newValue) => {
+        //loadBookingData()
+        setRquestFormValue(newValue);
+    }
     return (
-        <Box sx={{ display: 'flex' }} >
-            <img src={backImg2} style={{position:"fixed",
-                width: '100vw', height:'100vh', backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat', backgroundSize: 'cover', opacity:'30%',}}/>
-            <CssBaseline />
+        <Box sx={{display: 'flex'}}>
+            <img src={backImg2} style={{
+                position: "fixed",
+                width: '100vw', height: '100vh', backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat', backgroundSize: 'cover', opacity: '30%',
+            }}/>
+            <CssBaseline/>
             <AppBar position="fixed" open={open}>
                 <Toolbar>
                     <IconButton color="inherit" aria-label="open drawer" edge="start"
-                        onClick={handleDrawerOpen}
-                        sx={{marginRight: 5, ...(open && { display: 'none' }),}}>
-                        <MenuIcon />
+                                onClick={handleDrawerOpen}
+                                sx={{marginRight: 5, ...(open && {display: 'none'}),}}>
+                        <MenuIcon/>
                     </IconButton>
                     <Typography variant="h6" noWrap component="div">
                         {tittle}
@@ -217,62 +267,73 @@ export default function Dashboard() {
             <Drawer variant="permanent" open={open}>
                 <DrawerHeader>
                     <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+                        {theme.direction === 'rtl' ? <ChevronRightIcon/> : <ChevronLeftIcon/>}
                     </IconButton>
                 </DrawerHeader>
-                <Divider />
+                <Divider/>
                 <Tabs orientation="vertical"
-                    value={value} onChange={handleChange}
-                    aria-label="dashboard tabs" sx={{ borderRight: 1, borderColor: 'divider' }}>
+                      value={value} onChange={handleChange}
+                      aria-label="dashboard tabs" sx={{borderRight: 1, borderColor: 'divider'}}>
 
 
                     <Tab className={classes.tab} icon={
-                        <DashboardIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start" label="Dashboard" {...a11yProps(0)} />
+                        <DashboardIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start"
+                         label="Dashboard" {...a11yProps(0)} />
                     <Tab className={classes.tab} icon={
-                        <CollectionsBookmarkIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start" label="Booking" {...a11yProps(1)} />
+                        <CollectionsBookmarkIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>}
+                         iconPosition="start" label="Booking" {...a11yProps(1)} />
                     <Tab className={classes.tab} icon={
-                        <DirectionsCarIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start" label="Vehicle" {...a11yProps(2)} />
+                        <DirectionsCarIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start"
+                         label="Vehicle" {...a11yProps(2)} />
                     <Tab className={classes.tab} icon={
-                        <PeopleIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start" label="Driver" {...a11yProps(3)} />
+                        <PeopleIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start"
+                         label="Driver" {...a11yProps(3)} />
                     <Tab className={classes.tab} icon={
-                        <SwitchAccountIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start" label="Customer" {...a11yProps(4)} />
+                        <SwitchAccountIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start"
+                         label="Customer" {...a11yProps(4)} />
                     <Tab className={classes.tab} icon={
-                        <LeaderboardIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start" label="Reports" {...a11yProps(5)} />
-                    <Divider />
+                        <LeaderboardIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start"
+                         label="Reports" {...a11yProps(5)} />
+                    <Divider/>
                     <Tab className={classes.tab} icon={
-                        <DashboardIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start" label="Requests" {...a11yProps(6)} />
+                        <DashboardIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start"
+                         label="Requests" {...a11yProps(6)} />
                     <Tab className={classes.tab} icon={
-                        <CollectionsBookmarkIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start" label="Maintenance" {...a11yProps(7)} />
+                        <CollectionsBookmarkIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>}
+                         iconPosition="start" label="Maintenance" {...a11yProps(7)} />
                     <Tab className={classes.tab} icon={
-                        <DirectionsCarIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start" label="Damages" {...a11yProps(8)} />
+                        <DirectionsCarIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start"
+                         label="Damages" {...a11yProps(8)} />
                     <Tab className={classes.tab} icon={
-                        <PeopleIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start" label="Schedule" {...a11yProps(9)} />
+                        <PeopleIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start"
+                         label="Schedule" {...a11yProps(9)} />
 
                 </Tabs>
             </Drawer>
-            <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-                <DrawerHeader />
+            <Box component="main" sx={{flexGrow: 1, p: 3}}>
+                <DrawerHeader/>
                 {/*-----------------------------------Dash-------------------------*/}
                 <TabPanel value={value} index={0}>
 
                     <Stack spacing={2}>
-                        <Stack direction={{ xs: 'column', sm: 'row' }}
-                               spacing={{ xs: 1, sm: 2, md: 4 }}
+                        <Stack direction={{xs: 'column', sm: 'row'}}
+                               spacing={{xs: 1, sm: 2, md: 4}}
                                justifyContent="center"
                                alignItems="center"
-                               mt={2} >
+                               mt={2}>
 
                             <Stack className={classes.card_box}>
                                 <div style={{backgroundColor: '#27ae60'}} className={classes.card_logo_box}>
                                     <PeopleAltIcon style={{fontSize: '34px'}}
-                                                   className={classes.card_logo} />
+                                                   className={classes.card_logo}/>
                                 </div>
-                                <Stack direction="column" justifyContent="flex-start" alignItems="flex-end" spacing={1} className={classes.card_mainAria}>
+                                <Stack direction="column" justifyContent="flex-start" alignItems="flex-end" spacing={1}
+                                       className={classes.card_mainAria}>
                                     <h3>Customers</h3>
                                     <h2>750</h2>
-                                </Stack><Divider />
+                                </Stack><Divider/>
                                 <Stack direction="row" justifyContent="flex-start" spacing={1}
-                                       alignItems="center" style={{width: '100%', height:'40px'}}>
+                                       alignItems="center" style={{width: '100%', height: '40px'}}>
                                     <EventIcon/><h3>Last 7 Days</h3>
                                 </Stack>
                             </Stack>
@@ -280,7 +341,7 @@ export default function Dashboard() {
                             <Stack className={classes.card_box}>
                                 <div style={{backgroundColor: '#34495e'}} className={classes.card_logo_box}>
                                     <DirectionsCarIcon style={{fontSize: '34px'}}
-                                                       className={classes.card_logo} />
+                                                       className={classes.card_logo}/>
                                 </div>
                                 <Stack direction="column" justifyContent="flex-start"
                                        alignItems="flex-end" spacing={1}
@@ -288,9 +349,9 @@ export default function Dashboard() {
                                     <h3>Cars</h3>
                                     <h2>27</h2>
                                 </Stack>
-                                <Divider />
+                                <Divider/>
                                 <Stack direction="row" justifyContent="flex-start" spacing={1}
-                                       alignItems="center" style={{width: '100%', height:'40px'}}>
+                                       alignItems="center" style={{width: '100%', height: '40px'}}>
                                     <EventIcon/><h3>Last 7 Days</h3>
                                 </Stack>
                             </Stack>
@@ -298,7 +359,7 @@ export default function Dashboard() {
                             <Stack className={classes.card_box}>
                                 <div style={{backgroundColor: '#f39c12'}} className={classes.card_logo_box}>
                                     <CollectionsBookmarkIcon style={{fontSize: '34px'}}
-                                                             className={classes.card_logo} />
+                                                             className={classes.card_logo}/>
                                 </div>
                                 <Stack direction="column" justifyContent="flex-start"
                                        alignItems="flex-end" spacing={1}
@@ -306,9 +367,9 @@ export default function Dashboard() {
                                     <h3>Rentals</h3>
                                     <h2>550</h2>
                                 </Stack>
-                                <Divider />
+                                <Divider/>
                                 <Stack direction="row" justifyContent="flex-start" spacing={1}
-                                       alignItems="center" style={{width: '100%', height:'40px'}}>
+                                       alignItems="center" style={{width: '100%', height: '40px'}}>
                                     <EventIcon/><h3>Last 7 Days</h3>
                                 </Stack>
                             </Stack>
@@ -316,7 +377,7 @@ export default function Dashboard() {
                             <Stack className={classes.card_box}>
                                 <div style={{backgroundColor: '#8e44ad'}} className={classes.card_logo_box}>
                                     <BadgeIcon style={{fontSize: '34px'}}
-                                               className={classes.card_logo} />
+                                               className={classes.card_logo}/>
                                 </div>
                                 <Stack direction="column" justifyContent="flex-start"
                                        alignItems="flex-end" spacing={1}
@@ -324,9 +385,9 @@ export default function Dashboard() {
                                     <h3>Drivers</h3>
                                     <h2>27</h2>
                                 </Stack>
-                                <Divider />
+                                <Divider/>
                                 <Stack direction="row" justifyContent="flex-start" spacing={1}
-                                       alignItems="center" style={{width: '100%', height:'40px'}}>
+                                       alignItems="center" style={{width: '100%', height: '40px'}}>
                                     <EventIcon/><h3>Last 7 Days</h3>
                                 </Stack>
                             </Stack>
@@ -334,7 +395,7 @@ export default function Dashboard() {
                             <Stack className={classes.card_box}>
                                 <div style={{backgroundColor: '#16a085'}} className={classes.card_logo_box}>
                                     <HandymanIcon style={{fontSize: '34px'}}
-                                                  className={classes.card_logo} />
+                                                  className={classes.card_logo}/>
                                 </div>
                                 <Stack direction="column" justifyContent="flex-start"
                                        alignItems="flex-end" spacing={1}
@@ -342,14 +403,14 @@ export default function Dashboard() {
                                     <h3>Maintain</h3>
                                     <h2>550</h2>
                                 </Stack>
-                                <Divider />
+                                <Divider/>
                                 <Stack direction="row" justifyContent="flex-start" spacing={1}
-                                       alignItems="center" style={{width: '100%', height:'40px'}}>
+                                       alignItems="center" style={{width: '100%', height: '40px'}}>
                                     <EventIcon/><h3>Last 7 Days</h3>
                                 </Stack>
                             </Stack>
                         </Stack>
-                        <Stack direction="row"  alignItems="center">
+                        <Stack direction="row" alignItems="center">
                             <Stack>
                                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                                     <StaticDatePicker
@@ -418,7 +479,7 @@ export default function Dashboard() {
                             </Stack>
                             <Stack>
                                 <TableContainer component={Paper}>
-                                    <Table sx={{ minWidth: 650 }} aria-label="booking table">
+                                    <Table sx={{minWidth: 650}} aria-label="booking table">
                                         <TableHead>
                                             <TableRow>
                                                 <TableCell align="left">Status</TableCell>
@@ -447,7 +508,7 @@ export default function Dashboard() {
                                                         <TableCell align="left">
                                                             <Tooltip title="Edit">
                                                                 <IconButton>
-                                                                    <EditIcon color="primary" />
+                                                                    <EditIcon color="primary"/>
                                                                 </IconButton>
                                                             </Tooltip>
                                                             <Tooltip title="Delete">
@@ -471,7 +532,7 @@ export default function Dashboard() {
                                                                             });
                                                                     }}
                                                                 >
-                                                                    <DeleteIcon color="error" />
+                                                                    <DeleteIcon color="error"/>
                                                                 </IconButton>
                                                             </Tooltip>
                                                         </TableCell>
@@ -495,12 +556,12 @@ export default function Dashboard() {
                             indicatorColor="primary"
                             aria-label="booking tabs"
                         >
-                            <Tab value={0} label="All Bookings" />
-                            <Tab value={1} label="Update Booking" />
+                            <Tab value={0} label="All Bookings"/>
+                            <Tab value={1} label="Update Booking"/>
                         </Tabs>
                         <TabPanel value={bookingFormValue} index={0}>
                             <TableContainer component={Paper}>
-                                <Table sx={{ minWidth: 650 }} aria-label="booking table">
+                                <Table sx={{minWidth: 650}} aria-label="booking table">
                                     <TableHead>
                                         <TableRow>
                                             <TableCell align="left">Status</TableCell>
@@ -519,7 +580,9 @@ export default function Dashboard() {
                                             bookingList.map((row) => (
                                                 <TableRow>
                                                     <TableCell align="left">
-                                                        <Chip label={row.status} color={row.status === "Pending"? "warning":"success"} clickable onClick={() => {
+                                                        <Chip label={row.status}
+                                                              color={row.status === "Pending" ? "warning" : "success"}
+                                                              clickable onClick={() => {
                                                             swal({
                                                                 title: "Are you sure?",
                                                                 text: "Accept this Rental!",
@@ -528,24 +591,24 @@ export default function Dashboard() {
                                                             })
                                                                 .then((a) => {
                                                                     if (a) {
-                                                                        row.status="Accept";
+                                                                        row.status = "Accept";
                                                                         updateBookingData(row)
                                                                         swal("This Rental has been accept!", {
                                                                             icon: "success",
                                                                         });
                                                                     }
                                                                 });
-                                                        }} />
+                                                        }}/>
                                                     </TableCell>
                                                     <TableCell align="left">
-                                                        <Avatar alt="img" src={vehicleImg1} />
+                                                        <Avatar alt="img" src={vehicleImg1}/>
                                                         {row.vehicle.brand}
                                                     </TableCell>
                                                     <TableCell align="left">{row.leavingDate}</TableCell>
                                                     <TableCell align="left">{row.returnDate}</TableCell>
                                                     <TableCell align="left">{row.location}</TableCell>
                                                     <TableCell align="left">
-                                                        <Avatar alt="user" />
+                                                        <Avatar alt="user"/>
                                                         {row.customer.cusName}
                                                     </TableCell>
                                                     <TableCell align="left">{row.payment}</TableCell>
@@ -553,7 +616,7 @@ export default function Dashboard() {
                                                     <TableCell align="left">
                                                         <Tooltip title="Edit">
                                                             <IconButton>
-                                                                <EditIcon color="primary" />
+                                                                <EditIcon color="primary"/>
                                                             </IconButton>
                                                         </Tooltip>
                                                         <Tooltip title="Delete">
@@ -577,7 +640,7 @@ export default function Dashboard() {
                                                                         });
                                                                 }}
                                                             >
-                                                                <DeleteIcon color="error" />
+                                                                <DeleteIcon color="error"/>
                                                             </IconButton>
                                                         </Tooltip>
                                                     </TableCell>
@@ -595,7 +658,7 @@ export default function Dashboard() {
                 </TabPanel>
                 {/*----------------------------------vehicle-------------------------*/}
                 <TabPanel value={value} index={2}>
-                    <Stack >
+                    <Stack>
                         <Tabs
                             value={vehicleFormValue}
                             onChange={vehicleFormHandleChange}
@@ -603,14 +666,14 @@ export default function Dashboard() {
                             indicatorColor="secondary"
                             aria-label="secondary tabs example"
                         >
-                            <Tab value={0} label="All" />
-                            <Tab value={1} label="Add New Vehicle" />
-                            <Tab value={2} label="Update Vehicle" />
+                            <Tab value={0} label="All"/>
+                            <Tab value={1} label="Add New Vehicle"/>
+                            <Tab value={2} label="Update Vehicle"/>
                         </Tabs>
 
                         <TabPanel value={vehicleFormValue} index={0}>
                             <TableContainer component={Paper}>
-                                <Table sx={{ minWidth: 650 }} aria-label="vehicle table">
+                                <Table sx={{minWidth: 650}} aria-label="vehicle table">
                                     <TableHead>
                                         <TableRow>
                                             <TableCell align="left">Reg.No</TableCell>
@@ -627,7 +690,10 @@ export default function Dashboard() {
                                             vehicleList.map((row) => (
                                                 <TableRow>
                                                     <TableCell align="left">{row.regNo}</TableCell>
-                                                    <TableCell align="left">{row.brand}</TableCell>
+                                                    <TableCell align="left">
+                                                        <Avatar alt="img" src={vehicleImg1}/>
+                                                        {row.brand}
+                                                    </TableCell>
                                                     <TableCell align="left">{row.type}</TableCell>
                                                     <TableCell align="left">{row.transmissionType}</TableCell>
                                                     <TableCell align="left">{row.fuelType}</TableCell>
@@ -637,11 +703,11 @@ export default function Dashboard() {
                                                             <IconButton
                                                                 onClick={() => {
                                                                     console.log("edit icon clicked!")
-                                                                   updateVehicle(row);
+                                                                    updateVehicle(row);
 
                                                                 }}
                                                             >
-                                                                <EditIcon color="primary" />
+                                                                <EditIcon color="primary"/>
                                                             </IconButton>
                                                         </Tooltip>
                                                         <Tooltip title="Delete">
@@ -666,7 +732,7 @@ export default function Dashboard() {
                                                                         });
                                                                 }}
                                                             >
-                                                                <DeleteIcon color="error" />
+                                                                <DeleteIcon color="error"/>
                                                             </IconButton>
                                                         </Tooltip>
                                                     </TableCell>
@@ -687,7 +753,7 @@ export default function Dashboard() {
                 </TabPanel>
                 {/*----------------------------------driver---------------------------*/}
                 <TabPanel value={value} index={3}>
-                    <Stack >
+                    <Stack>
                         <Tabs
                             value={driversFormValue}
                             onChange={driverFormHandleChange}
@@ -695,14 +761,14 @@ export default function Dashboard() {
                             indicatorColor="secondary"
                             aria-label="driver tabs"
                         >
-                            <Tab value={0} label="All" />
-                            <Tab value={1} label="Add New Driver" />
-                            <Tab value={2} label="Update Driver" />
+                            <Tab value={0} label="All"/>
+                            <Tab value={1} label="Add New Driver"/>
+                            <Tab value={2} label="Update Driver"/>
                         </Tabs>
 
                         <TabPanel value={driversFormValue} index={0}>
                             <TableContainer component={Paper}>
-                                <Table sx={{ minWidth: 650 }} aria-label="driver table">
+                                <Table sx={{minWidth: 650}} aria-label="driver table">
                                     <TableHead>
                                         <TableRow>
                                             <TableCell align="left">Name</TableCell>
@@ -733,7 +799,7 @@ export default function Dashboard() {
 
                                                                 }}
                                                             >
-                                                                <EditIcon color="primary" />
+                                                                <EditIcon color="primary"/>
                                                             </IconButton>
                                                         </Tooltip>
                                                         <Tooltip title="Delete">
@@ -759,7 +825,7 @@ export default function Dashboard() {
 
                                                                 }}
                                                             >
-                                                                <DeleteIcon color="error" />
+                                                                <DeleteIcon color="error"/>
                                                             </IconButton>
                                                         </Tooltip>
                                                     </TableCell>
@@ -780,7 +846,7 @@ export default function Dashboard() {
                 </TabPanel>
                 {/*----------------------------------customer-------------------------*/}
                 <TabPanel value={value} index={4}>
-                    <Stack >
+                    <Stack>
                         <Tabs
                             value={customersFormValue}
                             onChange={customerFormHandleChange}
@@ -788,14 +854,14 @@ export default function Dashboard() {
                             indicatorColor="secondary"
                             aria-label="customer tabs"
                         >
-                            <Tab value={0} label="All" />
-                            <Tab value={1} label="Add New Customer" />
-                            <Tab value={2} label="Update Customer" />
+                            <Tab value={0} label="All"/>
+                            <Tab value={1} label="Add New Customer"/>
+                            <Tab value={2} label="Update Customer"/>
                         </Tabs>
 
                         <TabPanel value={customersFormValue} index={0}>
                             <TableContainer component={Paper}>
-                                <Table sx={{ minWidth: 650 }} aria-label="customer table">
+                                <Table sx={{minWidth: 650}} aria-label="customer table">
                                     <TableHead>
                                         <TableRow>
                                             <TableCell align="left">Name</TableCell>
@@ -826,7 +892,7 @@ export default function Dashboard() {
 
                                                                 }}
                                                             >
-                                                                <EditIcon color="primary" />
+                                                                <EditIcon color="primary"/>
                                                             </IconButton>
                                                         </Tooltip>
                                                         <Tooltip title="Delete">
@@ -851,7 +917,7 @@ export default function Dashboard() {
                                                                         })
                                                                 }}
                                                             >
-                                                                <DeleteIcon color="error" />
+                                                                <DeleteIcon color="error"/>
                                                             </IconButton>
                                                         </Tooltip>
                                                     </TableCell>
@@ -873,15 +939,402 @@ export default function Dashboard() {
                 {/*-----------------------------------reports-------------------------*/}
                 <TabPanel value={value} index={5}></TabPanel>
                 {/*-----------------------------------request-------------------------*/}
-                <TabPanel value={value} index={7}></TabPanel>
+                <TabPanel value={value} index={7}>
+                    <Stack>
+                        <Tabs
+                            value={requestFormValue}
+                            onChange={requestFormHandleChange}
+                            textColor="primary"
+                            indicatorColor="primary"
+                            aria-label="booking tabs"
+                        >
+                            <Tab value={0} label="Pending"/>
+                            <Tab value={1} label="Accept"/>
+                            <Tab value={2} label="NIC verify"/>
+                        </Tabs>
+                        <TabPanel value={requestFormValue} index={0}>
+                            <TableContainer component={Paper}>
+                                <Table sx={{minWidth: 650}} aria-label="pending table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell align="left">Status</TableCell>
+                                            <TableCell align="left">Vehicle</TableCell>
+                                            <TableCell align="left">Pickup</TableCell>
+                                            <TableCell align="left">Return</TableCell>
+                                            <TableCell align="left">Location</TableCell>
+                                            <TableCell align="left">Customer</TableCell>
+                                            <TableCell align="left">Pay</TableCell>
+                                            <TableCell align="left">Rental Fee</TableCell>
+                                            <TableCell align="left">Action</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {
+                                            bookingList.map((row) => (
+
+                                                    row.status === "Pending" &&
+                                                        <TableRow>
+                                                            <TableCell align="left">
+                                                                <Chip label={row.status}
+                                                                      color={row.status === "Pending" ? "warning" : "success"}
+                                                                      clickable onClick={() => {
+                                                                    swal({
+                                                                        title: "Are you sure?",
+                                                                        text: "Accept this Rental!",
+                                                                        icon: "info",
+                                                                        buttons: true,
+                                                                    })
+                                                                        .then((a) => {
+                                                                            if (a) {
+                                                                                row.status = "Accept";
+                                                                                updateBookingData(row)
+                                                                                swal("This Rental has been accept!", {
+                                                                                    icon: "success",
+                                                                                });
+                                                                            }
+                                                                        });
+                                                                }}/>
+                                                            </TableCell>
+                                                            <TableCell align="left">
+                                                                <Avatar alt="img" src={vehicleImg1}/>
+                                                                {row.vehicle.brand}
+                                                            </TableCell>
+                                                            <TableCell align="left">{row.leavingDate}</TableCell>
+                                                            <TableCell align="left">{row.returnDate}</TableCell>
+                                                            <TableCell align="left">{row.location}</TableCell>
+                                                            <TableCell align="left">
+                                                                <Avatar alt="user"/>
+                                                                {row.customer.cusName}
+                                                            </TableCell>
+                                                            <TableCell align="left">{row.payment}</TableCell>
+                                                            <TableCell align="left">{row.rentalFee}</TableCell>
+                                                            <TableCell align="left">
+                                                                <Tooltip title="Edit">
+                                                                    <IconButton>
+                                                                        <EditIcon color="primary"/>
+                                                                    </IconButton>
+                                                                </Tooltip>
+                                                                <Tooltip title="Delete">
+                                                                    <IconButton
+                                                                        onClick={() => {
+                                                                            swal({
+                                                                                title: "Are you sure?",
+                                                                                text: "Once deleted, you will not be able to recover this imaginary file!",
+                                                                                icon: "warning",
+                                                                                buttons: true,
+                                                                                dangerMode: true,
+                                                                            })
+                                                                                .then((willDelete) => {
+                                                                                    if (willDelete) {
+                                                                                        swal("Poof! Your imaginary file has been deleted!", {
+                                                                                            icon: "success",
+                                                                                        });
+                                                                                    } else {
+                                                                                        swal("Your imaginary file is safe!");
+                                                                                    }
+                                                                                });
+                                                                        }}
+                                                                    >
+                                                                        <DeleteIcon color="error"/>
+                                                                    </IconButton>
+                                                                </Tooltip>
+                                                            </TableCell>
+                                                        </TableRow>
+
+                                            ))
+                                        }
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </TabPanel>
+                        <TabPanel value={requestFormValue} index={1}>
+                            <TableContainer component={Paper}>
+                                <Table sx={{minWidth: 650}} aria-label="pending table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell align="left">Status</TableCell>
+                                            <TableCell align="left">Vehicle</TableCell>
+                                            <TableCell align="left">Pickup</TableCell>
+                                            <TableCell align="left">Return</TableCell>
+                                            <TableCell align="left">Location</TableCell>
+                                            <TableCell align="left">Customer</TableCell>
+                                            <TableCell align="left">Pay</TableCell>
+                                            <TableCell align="left">Rental Fee</TableCell>
+                                            <TableCell align="left">Action</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {
+                                            bookingList.map((row) => (
+
+                                                row.status === "Accept" &&
+                                                <TableRow>
+                                                    <TableCell align="left">
+                                                        <Chip label={row.status}
+                                                              color={row.status === "Pending" ? "warning" : "success"}
+                                                              clickable onClick={() => {
+                                                            swal({
+                                                                title: "Are you sure?",
+                                                                text: "Accept this Rental!",
+                                                                icon: "info",
+                                                                buttons: true,
+                                                            })
+                                                                .then((a) => {
+                                                                    if (a) {
+                                                                        row.status = "Accept";
+                                                                        updateBookingData(row)
+                                                                        swal("This Rental has been accept!", {
+                                                                            icon: "success",
+                                                                        });
+                                                                    }
+                                                                });
+                                                        }}/>
+                                                    </TableCell>
+                                                    <TableCell align="left">
+                                                        <Avatar alt="img" src={vehicleImg1}/>
+                                                        {row.vehicle.brand}
+                                                    </TableCell>
+                                                    <TableCell align="left">{row.leavingDate}</TableCell>
+                                                    <TableCell align="left">{row.returnDate}</TableCell>
+                                                    <TableCell align="left">{row.location}</TableCell>
+                                                    <TableCell align="left">
+                                                        <Avatar alt="user"/>
+                                                        {row.customer.cusName}
+                                                    </TableCell>
+                                                    <TableCell align="left">{row.payment}</TableCell>
+                                                    <TableCell align="left">{row.rentalFee}</TableCell>
+                                                    <TableCell align="left">
+                                                        <Tooltip title="Edit">
+                                                            <IconButton>
+                                                                <EditIcon color="primary"/>
+                                                            </IconButton>
+                                                        </Tooltip>
+                                                        <Tooltip title="Delete">
+                                                            <IconButton
+                                                                onClick={() => {
+                                                                    swal({
+                                                                        title: "Are you sure?",
+                                                                        text: "Once deleted, you will not be able to recover this imaginary file!",
+                                                                        icon: "warning",
+                                                                        buttons: true,
+                                                                        dangerMode: true,
+                                                                    })
+                                                                        .then((willDelete) => {
+                                                                            if (willDelete) {
+                                                                                swal("Poof! Your imaginary file has been deleted!", {
+                                                                                    icon: "success",
+                                                                                });
+                                                                            } else {
+                                                                                swal("Your imaginary file is safe!");
+                                                                            }
+                                                                        });
+                                                                }}
+                                                            >
+                                                                <DeleteIcon color="error"/>
+                                                            </IconButton>
+                                                        </Tooltip>
+                                                    </TableCell>
+                                                </TableRow>
+
+                                            ))
+                                        }
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </TabPanel>
+                        <TabPanel value={requestFormValue} index={2}>
+
+                        </TabPanel>
+                    </Stack>
+                </TabPanel>
                 {/*---------------------------------maintenance-----------------------*/}
-                <TabPanel value={value} index={8}></TabPanel>
+                <TabPanel value={value} index={8}>
+                    <Stack>
+                        <Tabs
+                            value={vehicleFormValue}
+                            onChange={vehicleFormHandleChange}
+                            textColor="secondary"
+                            indicatorColor="secondary"
+                            aria-label="secondary tabs example"
+                        >
+                            <Tab value={0} label="Maintain"/>
+                            <Tab value={1} label="Service"/>
+                            <Tab value={2} label="Hire"/>
+                        </Tabs>
+
+                        <TabPanel value={vehicleFormValue} index={0}>
+                            <TableContainer component={Paper}>
+                                <Table sx={{minWidth: 650}} aria-label="vehicle table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell align="left">Reg.No</TableCell>
+                                            <TableCell align="left">Brand</TableCell>
+                                            <TableCell align="left">Type</TableCell>
+                                            <TableCell align="left">Transmission Type</TableCell>
+                                            <TableCell align="left">Fuel Type</TableCell>
+                                            <TableCell align="left">Status</TableCell>
+                                            <TableCell align="left">Action</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {
+                                            vehicleList.map((row) => (
+                                                <TableRow>
+                                                    <TableCell align="left">{row.regNo}</TableCell>
+                                                    <TableCell align="left">{row.brand}</TableCell>
+                                                    <TableCell align="left">{row.type}</TableCell>
+                                                    <TableCell align="left">{row.transmissionType}</TableCell>
+                                                    <TableCell align="left">{row.fuelType}</TableCell>
+                                                    <TableCell align="left">{row.status}</TableCell>
+                                                    <TableCell align="left">
+                                                        <Tooltip title="Edit">
+                                                            <IconButton
+                                                                onClick={() => {
+                                                                    console.log("edit icon clicked!")
+                                                                    updateVehicle(row);
+
+                                                                }}
+                                                            >
+                                                                <EditIcon color="primary"/>
+                                                            </IconButton>
+                                                        </Tooltip>
+                                                        <Tooltip title="Delete">
+                                                            <IconButton
+                                                                onClick={() => {
+                                                                    swal({
+                                                                        title: "Are you sure?",
+                                                                        text: "Once deleted, you will not be able to recover this imaginary file!",
+                                                                        icon: "warning",
+                                                                        buttons: true,
+                                                                        dangerMode: true,
+                                                                    })
+                                                                        .then((willDelete) => {
+                                                                            if (willDelete) {
+                                                                                deleteVehicle(row.vehicleId);
+                                                                                swal("Poof! Your imaginary file has been deleted!", {
+                                                                                    icon: "success",
+                                                                                });
+                                                                            } else {
+                                                                                swal("Your imaginary file is safe!");
+                                                                            }
+                                                                        });
+                                                                }}
+                                                            >
+                                                                <DeleteIcon color="error"/>
+                                                            </IconButton>
+                                                        </Tooltip>
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))
+                                        }
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </TabPanel>
+                        <TabPanel value={vehicleFormValue} index={1}>
+
+                        </TabPanel>
+                        <TabPanel value={vehicleFormValue} index={2}>
+
+                        </TabPanel>
+                    </Stack>
+                </TabPanel>
                 {/*-----------------------------------damages-------------------------*/}
-                <TabPanel value={value} index={9}></TabPanel>
+                <TabPanel value={value} index={9}>
+                    <Stack>
+                        <Tabs
+                            value={vehicleFormValue}
+                            onChange={vehicleFormHandleChange}
+                            textColor="secondary"
+                            indicatorColor="secondary"
+                            aria-label="secondary tabs example"
+                        >
+                            <Tab value={0} label="Damage"/>
+                            <Tab value={1} label="Service"/>
+                            <Tab value={2} label="Rent"/>
+                        </Tabs>
+
+                        <TabPanel value={vehicleFormValue} index={0}>
+                            <TableContainer component={Paper}>
+                                <Table sx={{minWidth: 650}} aria-label="vehicle table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell align="left">Reg.No</TableCell>
+                                            <TableCell align="left">Brand</TableCell>
+                                            <TableCell align="left">Type</TableCell>
+                                            <TableCell align="left">Transmission Type</TableCell>
+                                            <TableCell align="left">Fuel Type</TableCell>
+                                            <TableCell align="left">Status</TableCell>
+                                            <TableCell align="left">Action</TableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {
+                                            vehicleList.map((row) => (
+                                                <TableRow>
+                                                    <TableCell align="left">{row.regNo}</TableCell>
+                                                    <TableCell align="left">{row.brand}</TableCell>
+                                                    <TableCell align="left">{row.type}</TableCell>
+                                                    <TableCell align="left">{row.transmissionType}</TableCell>
+                                                    <TableCell align="left">{row.fuelType}</TableCell>
+                                                    <TableCell align="left">{row.status}</TableCell>
+                                                    <TableCell align="left">
+                                                        <Tooltip title="Edit">
+                                                            <IconButton
+                                                                onClick={() => {
+                                                                    console.log("edit icon clicked!")
+                                                                    updateVehicle(row);
+
+                                                                }}
+                                                            >
+                                                                <EditIcon color="primary"/>
+                                                            </IconButton>
+                                                        </Tooltip>
+                                                        <Tooltip title="Delete">
+                                                            <IconButton
+                                                                onClick={() => {
+                                                                    swal({
+                                                                        title: "Are you sure?",
+                                                                        text: "Once deleted, you will not be able to recover this imaginary file!",
+                                                                        icon: "warning",
+                                                                        buttons: true,
+                                                                        dangerMode: true,
+                                                                    })
+                                                                        .then((willDelete) => {
+                                                                            if (willDelete) {
+                                                                                deleteVehicle(row.vehicleId);
+                                                                                swal("Poof! Your imaginary file has been deleted!", {
+                                                                                    icon: "success",
+                                                                                });
+                                                                            } else {
+                                                                                swal("Your imaginary file is safe!");
+                                                                            }
+                                                                        });
+                                                                }}
+                                                            >
+                                                                <DeleteIcon color="error"/>
+                                                            </IconButton>
+                                                        </Tooltip>
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))
+                                        }
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </TabPanel>
+                        <TabPanel value={vehicleFormValue} index={1}>
+
+                        </TabPanel>
+                        <TabPanel value={vehicleFormValue} index={2}>
+
+                        </TabPanel>
+                    </Stack>
+                </TabPanel>
                 {/*----------------------------------schedule-------------------------*/}
                 <TabPanel value={value} index={10}>
                     <Stack>
-
+                        <Calendar selectRange={true}/>
                     </Stack>
                 </TabPanel>
 
@@ -892,9 +1345,8 @@ export default function Dashboard() {
 }
 
 
-
 function TabPanel(props) {
-    const { children, value, index, ...other } = props;
+    const {children, value, index, ...other} = props;
 
     return (
         <div
@@ -905,7 +1357,7 @@ function TabPanel(props) {
             {...other}
         >
             {value === index && (
-                <Box sx={{ p: 3 }}>
+                <Box sx={{p: 3}}>
                     <Typography>{children}</Typography>
                 </Box>
             )}
@@ -949,7 +1401,7 @@ const closedMixin = (theme) => ({
     },
 });
 
-const DrawerHeader = styled('div')(({ theme }) => ({
+const DrawerHeader = styled('div')(({theme}) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
@@ -960,7 +1412,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
+})(({theme, open}) => ({
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
         easing: theme.transitions.easing.sharp,
@@ -976,8 +1428,8 @@ const AppBar = styled(MuiAppBar, {
     }),
 }));
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-    ({ theme, open }) => ({
+const Drawer = styled(MuiDrawer, {shouldForwardProp: (prop) => prop !== 'open'})(
+    ({theme, open}) => ({
         width: drawerWidth,
         flexShrink: 0,
         whiteSpace: 'nowrap',

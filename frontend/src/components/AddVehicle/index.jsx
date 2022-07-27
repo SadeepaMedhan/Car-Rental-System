@@ -3,17 +3,37 @@ import {Component} from "react";
 import {withStyles} from "@mui/styles";
 import {styleSheet} from "./style";
 import Divider from "@mui/material/Divider";
-import {Stack, TextField} from "@mui/material";
+import {LinearProgress, Stack, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import VehicleService from "../../service/VehicleService";
 import {useTheme} from "@mui/material/styles";
 import UploadImages from "../ImageUpload/UploadImages";
+import UploadService from "../../service/UploadFilesService";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+
+const BorderLinearProgress = withStyles((theme) => ({
+    root: {
+        height: 15,
+        borderRadius: 5,
+    },
+    colorPrimary: {
+        backgroundColor: "#EEEEEE",
+    },
+    bar: {
+        borderRadius: 5,
+        backgroundColor: '#1a90ff',
+    },
+}))(LinearProgress);
 
 
 class AddVehicle extends Component{
 
     constructor(props) {
         super(props);
+        this.selectFile = this.selectFile.bind(this);
+        this.upload = this.upload.bind(this);
+
         this.state={
             vehicle: {
                 vehicleId:'',
@@ -30,10 +50,22 @@ class AddVehicle extends Component{
                 priceExtraKM:'',
                 color:'',
                 maintenanceMileage:'5000',
-                status:'Available'
+                status:'Available',
+                imgUrl1:'',
+                imgUrl2:'',
+                imgUrl3:'',
+                imgUrl4:'',
             },
             btnState:props.btnState,
             selectVehicle:props.vehicleData,
+
+            currentFile: undefined,
+            previewImage: undefined,
+            progress: 0,
+
+            message: "",
+            isError: false,
+            imageInfos: [],
         }
     }
 
@@ -54,7 +86,11 @@ class AddVehicle extends Component{
                 priceExtraKM:'',
                 color:'',
                 maintenanceMileage:'5000',
-                status:'Available'
+                status:'Available',
+                imgUrl1:'',
+                imgUrl2:'',
+                imgUrl3:'',
+                imgUrl4:'',
             },
             selectVehicle:null,
         })
@@ -87,11 +123,65 @@ class AddVehicle extends Component{
 
     componentDidMount() {
         this.loadData();
+        UploadService.getFiles().then((response) => {
+            this.setState({
+                imageInfos: response.data,
+            });
+        });
+    }
+    selectFile(event) {
+        this.setState({
+            currentFile: event.target.files[0],
+            previewImage: URL.createObjectURL(event.target.files[0]),
+            progress: 0,
+            message: ""
+        });
     }
 
+    upload() {
+        this.setState({
+            progress: 0
+        });
+
+        UploadService.upload(this.state.currentFile, (event) => {
+            this.setState({
+                progress: Math.round((100 * event.loaded) / event.total),
+            });
+        })
+            .then((response) => {
+                this.setState({
+                    message: response.data.message,
+                    isError: false
+                });
+                return UploadService.getFiles();
+            })
+            .then((files) => {
+                this.setState({
+                    imageInfos: files.data,
+                });
+            })
+            .catch((err) => {
+                this.setState({
+                    progress: 0,
+                    message: "Could not upload the image!",
+                    currentFile: undefined,
+                    isError: true
+                });
+            });
+    }
 
     render() {
         let {classes} = this.props;
+
+        const {
+            currentFile,
+            previewImage,
+            progress,
+            message,
+            imageInfos,
+            isError
+        } = this.state;
+
 
         const saveVehicle = async () => {
             if(this.state.btnState === "Save") {
@@ -146,6 +236,23 @@ class AddVehicle extends Component{
                         formData.noOfPassenger = e.target.value
                         this.setState({ formData })
                     }}/>
+
+                    <label htmlFor="btn-upload">
+                        <input
+                            id="btn-upload"
+                            name="btn-upload"
+                            style={{ display: 'none' }}
+                            type="file"
+                            accept="image/*"
+                            onChange={this.selectFile} />
+                        <Button
+                            className="btn-choose"
+                            variant="outlined"
+                            component="span" >
+                            Choose Image
+                        </Button>
+                    </label>
+
                 </Stack>
 
                 <Stack direction="row" justifyContent="flex-start"
@@ -172,7 +279,7 @@ class AddVehicle extends Component{
                         this.setState({ formData })
                     }}/>
 
-                    <UploadImages/>
+
 
                 </Stack>
                 <Divider />
@@ -209,6 +316,44 @@ class AddVehicle extends Component{
                 <Stack direction="row" justifyContent="flex-end"
                        alignItems="center"
                        spacing={2} style={{ height:'80px'}}>
+                    <Stack direction="row" justifyContent="flex-end"
+                           alignItems="center"
+                           spacing={2}>
+                        {previewImage && (
+                            <div>
+                                <img height="80px" className="preview my20" src={previewImage} alt="" />
+                            </div>
+                        )}
+
+                        {message && (
+                            <Typography variant="subtitle2" className={`upload-message ${isError ? "error" : ""}`}>
+                                {message}
+                            </Typography>
+                        )}
+                        <Button
+                            className="btn-upload"
+                            color="primary"
+                            variant="contained"
+                            component="span"
+                            disabled={!currentFile}
+                            onClick={this.upload}>
+                            Upload
+                        </Button>
+                        {currentFile && (
+                            <Box className="my20" display="flex" alignItems="center">
+                                <Box width="100px" mr={1}>
+                                    <BorderLinearProgress variant="determinate" value={progress} />
+                                </Box>
+                                <Box minWidth={35}>
+                                    <Typography variant="body2" color="textSecondary">{`${progress}%`}</Typography>
+                                </Box>
+                            </Box>)
+                        }
+                    </Stack>
+
+                    <div className="file-name">
+                        {currentFile ? currentFile.name : null}
+                    </div>
                     <Button autoFocus color="info" variant="contained" style={{fontWeight:'bold', width:'95px',borderRadius:15 }}>
                         Clear
                     </Button>

@@ -18,4 +18,6 @@ public class CustomerDTO {
     private String cusDrivingLicenseNo;
     private String cusAddress;
     private String cusContactNo;
+    private String nicUrl;
+
 }

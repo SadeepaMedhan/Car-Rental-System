@@ -25,4 +25,8 @@ public class VehicleDTO {
     private String color;
     private double maintenanceMileage;
     private String status;
+    private String imgUrl1;
+    private String imgUrl2;
+    private String imgUrl3;
+    private String imgUrl4;
 }
