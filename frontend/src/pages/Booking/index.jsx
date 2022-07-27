@@ -43,7 +43,6 @@ import vehicleImg2 from "../../assets/images/vehicles/Suzuki-Alto-R (2).png";
 import vehicleImg3 from "../../assets/images/vehicles/Suzuki-Alto-R (3).PNG";
 import vehicleImg4 from "../../assets/images/vehicles/Suzuki-Alto-R (4).PNG";
 import BookingService from "../../service/BookingService";
-import VehicleService from "../../service/VehicleService";
 
 const steps = [
     'Search Results',
@@ -96,20 +95,20 @@ class BookingPage extends Component {
     saveVehicle = async () => {
 
         let formData = {
-            bookingId:"b",
-            leavingDate:this.state.searchData.leavingDate,
-            returnDate:this.state.searchData.returnDate,
-            location:this.state.searchData.location,
-            payment:"10000",
-            lossDamageFee:0,
-            rentalFee:2500,
-            status:"Pending",
-            customer:this.state.searchData.customer,
-            vehicle:this.state.selectVehicle,
-            driver:null
+            bookingId: "b",
+            leavingDate: this.state.searchData.leavingDate,
+            returnDate: this.state.searchData.returnDate,
+            location: this.state.searchData.location,
+            payment: "10000",
+            lossDamageFee: 0,
+            rentalFee: 2500,
+            status: "Pending",
+            customer: this.state.searchData.customer,
+            vehicle: this.state.selectVehicle,
+            driver: null
         }
         let response = await BookingService.createBooking(formData);
-        console.log("res "+response)
+        console.log("res " + response)
         if (response.status === 201) {
             swal("Payment successful!", "Your Booking is pending", "success").then((value) => {
                 window.location.assign('/');
@@ -700,7 +699,6 @@ class BookingPage extends Component {
                                                 <Stack>
                                                     <CardMedia component="img" height="60px" image={pay4} alt="am"/>
                                                 </Stack>
-
                                             </Stack>
 
 
@@ -717,7 +715,7 @@ class BookingPage extends Component {
                                                                    validators={['required',]}
                                                                    value={this.state.payCardNo}
                                                                    onChange={(e) => {
-                                                                       this.setState({payCardNo:e.target.value})
+                                                                       this.setState({payCardNo: e.target.value})
                                                                    }}
                                                     />
                                                     <TextValidator label="Name on Card" variant="outlined" helperText=""
@@ -727,7 +725,7 @@ class BookingPage extends Component {
                                                                    validators={['required',]}
                                                                    value={this.state.payName}
                                                                    onChange={(e) => {
-                                                                       this.setState({payName:e.target.value})
+                                                                       this.setState({payName: e.target.value})
                                                                    }}
                                                     />
                                                 </Stack>
@@ -741,7 +739,7 @@ class BookingPage extends Component {
                                                                    validators={['required',]}
                                                                    value={this.state.payDate}
                                                                    onChange={(e) => {
-                                                                       this.setState({payDate:e.target.value})
+                                                                       this.setState({payDate: e.target.value})
                                                                    }}
                                                     />
                                                     <TextValidator label="CVV Code" variant="outlined" helperText=""
@@ -751,39 +749,39 @@ class BookingPage extends Component {
                                                                    validators={['required',]}
                                                                    value={this.state.payCode}
                                                                    onChange={(e) => {
-                                                                       this.setState({payCode:e.target.value})
+                                                                       this.setState({payCode: e.target.value})
                                                                    }}
                                                     />
                                                 </Stack>
-
                                             </Stack>
 
+                                            <Divider width="100%"/>
+                                            <Stack direction="row"
+                                                   justifyContent="space-between"
+                                                   alignItems="center"
+                                                   spacing={4}>
+                                                <Stack sx={{paddingLeft: '10px'}} spacing={4} direction="row">
+                                                    <h3 style={{fontFamily: 'Convergence'}}>Total Price</h3>
+                                                    <h3 style={{fontFamily: 'Convergence'}}>LKR.10000.00</h3>
+                                                </Stack>
+                                                <Stack sx={{paddingLeft: '10px'}} spacing={4} direction="row">
+                                                    <Button
+                                                        Button onClick={goDetails} color="primary" variant="contained"
+                                                        style={{
+                                                            fontWeight: 'bold',
+                                                            width: '95px',
+                                                            borderRadius: 15
+                                                        }}>
+                                                        Cancel
+                                                    </Button>
+                                                    <Button type="submit" color="primary" variant="contained"
+                                                            style={{fontWeight: 'bold', width: '200px', borderRadius: 15}}>
+                                                        Request to
+                                                        Booking</Button>
+                                                </Stack>
+                                            </Stack>
                                         </Stack>
 
-                                    <Divider/>
-                                    <Stack direction="row"
-                                           justifyContent="space-between"
-                                           alignItems="center"
-                                           spacing={4}>
-                                        <Stack sx={{paddingLeft: '10px'}} spacing={4} direction="row">
-                                            <h3 style={{fontFamily: 'Convergence'}}>Total Price</h3>
-                                            <h3 style={{fontFamily: 'Convergence'}}>LKR.10000.00</h3>
-                                        </Stack>
-                                        <Stack sx={{paddingLeft: '10px'}} spacing={4} direction="row">
-                                            <Button
-                                                Button onClick={goDetails} color="primary" variant="contained" style={{
-                                                fontWeight: 'bold',
-                                                width: '95px',
-                                                borderRadius: 15
-                                            }}>
-                                                Cancel
-                                            </Button>
-                                            <Button type="submit" color="primary" variant="contained"
-                                                    style={{fontWeight: 'bold', width: '200px', borderRadius: 15}}>
-                                                Request to
-                                                Booking</Button>
-                                        </Stack>
-                                    </Stack>
                                     </ValidatorForm>
                                 </Stack>
                                 <Stack direction="column" justifyContent="flex-start"
@@ -842,7 +840,6 @@ class BookingPage extends Component {
                         </TabPanel>
                     </Stack>
                 </Stack>
-
             </div>
         )
     }

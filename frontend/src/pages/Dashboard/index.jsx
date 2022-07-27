@@ -76,6 +76,7 @@ export default function Dashboard() {
     const [driversFormValue, setDriversFormValue] = React.useState(0);
     const [customersFormValue, setCustomersFormValue] = React.useState(0);
     const [bookingFormValue, setBookingFormValue] = React.useState(0);
+    const [driverSelectDate, setDriverSelectDate] = React.useState(new Date());
     const [date, setDate] = React.useState(() => new Date(2022, 1, 1, 1, 1));
     React.useEffect(() => {
         loadBookingData();
@@ -878,7 +879,11 @@ export default function Dashboard() {
                 {/*-----------------------------------damages-------------------------*/}
                 <TabPanel value={value} index={9}></TabPanel>
                 {/*----------------------------------schedule-------------------------*/}
-                <TabPanel value={value} index={10}></TabPanel>
+                <TabPanel value={value} index={10}>
+                    <Stack>
+
+                    </Stack>
+                </TabPanel>
 
 
             </Box>

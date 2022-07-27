@@ -26,7 +26,7 @@ class SmallVehicleCard extends Component{
                         component="img"
                         height="140"
                         image={this.props.imgSrc}
-                        alt="green iguana"
+                        alt="cars"
                     />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
