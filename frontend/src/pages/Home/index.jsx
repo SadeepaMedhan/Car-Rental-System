@@ -75,8 +75,8 @@ class HomePage extends Component {
             signInIcon: null,
             user: null,
             vehicleList: [],
-            leavingDate: new Date(),
-            returnDate: new Date(),
+            leavingDate: new Date("2022/07/27"),
+            returnDate: new Date("2022/07/28"),
             location: null,
             bookingData: {
                 customer: null,
@@ -369,6 +369,7 @@ class HomePage extends Component {
                                             inputFormat="yyyy/MM/dd"
                                             value={this.state.leavingDate}
                                             onChange={(date) => {
+                                                console.log(date.getTime())
                                                 this.setState({leavingDate: date})
                                             }}
                                             renderInput={(params) => <TextField {...params} />}
@@ -383,6 +384,11 @@ class HomePage extends Component {
                                             inputFormat="yyyy/MM/dd"
                                             value={this.state.returnDate}
                                             onChange={(date) => {
+                                                console.log(date.toLocaleDateString('en-ZA'))
+                                                console.log(date.getTime())
+                                                /*let d = date.getTime() - this.state.leavingDate
+                                                console.log(d)
+                                                console.log(d/(1000*3600*24))*/
                                                 this.setState({returnDate: date})
                                             }}
                                             renderInput={(params) => <TextField {...params} />}

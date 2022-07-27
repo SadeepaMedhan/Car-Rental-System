@@ -74,12 +74,15 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     public List<BookingDTO> getSchedule(String id) {
+
         if (driverRepo.existsById(id)) {
             List<Booking> schedule = new ArrayList<>();
             List<Booking> bookingList = bookingRepo.findAll();
             for (Booking booking : bookingList) {
-                if (booking.getDriver().getDriverID().equals(id)) {
-                    schedule.add(booking);
+                if (booking.getDriver() != null) {
+                    if (booking.getDriver().getDriverID().equals(id)){
+                        schedule.add(booking);
+                    }
                 }
             }
             return mapper.map(schedule, new TypeToken<List<BookingDTO>>() {

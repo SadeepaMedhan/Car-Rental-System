@@ -43,6 +43,7 @@ import vehicleImg2 from "../../assets/images/vehicles/Suzuki-Alto-R (2).png";
 import vehicleImg3 from "../../assets/images/vehicles/Suzuki-Alto-R (3).PNG";
 import vehicleImg4 from "../../assets/images/vehicles/Suzuki-Alto-R (4).PNG";
 import BookingService from "../../service/BookingService";
+import DriverService from "../../service/DriverService";
 
 const steps = [
     'Search Results',
@@ -68,6 +69,11 @@ class BookingPage extends Component {
             payName: '',
             payCode: '',
             driver:null,
+            duration:1,
+            lossDamageFee: 10000,
+            rentalCost:0,
+            leavingDate:props.data.returnDate.toLocaleDateString('en-ZA'),
+            returnDate:props.data.returnDate.toLocaleDateString('en-ZA'),
         }
     }
 
@@ -75,16 +81,38 @@ class BookingPage extends Component {
         this.getAvailableDriver()
     }
 
-    getAvailableDriver = () => {
+    getAvailableDriver = async () => {
         if(this.state.searchData.driverState === 1){
+            let resp = await DriverService.fetchDrivers();
+            resp.data.data.map((dr)=>{
+                console.log(dr.name+", "+dr.status)
+
+                if (dr.status === 'Available'){
+                    this.checkSchedule(dr)
+                    //this.setState({driver:dr})
+                }
+            })
 
         }
+    }
+    checkSchedule = async (dr) => {
+        let params = {id: dr.driverID}
+        let schedule = await DriverService.getSchedule(params);
+        schedule.data.data.map((book)=>{
+            if (book.leavingDate !== this.state.searchData.leavingDate){
+                //console.log(dr)
+                this.setState({driver:dr})
+            }
+        })
     }
 
     getVehicle = (data) => {
         console.log("get booking " + data)
         this.setState({alertState: true})
         this.setState({selectVehicle: data})
+        let d = this.state.searchData.returnDate.getTime()-this.state.searchData.leavingDate.getTime();
+        this.setState({duration:d/(1000*3600*24)})
+        this.setState({rentalCost:(d/(1000*3600*24) * data.dailyRate)})
         this.setState({stepperValue: 1});
         this.setState({bookingTabValue: 1});
     }
@@ -97,12 +125,12 @@ class BookingPage extends Component {
             returnDate: this.state.searchData.returnDate,
             location: this.state.searchData.location,
             payment: "10000",
-            lossDamageFee: 0,
-            rentalFee: 2500,
+            lossDamageFee: this.state.lossDamageFee,
+            rentalFee: this.state.rentalCost,
             status: "Pending",
             customer: this.state.searchData.customer,
             vehicle: this.state.selectVehicle,
-            driver: null
+            driver: this.state.driver
         }
         let response = await BookingService.createBooking(formData);
         console.log("res " + response)
@@ -126,6 +154,7 @@ class BookingPage extends Component {
             this.setState({bookingTabValue: 0});
         }
         const goOptions = (e) => {
+
             this.setState({stepperValue: 1});
             this.setState({bookingTabValue: 1});
         }
@@ -144,7 +173,24 @@ class BookingPage extends Component {
         }
 
         const radioBtnChange = (event) => {
+            changeLossDamageFee(event.target.value)
             this.setState({vehicleTypeId: event.target.value});
+
+        };
+
+        const changeLossDamageFee = (key) => {
+            console.log(key)
+            if (key === 0) {
+                this.setState({lossDamageFee: 10000})
+                console.log(this.state.lossDamageFee)
+            } else if (key === 1) {
+                this.setState({lossDamageFee: 15000})
+                console.log(this.state.lossDamageFee)
+            } else if (key === 2) {
+                this.setState({lossDamageFee: 20000})
+                console.log(this.state.lossDamageFee)
+            } else {
+            }
         };
 
         const sortChange = (event, newAlignment) => {
@@ -284,7 +330,7 @@ class BookingPage extends Component {
                                            spacing={1}>
                                         <p>Pickup :</p>
                                         <Stack>
-                                            <p>{toString(this.state.searchData.leavingDate)}</p>
+                                            <p>{this.state.leavingDate}</p>
                                             <p>{this.state.searchData.location}</p>
                                         </Stack>
                                     </Stack>
@@ -294,7 +340,7 @@ class BookingPage extends Component {
                                            spacing={1}>
                                         <p>Return :</p>
                                         <Stack>
-                                            <p>{toString(this.state.searchData.returnDate)}</p>
+                                            <p>{this.state.returnDate}</p>
                                             <p>{this.state.searchData.location}</p>
                                         </Stack>
                                     </Stack>
@@ -304,7 +350,7 @@ class BookingPage extends Component {
                                            spacing={1}>
                                         <p>Rental Duration :</p>
                                         <Stack>
-                                            <p>1 day 12 hours</p>
+                                            <p>{this.state.duration} day</p>
                                         </Stack>
                                     </Stack>
                                     <Divider/>
@@ -325,8 +371,7 @@ class BookingPage extends Component {
                                            alignItems="flex-start"
                                            spacing={1}>
                                         <p>Rental cost :</p>
-                                        <p>{this.state.selectVehicle.dailyRate}</p>
-
+                                        <p>{this.state.rentalCost}</p>
                                     </Stack>
                                 </Stack>
                                 <Stack direction="column" justifyContent="flex-start"
@@ -555,7 +600,9 @@ class BookingPage extends Component {
                                                 <NoiseControlOffIcon/>
                                                 <pre className={classes.card_prop_id}> Driver : </pre>
                                                 <span
-                                                    className={classes.card_prop_value}>{this.state.searchData.driverState}</span>
+                                                    className={classes.card_prop_value}>
+                                                    {this.state.driver === null ? "Self drive" : this.state.driver.name}
+                                                </span>
                                             </IconButton>
                                             <Stack direction="row"
                                                    justifyContent="flex-start"
@@ -597,25 +644,25 @@ class BookingPage extends Component {
                                                 <NoiseControlOffIcon/>
                                                 <pre className={classes.card_prop_id}> Pickup Date : </pre>
                                                 <span
-                                                    className={classes.card_prop_value}>{toString(this.state.searchData.returnDate)}</span>
+                                                    className={classes.card_prop_value}>{this.state.leavingDate}</span>
                                             </IconButton>
                                             <IconButton>
                                                 <NoiseControlOffIcon/>
                                                 <pre className={classes.card_prop_id}> Return Date : </pre>
                                                 <span
-                                                    className={classes.card_prop_value}>{toString(this.state.searchData.returnDate)}</span>
+                                                    className={classes.card_prop_value}>{this.state.returnDate}</span>
                                             </IconButton>
                                             <IconButton>
                                                 <NoiseControlOffIcon/>
                                                 <pre className={classes.card_prop_id}> Rental Duration : </pre>
                                                 <span
-                                                    className={classes.card_prop_value}>1 day</span>
+                                                    className={classes.card_prop_value}>{this.state.duration} day</span>
                                             </IconButton>
                                             <IconButton>
                                                 <NoiseControlOffIcon/>
                                                 <pre className={classes.card_prop_id}> Rental cost : </pre>
                                                 <span
-                                                    className={classes.card_prop_value}>{this.state.selectVehicle.dailyRate}</span>
+                                                    className={classes.card_prop_value}>{this.state.rentalCost}</span>
                                             </IconButton>
                                         </Stack>
                                         <Stack sx={{height: '100%'}} direction="column" justifyContent="space-around"
@@ -627,18 +674,20 @@ class BookingPage extends Component {
                                                     <NoiseControlOffIcon/>
                                                     <pre className={classes.card_prop_id}> Loss Damage Waiver  : </pre>
                                                     <span
-                                                        className={classes.card_prop_value}>10000.00</span>
+                                                        className={classes.card_prop_value}>{this.state.lossDamageFee}.00</span>
                                                 </IconButton>
                                                 <IconButton>
                                                     <NoiseControlOffIcon/>
                                                     <pre className={classes.card_prop_id}> Extra Price   : </pre>
                                                     <span
-                                                        className={classes.card_prop_value}>0.00</span>
+                                                        className={classes.card_prop_value}>
+                                                        {this.state.driver === null ? 0.00 : 1000.00}
+                                                    </span>
                                                 </IconButton>
                                             </Stack>
                                             <Stack sx={{paddingLeft: '10px'}} spacing={4} direction="row">
                                                 <h3 style={{fontFamily: 'Convergence'}}>Total Price</h3>
-                                                <h3 style={{fontFamily: 'Convergence'}}>LKR.10000.00</h3>
+                                                <h3 style={{fontFamily: 'Convergence'}}>LKR.{this.state.lossDamageFee}.00</h3>
                                             </Stack>
 
                                         </Stack>
@@ -759,7 +808,7 @@ class BookingPage extends Component {
                                                    spacing={4}>
                                                 <Stack sx={{paddingLeft: '10px'}} spacing={4} direction="row">
                                                     <h3 style={{fontFamily: 'Convergence'}}>Total Price</h3>
-                                                    <h3 style={{fontFamily: 'Convergence'}}>LKR.10000.00</h3>
+                                                    <h3 style={{fontFamily: 'Convergence'}}>LKR.{this.state.lossDamageFee}.00</h3>
                                                 </Stack>
                                                 <Stack sx={{paddingLeft: '10px'}} spacing={4} direction="row">
                                                     <Button
@@ -810,25 +859,25 @@ class BookingPage extends Component {
                                             <NoiseControlOffIcon/>
                                             <pre className={classes.card_prop_id}> Pickup Date : </pre>
                                             <span
-                                                className={classes.card_prop_value}>{toString(this.state.searchData.returnDate)}</span>
+                                                className={classes.card_prop_value}>{this.state.leavingDate}</span>
                                         </IconButton>
                                         <IconButton>
                                             <NoiseControlOffIcon/>
                                             <pre className={classes.card_prop_id}> Return Date : </pre>
                                             <span
-                                                className={classes.card_prop_value}>{toString(this.state.searchData.returnDate)}</span>
+                                                className={classes.card_prop_value}>{this.state.returnDate}</span>
                                         </IconButton>
                                         <IconButton>
                                             <NoiseControlOffIcon/>
                                             <pre className={classes.card_prop_id}> Rental Duration : </pre>
                                             <span
-                                                className={classes.card_prop_value}>1 day</span>
+                                                className={classes.card_prop_value}>{this.state.duration} day</span>
                                         </IconButton>
                                         <IconButton>
                                             <NoiseControlOffIcon/>
                                             <pre className={classes.card_prop_id}> Rental cost : </pre>
                                             <span
-                                                className={classes.card_prop_value}>{this.state.selectVehicle.dailyRate}</span>
+                                                className={classes.card_prop_value}>{this.state.rentalCost}</span>
                                         </IconButton>
                                     </Stack>
 
