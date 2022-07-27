@@ -19,12 +19,6 @@ import {
     RadioGroup,
     Select,
     Stack,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
     Typography
 } from "@mui/material";
 import {DesktopDatePicker} from '@mui/x-date-pickers/DesktopDatePicker';
@@ -63,7 +57,6 @@ import ElectricCarIcon from '@mui/icons-material/ElectricCar';
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
 import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined';
 import ContactInfo from "../../components/ContactInfo";
-import NoiseControlOffIcon from "@mui/icons-material/NoiseControlOff";
 import CustomerView from "../Customer";
 import DriverView from "../Driver";
 
@@ -99,6 +92,11 @@ class HomePage extends Component {
     getUserData = (data) => {
         console.log("get " + data)
         this.setState({user: data})
+    }
+    getDriverData = (data) => {
+        console.log("get " + data)
+        this.setState({driver: data})
+        this.setState({tabValue: 5});
     }
 
     getVehicle = (data) => {
@@ -137,7 +135,7 @@ class HomePage extends Component {
             }
             this.setState({tabValue: newValue});
         };
-        const searchResult = (event, newValue) => {
+        const searchResult = () => {
             if (this.state.user !== null) {
                 this.setState({
                     bookingData: {
@@ -166,11 +164,14 @@ class HomePage extends Component {
             this.setState({anchorElNav: event.currentTarget});
         };
 
-        const handleCloseNavMenu = (event, newValue) => {
+        const handleCloseNavMenu = () => {
             this.setState({anchorElNav: null});
         };
-        const logout = (event, newValue) => {
+        const logout = () => {
             this.setState({user: null});
+        };
+        const openUserInfo = () => {
+            this.setState({tabValue: 6});
         };
 
 
@@ -219,9 +220,6 @@ class HomePage extends Component {
                                     <Tab label="Vehicles" {...a11yProps(1)} />
                                     <Tab label="Service" {...a11yProps(2)} />
                                     <Tab label="About" {...a11yProps(3)} />
-                                    <Tab label="Book" {...a11yProps(4)} />
-                                    <Tab label="Dr" {...a11yProps(5)} />
-                                    <Tab label="Cu" {...a11yProps(6)} />
                                 </Tabs>
                             </Box>
 
@@ -256,7 +254,8 @@ class HomePage extends Component {
                                 </Tabs>
                             </Menu>
                             <div>
-                                {this.state.user === null && <SignIn getUserInfo={this.getUserData.bind(this)}/>}
+                                {this.state.user === null && <SignIn getDriverInfo={this.getDriverData.bind(this)}
+                                                                     getUserInfo={this.getUserData.bind(this)}/>}
                                 {this.state.user !== null && (
                                     <Chip icon={<AccountCircle/>} label={this.state.user.cusName}
                                           onClick={signInHandleMenu}/>)}
@@ -288,7 +287,7 @@ class HomePage extends Component {
                                     <MenuItem>
                                         <Avatar/> Profile
                                     </MenuItem>
-                                    <MenuItem href="/cb">
+                                    <MenuItem onClick={openUserInfo}>
                                         <CarRentalIcon/> My Bookings
                                     </MenuItem>
                                     <Divider/>
@@ -400,8 +399,8 @@ class HomePage extends Component {
                                             label="Self Driver"
                                             onChange={driverChange}
                                         >
-                                            <MenuItem value={0}>With Driver</MenuItem>
-                                            <MenuItem value={1}>Self Driver</MenuItem>
+                                            <MenuItem value={0}>Self Driver</MenuItem>
+                                            <MenuItem value={1}>With Driver</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </Stack>
@@ -597,11 +596,11 @@ class HomePage extends Component {
                         <ContactInfo/>
                     </TabPanel>
                     <TabPanel value={this.state.tabValue} index={5}>
-                        <DriverView/>
+                        <DriverView driver={this.state.driver}/>
                         <ContactInfo/>
                     </TabPanel>
                     <TabPanel value={this.state.tabValue} index={6}>
-                        <CustomerView/>
+                        <CustomerView customer={this.state.user}/>
                         <ContactInfo/>
                     </TabPanel>
 

@@ -18,6 +18,7 @@ import swal from 'sweetalert';
 import {TextValidator, ValidatorForm} from 'react-material-ui-form-validator';
 import CustomerService from "../../service/CustomerService";
 import UserService from "../../service/UserService";
+import DriverService from "../../service/DriverService";
 
 
 const SignInForm = styled(Dialog)(({theme}) => ({
@@ -63,6 +64,7 @@ export default function SignIn(props) {
     const [showPassword, setShowPassword] = React.useState(false);
     const [customer, setCustomer] = React.useState(null);
     const [admin, setAdmin] = React.useState(null);
+    const [driver, setDriver] = React.useState(null);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -87,6 +89,11 @@ export default function SignIn(props) {
     const clearData=()=>{
         setCustomer(null);
         setAdmin(null);
+        setDriver(null);
+    }
+    const clearText=()=>{
+        setUserName("");
+        setPassword("");
     }
 
 
@@ -95,11 +102,14 @@ export default function SignIn(props) {
         console.log("type "+id)
         const cusResponse = await CustomerService.findCustomer(id);
         const adResponse = await UserService.findAdmin(id);
-        if (cusResponse.status === 200) {setCustomer( cusResponse.data.data);
+        const driverResponse = await DriverService.findDriver(id);
+        if (cusResponse.status === 200) {setCustomer(cusResponse.data.data);
             console.log(cusResponse.data.data); }
-        else if (adResponse.status === 200) {setAdmin( adResponse.data.data);
+        else if (adResponse.status === 200) {setAdmin(adResponse.data.data);
             console.log(adResponse.data.data);}
-        else {console.log("error: " +cusResponse+", "+adResponse)}
+        else if (driverResponse.status === 200) {setDriver(driverResponse.data.data);
+            console.log(driverResponse.data.data);}
+        else {console.log("error: " +cusResponse+", "+adResponse+", "+driverResponse)}
     }
 
 
@@ -110,10 +120,13 @@ export default function SignIn(props) {
         }else if(admin !== null){
             swal("Sign In Successful!", "Admin", "success");
             window.location.assign('/dash');
+        }else if(driver !== null){
+            swal("Sign In Successful!", "Driver", "success");
+            props.getDriverInfo(driver);
         }else{
             swal("Sign In Unsuccessful!", "Error", "error");
         }
-
+        clearText();
     }
 
     return (

@@ -73,5 +73,33 @@ class DriverService {
         })
         return await promise;
     };
+
+
+    getSchedule = async (diverId) => {
+        const promise = new Promise((resolve, reject) => {
+            axios.get('driver/schedule',{params: diverId})
+                .then((res) => {
+                    return resolve(res)
+                })
+                .catch((er) => {
+                    return resolve(er)
+                })
+        })
+        return await promise
+    }
+
+    findDriver = async (data) => {
+        const promise = new Promise((resolve, reject) => {
+            axios.get('driver/'+data)
+                .then((res) => {
+                    return resolve(res)
+                })
+                .catch((er) => {
+                    return resolve(er)
+                })
+        })
+        return await promise
+    }
+
 }
 export default new DriverService();

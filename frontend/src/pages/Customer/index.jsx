@@ -6,14 +6,32 @@ import IconButton from "@mui/material/IconButton";
 import NoiseControlOffIcon from "@mui/icons-material/NoiseControlOff";
 import Chip from "@mui/material/Chip";
 import Avatar from "@mui/material/Avatar";
+import CustomerService from "../../service/CustomerService";
 
 class CustomerView extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            customer:props.customer,
+            bookingList:[]
+        }
     }
 
+    componentDidMount() {
+        this.loadBookingData(this.props.customer.cusID)
+    }
+
+    loadBookingData = async (cusId) => {
+        let params = {id: cusId}
+        console.log(cusId)
+        const res = await CustomerService.getBookings(params);
+        if (res.status === 200) {
+            this.setState({bookingList:res.data.data})
+            console.log(this.state.bookingList)
+        }
+        else {console.log("fetching error: " + res)}
+    }
 
     render() {
         return (
@@ -53,7 +71,7 @@ class CustomerView extends Component {
                                     style={{
                                         fontFamily: 'Convergence',
                                         fontSize: '0.6em',
-                                    }}>{"this.state.searchData."}</span>
+                                    }}>{this.state.customer.cusName}</span>
                             </IconButton>
                             <IconButton>
                                 <NoiseControlOffIcon/>
@@ -65,7 +83,7 @@ class CustomerView extends Component {
                                     style={{
                                         fontFamily: 'Convergence',
                                         fontSize: '0.6em',
-                                    }}>{"this.state.searchData."}</span>
+                                    }}>{this.state.customer.cusAddress}</span>
                             </IconButton>
                             <IconButton>
                                 <NoiseControlOffIcon/>
@@ -77,7 +95,7 @@ class CustomerView extends Component {
                                     style={{
                                         fontFamily: 'Convergence',
                                         fontSize: '0.6em',
-                                    }}>{"this.state.searchData."}</span>
+                                    }}>{this.state.customer.cusContactNo}</span>
                             </IconButton>
                             <IconButton>
                                 <NoiseControlOffIcon/>
@@ -89,7 +107,7 @@ class CustomerView extends Component {
                                     style={{
                                         fontFamily: 'Convergence',
                                         fontSize: '0.6em',
-                                    }}>{'this.state.searchData.'}</span>
+                                    }}>{this.state.customer.cusNIC}</span>
                             </IconButton>
                             <IconButton>
                                 <NoiseControlOffIcon/>
@@ -101,7 +119,7 @@ class CustomerView extends Component {
                                     style={{
                                         fontFamily: 'Convergence',
                                         fontSize: '0.6em',
-                                    }}>{"this.state.searchData.."}</span>
+                                    }}>{this.state.customer.cusEmail}</span>
                             </IconButton>
                         </Stack>
                     </Stack>
@@ -118,7 +136,7 @@ class CustomerView extends Component {
                                justifyContent="space-between"
                                alignItems="center">
                             <h2 style={{marginLeft: '20px', fontFamily: 'Convergence'}}>Your Bookings</h2>
-                            <Button>Edit</Button>
+
                         </Stack>
 
                         <Divider/>
@@ -136,17 +154,25 @@ class CustomerView extends Component {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    <TableRow>
-                                        <TableCell align="left">
-                                            <Chip label="Pending" color="warning"/>
-                                        </TableCell>
-                                        <TableCell align="left"><Avatar alt="vehicle"/></TableCell>
-                                        <TableCell align="left">day</TableCell>
-                                        <TableCell align="left">day</TableCell>
-                                        <TableCell align="left">location</TableCell>
-                                        <TableCell align="left">10000</TableCell>
-                                        <TableCell align="left">Action</TableCell>
-                                    </TableRow>
+                                    {
+                                        this.state.bookingList.map((row)=>(
+                                            <TableRow>
+                                                <TableCell align="left">
+                                                    <Chip label={row.status} color={row.status === "Pending"? "warning":"success"}/>
+                                                </TableCell>
+                                                <TableCell align="left">
+                                                    <Avatar alt="vehicle"/>
+                                                    {row.vehicle.brand}
+                                                </TableCell>
+                                                <TableCell align="left">{row.leavingDate}</TableCell>
+                                                <TableCell align="left">{row.returnDate}</TableCell>
+                                                <TableCell align="left">{row.location}</TableCell>
+                                                <TableCell align="left">{row.payment}</TableCell>
+                                                <TableCell align="left">Action</TableCell>
+                                            </TableRow>
+                                        ))
+                                    }
+
                                 </TableBody>
                             </Table>
                         </TableContainer>

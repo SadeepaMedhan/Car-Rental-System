@@ -6,14 +6,32 @@ import IconButton from "@mui/material/IconButton";
 import NoiseControlOffIcon from "@mui/icons-material/NoiseControlOff";
 import Chip from "@mui/material/Chip";
 import Avatar from "@mui/material/Avatar";
+import DriverService from "../../service/DriverService";
 
 class DriverView extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            driver:props.driver,
+            scheduleList:[]
+        }
     }
 
+    componentDidMount() {
+        this.loadSchedule(this.props.driver.driverID)
+    }
+
+    loadSchedule = async (driverId) => {
+        let params = {id: driverId}
+        console.log(driverId)
+        const res = await DriverService.getSchedule(params);
+        if (res.status === 200) {
+            this.setState({scheduleList:res.data.data})
+            console.log(this.state.scheduleList)
+        }
+        else {console.log("fetching error: " + res)}
+    }
 
     render() {
         return (
@@ -53,7 +71,7 @@ class DriverView extends Component {
                                     style={{
                                         fontFamily: 'Convergence',
                                         fontSize: '0.6em',
-                                    }}>{"this.state.searchData."}</span>
+                                    }}>{this.state.driver.name}</span>
                             </IconButton>
                             <IconButton>
                                 <NoiseControlOffIcon/>
@@ -65,7 +83,7 @@ class DriverView extends Component {
                                     style={{
                                         fontFamily: 'Convergence',
                                         fontSize: '0.6em',
-                                    }}>{"this.state.searchData."}</span>
+                                    }}>{this.state.driver.address}</span>
                             </IconButton>
                             <IconButton>
                                 <NoiseControlOffIcon/>
@@ -77,7 +95,7 @@ class DriverView extends Component {
                                     style={{
                                         fontFamily: 'Convergence',
                                         fontSize: '0.6em',
-                                    }}>{"this.state.searchData."}</span>
+                                    }}>{this.state.driver.contact}</span>
                             </IconButton>
                             <IconButton>
                                 <NoiseControlOffIcon/>
@@ -89,7 +107,7 @@ class DriverView extends Component {
                                     style={{
                                         fontFamily: 'Convergence',
                                         fontSize: '0.6em',
-                                    }}>{'this.state.searchData.'}</span>
+                                    }}>{this.state.driver.nic}</span>
                             </IconButton>
                             <IconButton>
                                 <NoiseControlOffIcon/>
@@ -101,7 +119,7 @@ class DriverView extends Component {
                                     style={{
                                         fontFamily: 'Convergence',
                                         fontSize: '0.6em',
-                                    }}>{"this.state.searchData.."}</span>
+                                    }}>{this.state.driver.email}</span>
                             </IconButton>
                         </Stack>
                     </Stack>
@@ -135,14 +153,25 @@ class DriverView extends Component {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    <TableRow>
-                                        <TableCell align="left">Date</TableCell>
-                                        <TableCell align="left">Date</TableCell>
-                                        <TableCell align="left">Location</TableCell>
-                                        <TableCell align="left"><Avatar alt="user"/></TableCell>
-                                        <TableCell align="left"><Avatar alt="vehicle"/></TableCell>
-                                        <TableCell align="left">Action</TableCell>
-                                    </TableRow>
+                                    {
+                                    this.state.scheduleList.map((row)=>(
+                                        <TableRow>
+                                            <TableCell align="left">{row.leavingDate}</TableCell>
+                                            <TableCell align="left">{row.returnDate}</TableCell>
+                                            <TableCell align="left">{row.location}</TableCell>
+                                            <TableCell align="left">
+                                                <Avatar alt="user"/>
+                                                {row.customer.cusName}
+                                            </TableCell>
+                                            <TableCell align="left">
+                                                <Avatar alt="vehicle"/>
+                                                {row.vehicle.brand}
+                                            </TableCell>
+                                            <TableCell align="left">Action</TableCell>
+                                        </TableRow>
+                                    ))
+                                }
+
                                 </TableBody>
                             </Table>
                         </TableContainer>

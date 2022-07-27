@@ -67,6 +67,17 @@ class BookingPage extends Component {
             payDate: '',
             payName: '',
             payCode: '',
+            driver:null,
+        }
+    }
+
+    componentDidMount() {
+        this.getAvailableDriver()
+    }
+
+    getAvailableDriver = () => {
+        if(this.state.searchData.driverState === 1){
+
         }
     }
 
@@ -77,20 +88,6 @@ class BookingPage extends Component {
         this.setState({stepperValue: 1});
         this.setState({bookingTabValue: 1});
     }
-
-
-    /*async getBookingId() {
-        let res = await BookingService.fetchNewId();
-        if (res.status === 200) {
-            this.setState({
-                bookingId: res.data.data
-            })
-            this.saveVehicle()
-            console.log("res: " + res.data.data)
-        } else {
-            console.log("fetching error: " + res)
-        }
-    }*/
 
     saveVehicle = async () => {
 

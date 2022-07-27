@@ -84,6 +84,17 @@ class CustomerService {
         })
         return await promise
     }
-
+    getBookings = async (cusId) => {
+        const promise = new Promise((resolve, reject) => {
+            axios.get('customer/request',{params: cusId})
+                .then((res) => {
+                    return resolve(res)
+                })
+                .catch((er) => {
+                    return resolve(er)
+                })
+        })
+        return await promise
+    }
 }
 export default new CustomerService();
