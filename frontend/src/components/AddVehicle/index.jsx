@@ -56,14 +56,18 @@ class AddVehicle extends Component{
                 imgUrl2:'',
                 imgUrl3:'',
                 imgUrl4:'',
+
             },
             btnState:props.btnState,
             selectVehicle:props.vehicleData,
 
             currentFile: undefined,
-            previewImage: undefined,
+            image1: undefined,
+            image2: undefined,
+            image3: undefined,
+            image4: undefined,
             progress: 0,
-
+            imageList:[],
             message: "",
             isError: false,
             imageInfos: [],
@@ -94,7 +98,7 @@ class AddVehicle extends Component{
                 imgUrl3:'',
                 imgUrl4:'',
             },
-            selectVehicle:null,
+            imageList:[]
         })
     }
 
@@ -133,10 +137,22 @@ class AddVehicle extends Component{
         });
     }
     selectFile(event) {
-        console.log(event.target.files[0].name)
+        console.log(event.target.files)
+        if (event.target.files.length>0){
+            this.setState({image1: URL.createObjectURL(event.target.files[0])});
+        }
+        if (event.target.files.length>1){
+            this.setState({image2: URL.createObjectURL(event.target.files[1])});
+        }
+        if (event.target.files.length>2){
+            this.setState({image3: URL.createObjectURL(event.target.files[2])});
+        }
+        if (event.target.files.length>3){
+            this.setState({image4: URL.createObjectURL(event.target.files[3])});
+        }
         this.setState({
+            imageList:event.target.files,
             currentFile: event.target.files[0],
-            previewImage: URL.createObjectURL(event.target.files[0]),
             progress: 0,
             message: ""
         });
@@ -179,11 +195,15 @@ class AddVehicle extends Component{
 
         const {
             currentFile,
-            previewImage,
+            image1,
+            image2,
+            image3,
+            image4,
             progress,
             message,
             imageInfos,
-            isError
+            isError,
+            imageList
         } = this.state;
 
 
@@ -326,10 +346,14 @@ class AddVehicle extends Component{
                     <Stack direction="row" justifyContent="flex-end"
                            alignItems="center"
                            spacing={2}>
-                        {previewImage && (
-                            <div>
-                                <img height="80px" className="preview my20" src={previewImage} alt="" />
-                            </div>
+                        {image1 && (
+                            <img height="80px" className="preview my20" src={URL.createObjectURL(imageList[0])} alt="" />
+                        )}{image2 && (
+                            <img height="80px" className="preview my20" src={URL.createObjectURL(imageList[1])} alt="" />
+                        )}{image3 && (
+                            <img height="80px" className="preview my20" src={URL.createObjectURL(imageList[2])} alt="" />
+                        )}{image4 && (
+                            <img height="80px" className="preview my20" src={URL.createObjectURL(imageList[3])} alt="" />
                         )}
 
                         {message && (
@@ -358,10 +382,7 @@ class AddVehicle extends Component{
                         }
                     </Stack>
 
-                    <div className="file-name">
-                        {currentFile ? currentFile.name : null}
-                    </div>
-                    <Button autoFocus color="info" variant="contained" style={{fontWeight:'bold', width:'95px',borderRadius:15 }}>
+                    <Button onClick={this.clearData} color="info" variant="contained" style={{fontWeight:'bold', width:'95px',borderRadius:15 }}>
                         Clear
                     </Button>
                     <Button onClick={saveVehicle} disabled={this.state.selectVehicle === null} color="primary" variant="contained" style={{fontWeight:'bold', width:'95px',borderRadius:15 }}>

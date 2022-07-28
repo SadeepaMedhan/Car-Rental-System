@@ -14,6 +14,7 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import {withStyles} from "@mui/styles";
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import CustomerService from "../../service/CustomerService";
+import UploadFilesService from "../../service/UploadFilesService";
 
 class SignUp extends Component{
 
@@ -70,6 +71,16 @@ class SignUp extends Component{
         const handleMouseDownPassword = (event) => {
             event.preventDefault();
         };
+         const selectFile = async (event) => {
+             var data = new FormData();
+             let file = event.target.files[0];
+             let fileName = event.target.files[0].name;
+             data.append("myFile", file, fileName);
+
+             let promise = await UploadFilesService.upload(data);
+
+
+         };
 
         return (
             <div>
@@ -205,6 +216,22 @@ class SignUp extends Component{
                                                </InputAdornment>
                                            }
                                 />
+                                <label htmlFor="btn-upload">
+                                    <input
+                                        multiple
+                                        id="btn-upload"
+                                        name="btn-upload"
+                                        style={{ display: 'none' }}
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={selectFile} />
+                                    <Button
+                                        className="btn-choose"
+                                        variant="outlined"
+                                        component="span" >
+                                        Choose Image
+                                    </Button>
+                                </label>
                             </Stack>
                             <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={1}>
                                 <Button autoFocus onClick={handleClose} color="info" variant="contained" style={{fontWeight:'bold', width:'95px',borderRadius:15 }}>
