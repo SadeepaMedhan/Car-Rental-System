@@ -11,6 +11,7 @@ import UploadImages from "../ImageUpload/UploadImages";
 import UploadService from "../../service/UploadFilesService";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import UploadFilesService from "../../service/UploadFilesService";
 
 const BorderLinearProgress = withStyles((theme) => ({
     root: {
@@ -70,6 +71,7 @@ class AddVehicle extends Component{
     }
 
     clearData = () =>{
+
         this.setState({
             vehicle: {
                 vehicleId:'',
@@ -121,6 +123,7 @@ class AddVehicle extends Component{
 
     }
 
+
     componentDidMount() {
         this.loadData();
         UploadService.getFiles().then((response) => {
@@ -130,6 +133,7 @@ class AddVehicle extends Component{
         });
     }
     selectFile(event) {
+        console.log(event.target.files[0].name)
         this.setState({
             currentFile: event.target.files[0],
             previewImage: URL.createObjectURL(event.target.files[0]),
@@ -184,10 +188,12 @@ class AddVehicle extends Component{
 
 
         const saveVehicle = async () => {
+
             if(this.state.btnState === "Save") {
                 console.log(this.state.vehicle)
 
                 let formData = this.state.vehicle
+
                 let response = await VehicleService.createVehicle(formData);
                 if (response.status === 201) {
                     console.log("saved !")
@@ -239,6 +245,7 @@ class AddVehicle extends Component{
 
                     <label htmlFor="btn-upload">
                         <input
+                            multiple
                             id="btn-upload"
                             name="btn-upload"
                             style={{ display: 'none' }}

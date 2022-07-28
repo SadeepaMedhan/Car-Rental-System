@@ -31,7 +31,7 @@ import VehicleService from "../../service/VehicleService";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {
-    Avatar,
+    Avatar, Badge,
     Paper,
     Stack,
     Table,
@@ -53,9 +53,9 @@ import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import {StaticDatePicker} from '@mui/x-date-pickers/StaticDatePicker';
 import '@mobiscroll/react-lite/dist/css/mobiscroll.min.css';
 import BookingService from "../../service/BookingService";
-import vehicleImg1 from "../../assets/images/vehicles/v1f.jpg";
 import Chip from "@mui/material/Chip";
 import Calendar from "react-calendar";
+import UploadFilesService from "../../service/UploadFilesService";
 
 
 export default function Dashboard() {
@@ -64,6 +64,12 @@ export default function Dashboard() {
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState(0);
     const [tittle, setTittle] = React.useState("Dashboard");
+    const [noCus, setNoCus] = React.useState(0);
+    const [noVehicle, setNoVehicle] = React.useState(0);
+    const [noRental, setNoRental] = React.useState(0);
+    const [noDriver, setNoDriver] = React.useState(0);
+    const [noMaintain, setNoMaintain] = React.useState(0);
+    const [noRequest, setNoRequest] = React.useState(0);
     const [selectImg, setSelectImg] = React.useState(null);
     const [vehicleList, setVehicleList] = React.useState([]);
     const [driversList, setDriversList] = React.useState([]);
@@ -79,9 +85,14 @@ export default function Dashboard() {
     const [bookingFormValue, setBookingFormValue] = React.useState(0);
     const [requestFormValue, setRquestFormValue] = React.useState(0);
     const [driverSelectDate, setDriverSelectDate] = React.useState(new Date());
-    const [date, setDate] = React.useState(() => new Date(2022, 1, 1, 1, 1));
+    const [imgUrl, setImgUrl] = React.useState(null);
+    const [date, setDate] = React.useState(() => new Date());
     React.useEffect(() => {
         loadBookingData();
+        loadVehicleData();
+        loadDriversData();
+        loadCustomersData();
+        loadImages();
     }, []);
 
     const now = new Date();
@@ -154,6 +165,7 @@ export default function Dashboard() {
     const loadVehicleData = async () => {
         const res = await VehicleService.fetchVehicles();
         if (res.status === 200) {
+            setNoVehicle(res.data.data.length)
             setVehicleList(res.data.data)
         } else {
             console.log("fetching error: " + res)
@@ -182,6 +194,7 @@ export default function Dashboard() {
     const loadDriversData = async () => {
         const res = await DriverService.fetchDrivers();
         if (res.status === 200) {
+            setNoDriver(res.data.data.length)
             setDriversList(res.data.data)
         } else {
             console.log("fetching error: " + res)
@@ -211,6 +224,7 @@ export default function Dashboard() {
     const loadCustomersData = async () => {
         const res = await CustomerService.fetchCustomers();
         if (res.status === 200) {
+            setNoCus(res.data.data.length)
             setCustomersList(res.data.data)
         } else {
             console.log("fetching error: " + res)
@@ -225,11 +239,13 @@ export default function Dashboard() {
     const loadBookingData = async () => {
         const res = await BookingService.fetchBooking();
         if (res.status === 200) {
+            setNoRental(res.data.data.length)
             setBookingList(res.data.data)
         } else {
             console.log("fetching error: " + res)
         }
     }
+
     const updateBookingData = async (data) => {
         let response = await BookingService.updateBooking(data);
         if (response.status === 200) {
@@ -243,6 +259,17 @@ export default function Dashboard() {
         //loadBookingData()
         setRquestFormValue(newValue);
     }
+
+    const loadImages = async () => {
+        let baseUrl = "http://localhost:8080/backend_war/"
+        const res = await UploadFilesService.getFiles();
+        console.log(baseUrl+res.data[1])
+        setImgUrl(baseUrl+res.data[0]);
+    }
+
+
+
+
     return (
         <Box sx={{display: 'flex'}}>
             <img src={backImg2} style={{
@@ -280,7 +307,9 @@ export default function Dashboard() {
                         <DashboardIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start"
                          label="Dashboard" {...a11yProps(0)} />
                     <Tab className={classes.tab} icon={
-                        <CollectionsBookmarkIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>}
+                        <Badge badgeContent={noRequest} color="secondary" anchorOrigin={{vertical: 'top', horizontal: 'left',}}>
+                            <CollectionsBookmarkIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>
+                        </Badge>}
                          iconPosition="start" label="Booking" {...a11yProps(1)} />
                     <Tab className={classes.tab} icon={
                         <DirectionsCarIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start"
@@ -315,7 +344,7 @@ export default function Dashboard() {
                 {/*-----------------------------------Dash-------------------------*/}
                 <TabPanel value={value} index={0}>
 
-                    <Stack spacing={2}>
+                    <Stack spacing={4}>
                         <Stack direction={{xs: 'column', sm: 'row'}}
                                spacing={{xs: 1, sm: 2, md: 4}}
                                justifyContent="center"
@@ -330,7 +359,7 @@ export default function Dashboard() {
                                 <Stack direction="column" justifyContent="flex-start" alignItems="flex-end" spacing={1}
                                        className={classes.card_mainAria}>
                                     <h3>Customers</h3>
-                                    <h2>750</h2>
+                                    <h2>{noCus}</h2>
                                 </Stack><Divider/>
                                 <Stack direction="row" justifyContent="flex-start" spacing={1}
                                        alignItems="center" style={{width: '100%', height: '40px'}}>
@@ -347,7 +376,7 @@ export default function Dashboard() {
                                        alignItems="flex-end" spacing={1}
                                        className={classes.card_mainAria}>
                                     <h3>Cars</h3>
-                                    <h2>27</h2>
+                                    <h2>{noVehicle}</h2>
                                 </Stack>
                                 <Divider/>
                                 <Stack direction="row" justifyContent="flex-start" spacing={1}
@@ -365,7 +394,7 @@ export default function Dashboard() {
                                        alignItems="flex-end" spacing={1}
                                        className={classes.card_mainAria}>
                                     <h3>Rentals</h3>
-                                    <h2>550</h2>
+                                    <h2>{noRental}</h2>
                                 </Stack>
                                 <Divider/>
                                 <Stack direction="row" justifyContent="flex-start" spacing={1}
@@ -383,7 +412,7 @@ export default function Dashboard() {
                                        alignItems="flex-end" spacing={1}
                                        className={classes.card_mainAria}>
                                     <h3>Drivers</h3>
-                                    <h2>27</h2>
+                                    <h2>{noDriver}</h2>
                                 </Stack>
                                 <Divider/>
                                 <Stack direction="row" justifyContent="flex-start" spacing={1}
@@ -401,7 +430,7 @@ export default function Dashboard() {
                                        alignItems="flex-end" spacing={1}
                                        className={classes.card_mainAria}>
                                     <h3>Maintain</h3>
-                                    <h2>550</h2>
+                                    <h2>{noMaintain}</h2>
                                 </Stack>
                                 <Divider/>
                                 <Stack direction="row" justifyContent="flex-start" spacing={1}
@@ -410,7 +439,10 @@ export default function Dashboard() {
                                 </Stack>
                             </Stack>
                         </Stack>
-                        <Stack direction="row" alignItems="center">
+                        <Stack direction="row"
+                               justifyContent="space-around"
+                               alignItems="flex-start"
+                               spacing={2} style={{border:'1px solid #E0E0E0',borderRadius:'3px', boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px'}}>
                             <Stack>
                                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                                     <StaticDatePicker
@@ -478,64 +510,49 @@ export default function Dashboard() {
                                 </LocalizationProvider>
                             </Stack>
                             <Stack>
+                                <h2>Today Rentals</h2>
+
                                 <TableContainer component={Paper}>
                                     <Table sx={{minWidth: 650}} aria-label="booking table">
                                         <TableHead>
                                             <TableRow>
                                                 <TableCell align="left">Status</TableCell>
                                                 <TableCell align="left">Vehicle</TableCell>
-                                                <TableCell align="left">Leaving Date</TableCell>
-                                                <TableCell align="left">Return Date</TableCell>
+                                                <TableCell align="left">Date</TableCell>
                                                 <TableCell align="left">Location</TableCell>
+                                                <TableCell align="left">Customer</TableCell>
                                                 <TableCell align="left">Pay</TableCell>
-                                                <TableCell align="left">Damage</TableCell>
                                                 <TableCell align="left">Rental Fee</TableCell>
-                                                <TableCell align="left">Action</TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
                                             {
                                                 bookingList.map((row) => (
                                                     <TableRow>
-                                                        <TableCell align="left">{row.status}</TableCell>
-                                                        <TableCell align="left">{row.vehicle.brand}</TableCell>
-                                                        <TableCell align="left">{row.leavingDate}</TableCell>
-                                                        <TableCell align="left">{row.returnDate}</TableCell>
-                                                        <TableCell align="left">{row.location}</TableCell>
-                                                        <TableCell align="left">{row.payment}</TableCell>
-                                                        <TableCell align="left">{row.lossDamageFee}</TableCell>
-                                                        <TableCell align="left">{row.rentalFee}</TableCell>
                                                         <TableCell align="left">
-                                                            <Tooltip title="Edit">
-                                                                <IconButton>
-                                                                    <EditIcon color="primary"/>
-                                                                </IconButton>
-                                                            </Tooltip>
-                                                            <Tooltip title="Delete">
-                                                                <IconButton
-                                                                    onClick={() => {
-                                                                        swal({
-                                                                            title: "Are you sure?",
-                                                                            text: "Once deleted, you will not be able to recover this imaginary file!",
-                                                                            icon: "warning",
-                                                                            buttons: true,
-                                                                            dangerMode: true,
-                                                                        })
-                                                                            .then((willDelete) => {
-                                                                                if (willDelete) {
-                                                                                    swal("Poof! Your imaginary file has been deleted!", {
-                                                                                        icon: "success",
-                                                                                    });
-                                                                                } else {
-                                                                                    swal("Your imaginary file is safe!");
-                                                                                }
-                                                                            });
-                                                                    }}
-                                                                >
-                                                                    <DeleteIcon color="error"/>
-                                                                </IconButton>
-                                                            </Tooltip>
+                                                            <Chip label={row.status}
+                                                                  color={row.status === "Pending" ? "warning" : "success"}
+                                                                  />
                                                         </TableCell>
+                                                        <TableCell align="left">
+                                                            <Avatar alt="img" src={imgUrl}/>
+
+                                                            {row.vehicle.brand}
+                                                        </TableCell>
+                                                        <TableCell align="left">
+                                                            <Stack>
+                                                                <p>{row.leavingDate.split('T')[0]}</p>
+                                                                <p>{row.returnDate.split('T')[0]}</p>
+                                                            </Stack>
+                                                        </TableCell>
+                                                        <TableCell align="left">{row.location}</TableCell>
+                                                        <TableCell align="left">
+                                                            <Avatar alt="user"/>
+                                                            {row.customer.cusName}
+                                                        </TableCell>
+                                                        <TableCell align="left">{row.payment}</TableCell>
+                                                        <TableCell align="left">{row.rentalFee}</TableCell>
+
                                                     </TableRow>
                                                 ))
                                             }
@@ -570,9 +587,9 @@ export default function Dashboard() {
                                             <TableCell align="left">Return</TableCell>
                                             <TableCell align="left">Location</TableCell>
                                             <TableCell align="left">Customer</TableCell>
+                                            <TableCell align="left">Driver</TableCell>
                                             <TableCell align="left">Pay</TableCell>
                                             <TableCell align="left">Rental Fee</TableCell>
-                                            <TableCell align="left">Action</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -601,49 +618,24 @@ export default function Dashboard() {
                                                         }}/>
                                                     </TableCell>
                                                     <TableCell align="left">
-                                                        <Avatar alt="img" src={vehicleImg1}/>
+                                                        <Avatar alt="img" src={row.imgUrl1 !== null && "../../assets/images/vehicles/"+row.imgUrl1}/>
                                                         {row.vehicle.brand}
                                                     </TableCell>
-                                                    <TableCell align="left">{row.leavingDate}</TableCell>
-                                                    <TableCell align="left">{row.returnDate}</TableCell>
+                                                    <TableCell align="left">{row.leavingDate.split('T')[0]}</TableCell>
+                                                    <TableCell align="left">{row.returnDate.split('T')[0]}</TableCell>
                                                     <TableCell align="left">{row.location}</TableCell>
                                                     <TableCell align="left">
-                                                        <Avatar alt="user"/>
-                                                        {row.customer.cusName}
+                                                        <Stack  direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
+                                                            <Avatar alt="user"/>
+                                                            <p>{row.customer.cusName}</p>
+                                                        </Stack>
+                                                    </TableCell>
+                                                    <TableCell align="left">
+                                                        {row.driver === null ? 'Self Drive' : row.driver.name}
                                                     </TableCell>
                                                     <TableCell align="left">{row.payment}</TableCell>
                                                     <TableCell align="left">{row.rentalFee}</TableCell>
-                                                    <TableCell align="left">
-                                                        <Tooltip title="Edit">
-                                                            <IconButton>
-                                                                <EditIcon color="primary"/>
-                                                            </IconButton>
-                                                        </Tooltip>
-                                                        <Tooltip title="Delete">
-                                                            <IconButton
-                                                                onClick={() => {
-                                                                    swal({
-                                                                        title: "Are you sure?",
-                                                                        text: "Once deleted, you will not be able to recover this imaginary file!",
-                                                                        icon: "warning",
-                                                                        buttons: true,
-                                                                        dangerMode: true,
-                                                                    })
-                                                                        .then((willDelete) => {
-                                                                            if (willDelete) {
-                                                                                swal("Poof! Your imaginary file has been deleted!", {
-                                                                                    icon: "success",
-                                                                                });
-                                                                            } else {
-                                                                                swal("Your imaginary file is safe!");
-                                                                            }
-                                                                        });
-                                                                }}
-                                                            >
-                                                                <DeleteIcon color="error"/>
-                                                            </IconButton>
-                                                        </Tooltip>
-                                                    </TableCell>
+
                                                 </TableRow>
                                             ))
                                         }
@@ -677,7 +669,7 @@ export default function Dashboard() {
                                     <TableHead>
                                         <TableRow>
                                             <TableCell align="left">Reg.No</TableCell>
-                                            <TableCell align="left">Brand</TableCell>
+                                            <TableCell align="left">Vehicle</TableCell>
                                             <TableCell align="left">Type</TableCell>
                                             <TableCell align="left">Transmission Type</TableCell>
                                             <TableCell align="left">Fuel Type</TableCell>
@@ -691,7 +683,7 @@ export default function Dashboard() {
                                                 <TableRow>
                                                     <TableCell align="left">{row.regNo}</TableCell>
                                                     <TableCell align="left">
-                                                        <Avatar alt="img" src={vehicleImg1}/>
+                                                        <Avatar alt="img" src={row.imgUrl1 !== null && "../../assets/images/vehicles/"+row.imgUrl1}/>
                                                         {row.brand}
                                                     </TableCell>
                                                     <TableCell align="left">{row.type}</TableCell>
@@ -996,7 +988,7 @@ export default function Dashboard() {
                                                                 }}/>
                                                             </TableCell>
                                                             <TableCell align="left">
-                                                                <Avatar alt="img" src={vehicleImg1}/>
+                                                                <Avatar alt="img" src={row.imgUrl1 !== null && "../../assets/images/vehicles/"+row.imgUrl1}/>
                                                                 {row.vehicle.brand}
                                                             </TableCell>
                                                             <TableCell align="left">{row.leavingDate}</TableCell>
@@ -1091,7 +1083,7 @@ export default function Dashboard() {
                                                         }}/>
                                                     </TableCell>
                                                     <TableCell align="left">
-                                                        <Avatar alt="img" src={vehicleImg1}/>
+                                                        <Avatar alt="img" src={row.imgUrl1 !== null && "../../assets/images/vehicles/"+row.imgUrl1}/>
                                                         {row.vehicle.brand}
                                                     </TableCell>
                                                     <TableCell align="left">{row.leavingDate}</TableCell>

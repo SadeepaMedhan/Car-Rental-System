@@ -25,8 +25,13 @@ class CustomerManage extends Component{
             },
             btnState:props.btnState,
             selectCustomer:props.customerData,
+
+            images:[],
+            imageURLs:[],
+
         }
     }
+
 
     clearData = () =>{
         this.setState({
@@ -71,10 +76,21 @@ class CustomerManage extends Component{
 
     componentDidMount() {
         this.loadData();
+        if (!this.state.images.length<1){
+            const newImgUrls = [];
+            this.state.images.forEach(image=>newImgUrls.push(URL.createObjectURL(image)));
+            this.setState({imageURLs:newImgUrls})
+        }
     }
 
 
+
+
     render() {
+
+        const onImageChange = (e) => {
+            this.setState({images: [...e.target.files]})
+        }
 
         const saveCustomer = async () => {
             if(this.state.btnState === "Save") {
@@ -122,6 +138,9 @@ class CustomerManage extends Component{
                                    let formData = this.state.customer
                                    formData.cusNIC = e.target.value
                                    this.setState({ formData })}}/>
+
+                    <input type="file" multiple accept="image/*" onChange={onImageChange}/>
+                    {this.state.imageURLs.map(imageSrc => <img src={imageSrc}/>)}
 
                 </Stack>
 
