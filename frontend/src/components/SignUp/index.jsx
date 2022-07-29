@@ -77,8 +77,8 @@ class SignUp extends Component{
              let fileName = event.target.files[0].name;
              data.append("myFile", file, fileName);
 
-             let promise = await UploadFilesService.upload(data);
-
+             let resp = await UploadFilesService.upload(file);
+             console.log(resp)
 
          };
 

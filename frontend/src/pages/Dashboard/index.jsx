@@ -268,7 +268,7 @@ export default function Dashboard() {
     }
 
 
-
+    let baseUrl = "http://localhost:8080/backend_war/uploads/"
 
     return (
         <Box sx={{display: 'flex'}}>
@@ -535,7 +535,7 @@ export default function Dashboard() {
                                                                   />
                                                         </TableCell>
                                                         <TableCell align="left">
-                                                            <Avatar alt="img" src={imgUrl}/>
+                                                            <Avatar alt="img" src={baseUrl+row.vehicle.imgUrl1}/>
 
                                                             {row.vehicle.brand}
                                                         </TableCell>
@@ -618,7 +618,7 @@ export default function Dashboard() {
                                                         }}/>
                                                     </TableCell>
                                                     <TableCell align="left">
-                                                        <Avatar alt="img" src={row.imgUrl1 !== null && "../../assets/images/vehicles/"+row.imgUrl1}/>
+                                                        <Avatar alt="img" src={baseUrl+row.vehicle.imgUrl1}/>
                                                         {row.vehicle.brand}
                                                     </TableCell>
                                                     <TableCell align="left">{row.leavingDate.split('T')[0]}</TableCell>
@@ -683,7 +683,7 @@ export default function Dashboard() {
                                                 <TableRow>
                                                     <TableCell align="left">{row.regNo}</TableCell>
                                                     <TableCell align="left">
-                                                        <Avatar alt="img" src={row.imgUrl1 !== null && "../../assets/images/vehicles/"+row.imgUrl1}/>
+                                                        <Avatar alt="img" src={baseUrl+row.imgUrl1}/>
                                                         {row.brand}
                                                     </TableCell>
                                                     <TableCell align="left">{row.type}</TableCell>

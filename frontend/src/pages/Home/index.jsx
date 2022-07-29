@@ -471,7 +471,7 @@ class HomePage extends Component {
                             </Stack>
 
                             <Stack id="resultSec">
-                                <div className={classes.suggest__result_box}>
+                                <Stack className={classes.suggest__result_box}>
                                     <h2 style={{
                                         fontFamily: 'Convergence', fontSize: '1.2em',
                                         textAlign: 'center', marginTop: '30px', marginBottom: '10px'
@@ -532,7 +532,7 @@ class HomePage extends Component {
 
                                         </Stack>
                                     </div>
-                                </div>
+                                </Stack>
                             </Stack>
 
                             <ContactInfo/>

@@ -39,7 +39,7 @@ class VehicleCard extends Component{
 
     render() {
         let {classes} = this.props;
-
+        let baseUrl = "http://localhost:8080/backend_war/uploads/"
 
         return (
             <div /*sx={{ maxWidth: 345 }}*/>
@@ -56,7 +56,7 @@ class VehicleCard extends Component{
                                 <p className={classes.card_type} >{this.state.vehicle.type}</p>
                             </div>
                             <div>
-                                <img className={classes.card_img} src={this.props.imgSrc} alt=""/>
+                                <img className={classes.card_img} src={baseUrl+this.state.vehicle.imgUrl1} alt=""/>
                             </div>
 
                         </Stack>

@@ -213,7 +213,7 @@ class AddVehicle extends Component{
                 console.log(this.state.vehicle)
 
                 let formData = this.state.vehicle
-
+                formData.imgUrl1 = this.state.currentFile.name;
                 let response = await VehicleService.createVehicle(formData);
                 if (response.status === 201) {
                     console.log("saved !")
@@ -225,6 +225,7 @@ class AddVehicle extends Component{
                 //console.log(this.state.vehicle)
 
                 let formData = this.state.vehicle
+                formData.imgUrl1 = this.state.currentFile.name;
                 let response = await VehicleService.updateVehicle(formData);
                 if (response.status === 200) {
                     console.log("updated !")
