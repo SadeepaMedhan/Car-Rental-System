@@ -26,16 +26,17 @@ class SignUp extends Component {
             password: '',
             showPassword: false,
             cusFormData: {
-                cusID: 'C002',
+                cusID: 'C***',
                 cusName: '',
                 cusEmail: '',
                 cusPassword: '',
                 cusNIC: '',
                 cusDrivingLicenseNo: '',
                 cusAddress: '',
-                cusContactNo: ''
+                cusContactNo: '',
+                nicUrl:''
             },
-
+            currentFile: undefined,
         }
     }
 
@@ -75,15 +76,20 @@ class SignUp extends Component {
         const handleMouseDownPassword = (event) => {
             event.preventDefault();
         };
-        const selectFile = async (event) => {
+        const selectFile = (event) => {
+            this.setState({
+                currentFile: event.target.files[0],
+                nicUrl:event.target.files[0].name
+            });
+        };
+        const uploadNic = async (event) => {
             var data = new FormData();
-            let file = event.target.files[0];
-            let fileName = event.target.files[0].name;
+            let file = this.state.currentFile;
+            let fileName = this.state.currentFile.name;
             data.append("myFile", file, fileName);
 
             let resp = await UploadFilesService.upload(file);
             console.log(resp)
-
         };
 
         return (
@@ -105,14 +111,13 @@ class SignUp extends Component {
                             </Tooltip>
                         </SignUpTitle>
 
-                        <Stack    spacing={4}
+                        <Stack spacing={4}
                                   justifyContent="space-evenly"
                                  direction="row"   divider={<Divider orientation="vertical" flexItem />}>
-                            <ValidatorForm ref="form" onSubmit={handleSubmit} onError={errors => console.log(errors)}>
+                            <ValidatorForm  onSubmit={handleSubmit} onError={errors => console.log(errors)}>
 
                                 <Stack direction="column" justifyContent="center" alignItems="center" spacing={3}
                                        className={classes.signUp__back}>
-
 
                                     <Stack direction="row" spacing={4}>
                                         <TextValidator
@@ -219,27 +224,9 @@ class SignUp extends Component {
                                         />
 
                                     </Stack>
-                                    <Stack direction="row">
-                                        <label htmlFor="btn-upload">
-                                            <input
-                                                multiple
-                                                id="btn-upload"
-                                                name="btn-upload"
-                                                style={{display: 'none'}}
-                                                type="file"
-                                                accept="image/*"
-                                                onChange={selectFile}/>
-                                            <Button
-                                                className="btn-choose"
-                                                variant="outlined"
-                                                component="span">
-                                                Choose NIC Image
-                                            </Button>
-                                        </label>
 
-                                    </Stack>
                                     <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={1}>
-                                        <Button autoFocus onClick={handleClose} color="info" variant="contained"
+                                        <Button onClick={handleClose} color="info" variant="contained"
                                                 style={{fontWeight: 'bold', width: '95px', borderRadius: 15}}>
                                             Clear
                                         </Button>
@@ -251,6 +238,39 @@ class SignUp extends Component {
 
                                 </Stack>
                             </ValidatorForm>
+                            <Stack direction="row" spacing={2} alignItems="center">
+                                <label htmlFor="btn-upload">
+                                    <input
+                                        multiple
+                                        id="btn-upload"
+                                        name="btn-upload"
+                                        style={{display: 'none'}}
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={selectFile}/>
+                                    <Button
+                                        className="btn-choose"
+                                        variant="outlined"
+                                        component="span">
+                                        Choose NIC Image
+                                    </Button>
+                                </label>
+                                <div>
+                                    {this.state.currentFile && (
+                                        <img height="80px" className="preview my20" src={URL.createObjectURL(this.state.currentFile)} alt="" />
+                                    )}
+                                </div>
+                                <Button
+                                    className="btn-upload"
+                                    color="primary"
+                                    variant="contained"
+                                    component="span"
+                                    disabled={!this.state.currentFile}
+                                    onClick={uploadNic}
+                                >
+                                    Upload
+                                </Button>
+                            </Stack>
                             <Stack direction="column"
                                    justifyContent="center"
                                    alignItems="center"

@@ -38,10 +38,6 @@ import pay2 from "../../assets/images/payM.png";
 import pay3 from "../../assets/images/payV.png";
 import pay4 from "../../assets/images/payA.png";
 import {TextValidator, ValidatorForm} from "react-material-ui-form-validator";
-import vehicleImg1 from "../../assets/images/vehicles/Suzuki-Alto-R (1).png";
-import vehicleImg2 from "../../assets/images/vehicles/Suzuki-Alto-R (2).png";
-import vehicleImg3 from "../../assets/images/vehicles/Suzuki-Alto-R (3).PNG";
-import vehicleImg4 from "../../assets/images/vehicles/Suzuki-Alto-R (4).PNG";
 import BookingService from "../../service/BookingService";
 import DriverService from "../../service/DriverService";
 
@@ -147,6 +143,7 @@ class BookingPage extends Component {
 
     render() {
         let {classes} = this.props;
+        let baseUrl = "http://localhost:8080/backend_war/uploads/"
 
 
         const goResults = (e) => {
@@ -463,11 +460,11 @@ class BookingPage extends Component {
                                             <img style={{
                                                 width: '220px',
                                                 height: '100px',
-                                            }} src={vehicleImg1} alt=""/>
+                                            }} src={baseUrl+this.state.selectVehicle.imgUrl1} alt=""/>
                                             <img style={{
                                                 width: '220px',
                                                 height: '100px',
-                                            }} src={vehicleImg2} alt=""/>
+                                            }} src={baseUrl+this.state.selectVehicle.imgUrl2} alt=""/>
                                         </Stack>
                                         <Stack direction="column"
                                                justifyContent="center"
@@ -476,11 +473,11 @@ class BookingPage extends Component {
                                             <img style={{
                                                 width: '220px',
                                                 height: '100px',
-                                            }} src={vehicleImg3} alt=""/>
+                                            }} src={baseUrl+this.state.selectVehicle.imgUrl3} alt=""/>
                                             <img style={{
                                                 width: '220px',
                                                 height: '100px',
-                                            }} src={vehicleImg4} alt=""/>
+                                            }} src={baseUrl+this.state.selectVehicle.imgUrl4} alt=""/>
 
                                         </Stack>
                                     </Stack>
