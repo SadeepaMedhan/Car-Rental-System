@@ -13,60 +13,25 @@ import Divider from "@mui/material/Divider";
 import CustomerService from "../../service/CustomerService";
 import UploadFilesService from "../../service/UploadFilesService";
 
-const SignUpForm = styled(Dialog)(({theme}) => ({
-    '& .MuiDialogContent-root': {
-        padding: theme.spacing(2),
-        width: '100vw',
-    },
-    '& .MuiDialogActions-root': {
-        padding: theme.spacing(1),
-    },
-    '.css-1t1j96h-MuiPaper-root-MuiDialog-paper': {
-        maxWidth: '900px',
-        maxHeight: false,
-    }
-}));
-
-const SignUpFormTitle = (props) => {
-    const {children, onClose, ...other} = props;
-
-    return (
-        <DialogTitle sx={{m: 0, p: 2}} {...other}>
-            {children}
-            {onClose ? (
-                <IconButton aria-label="close" onClick={onClose}
-                            sx={{
-                                position: 'absolute',
-                                right: 8, top: 8,
-                                color: (theme) => theme.palette.grey[500],
-                            }}
-                >
-                    <CloseIcon/>
-                </IconButton>
-            ) : null}
-        </DialogTitle>
-    );
-};
-
-SignUpFormTitle.propTypes = {
-    children: PropTypes.node,
-    onClose: PropTypes.func.isRequired,
-};
-
 
 export default function SignUp() {
     const [open, setOpen] = React.useState(false);
-    const [cusID, setCusID] = React.useState('');
-    const [cusName, setCusName] = React.useState('');
-    const [cusEmail, setCusEmail] = React.useState('');
-    const [cusPassword, setCusPassword] = React.useState('');
-    const [cusNIC, setCusNIC] = React.useState('');
-    const [cusDrivingLicenseNo, setCusLicenseNo] = React.useState('');
-    const [cusAddress, setCusAddress] = React.useState('');
-    const [cusContactNo, setCusContactNo] = React.useState('');
-    const [nicUrl, setCusNICUrl] = React.useState('');
+    const [cusRepeatPassword, setCusRepeatPassword] = React.useState('');
     const [currentFile, setCurrentFile] = React.useState(undefined);
-    const [cusFormData, setCusFormData] = React.useState(undefined);
+    const [cusFormData, setCusFormData] = React.useState({
+        cusID:'***',
+        cusName:'',
+        cusEmail:'',
+        cusPassword:'',
+        cusNIC:'',
+        cusDrivingLicenseNo:'',
+        cusAddress:'',
+        cusContactNo:'',
+        nicUrl:'',
+    });
+    React.useEffect(() => {
+        getNewId();
+    }, []);
     let classes = styleSheet();
 
     const handleClickOpen = () => {
@@ -78,26 +43,34 @@ export default function SignUp() {
 
 
     const submitForm = () => {
-        console.log("submit.")
+        saveCus()
     }
 
-    const selectFile = (event) => {
-        setCurrentFile(event.target.files[0])
-        setCusNICUrl(event.target.files[0].name)
-        console.log(event.target.files[0])
 
-    };
-
+    const getNewId = async () => {
+        let response = await CustomerService.fetchNewId();
+        if (response.status === 200) {
+            setCusFormData({...cusFormData ,cusID:response.data.data})
+            console.log("res: " + JSON.stringify(response.data.data))
+        } else {
+            console.log("fetching error: " + response)
+        }
+    }
     const saveCus = async () => {
         console.log(cusFormData)
         let response = await CustomerService.createCustomer(cusFormData);
         if (response.status === 201) {
             console.log("saved !")
+            handleClose()
         } else {
             console.log(response)
         }
     }
 
+    const selectFile = (event) => {
+        setCurrentFile(event.target.files[0])
+        setCusFormData({...cusFormData ,nicUrl:event.target.files[0].name})
+    };
 
     const uploadNic = async () => {
         var data = new FormData();
@@ -119,9 +92,9 @@ export default function SignUp() {
                 <SignUpFormTitle className={classes.signUp__tittle} id="tittle" onClose={handleClose}>
                     Sign Up
                     <p style={{fontFamily: 'Convergence', fontSize: '0.7em'}}>
-                        Your ID is : C001</p>
+                        Your ID is : {cusFormData.cusID}</p>
                 </SignUpFormTitle>
-                <Stack direction="row" justifyContent="center" alignItems="center" spacing={3} divider={<Divider orientation="vertical" flexItem />}
+                <Stack direction="row" justifyContent="center" alignItems="center" spacing={2} divider={<Divider orientation="vertical" flexItem />}
                        className={classes.signUp__back}>
                     <ValidatorForm onSubmit={submitForm} onError={errors => console.log(errors)}>
 
@@ -132,17 +105,17 @@ export default function SignUp() {
                                     <TextValidator
                                         label="User Name" variant="outlined"
                                         size="small" color="primary"
-                                        value={cusName}
+                                        value={cusFormData.cusName}
                                         onChange={(e) => {
-                                            setCusName(e.target.value)
+                                            setCusFormData({...cusFormData ,cusName:e.target.value})
                                         }} validators={['required',]}
                                         errorMessages={['this field is required']}/>
                                     <TextValidator
                                         label="NIC" variant="outlined"
                                         size="small" color="primary"
-                                        value={cusName}
+                                        value={cusFormData.cusNIC}
                                         onChange={(e) => {
-                                            setCusName(e.target.value)
+                                            setCusFormData({...cusFormData ,cusNIC:e.target.value})
                                         }} validators={['required',]}
                                         errorMessages={['this field is required']}/>
 
@@ -151,17 +124,17 @@ export default function SignUp() {
                                     <TextValidator
                                         label="Address" variant="outlined"
                                         size="small" color="primary"
-                                        value={cusName}
+                                        value={cusFormData.cusAddress}
                                         onChange={(e) => {
-                                            setCusName(e.target.value)
+                                            setCusFormData({...cusFormData ,cusAddress:e.target.value})
                                         }} validators={['required',]}
                                         errorMessages={['this field is required']}/>
                                     <TextValidator
                                         label="Driving License No" variant="outlined"
                                         size="small" color="primary"
-                                        value={cusName}
+                                        value={cusFormData.cusDrivingLicenseNo}
                                         onChange={(e) => {
-                                            setCusName(e.target.value)
+                                            setCusFormData({...cusFormData ,cusDrivingLicenseNo:e.target.value})
                                         }} validators={['required',]}
                                         errorMessages={['this field is required']}/>
 
@@ -170,36 +143,37 @@ export default function SignUp() {
                                     <TextValidator
                                         label="Contact" variant="outlined"
                                         size="small" color="primary"
-                                        value={cusName}
+                                        value={cusFormData.cusContactNo}
                                         onChange={(e) => {
-                                            setCusName(e.target.value)
-                                        }} validators={['required','']}
+                                            setCusFormData({...cusFormData ,cusContactNo:e.target.value})
+                                        }} validators={['required',]}
                                         errorMessages={['this field is required']}/>
+
                                     <TextValidator
                                         label="E-mail" variant="outlined"
                                         size="small" color="primary"
-                                        value={cusName}
+                                        value={cusFormData.cusEmail}
                                         onChange={(e) => {
-                                            setCusName(e.target.value)
-                                        }} validators={['required','^[A-Za-z_]{3,}@[A-Za-z]{3,}[.]{1}[A-Za-z.]{2,6}$']}
-                                        errorMessages={['this field is required']}/>
+                                            setCusFormData({...cusFormData ,cusEmail:e.target.value})
+                                        }} validators={['required','isEmail']}
+                                        errorMessages={['this field is required','invalid E-mail']}/>
 
                                 </Stack>
                                 <Stack direction="row" spacing={4}>
                                     <TextValidator
                                         label="Password" variant="outlined"
                                         size="small" color="primary"
-                                        value={cusName}
+                                        value={cusFormData.cusPassword}
                                         onChange={(e) => {
-                                            setCusName(e.target.value)
+                                            setCusFormData({...cusFormData ,cusPassword:e.target.value})
                                         }} validators={['required',]}
                                         errorMessages={['this field is required']}/>
                                     <TextValidator
                                         label="Repeat Password" variant="outlined"
                                         size="small" color="primary"
-                                        value={cusName}
+                                        value={cusRepeatPassword}
                                         onChange={(e) => {
-                                            setCusName(e.target.value)
+                                            setCusRepeatPassword(e.target.value)
                                         }} validators={['required',]}
                                         errorMessages={['this field is required']}/>
 
@@ -282,3 +256,43 @@ export default function SignUp() {
         </div>
     );
 }
+
+const SignUpForm = styled(Dialog)(({theme}) => ({
+    '& .MuiDialogContent-root': {
+        padding: theme.spacing(2),
+        width: '100vw',
+    },
+    '& .MuiDialogActions-root': {
+        padding: theme.spacing(1),
+    },
+    '.css-1t1j96h-MuiPaper-root-MuiDialog-paper': {
+        maxWidth: '900px',
+        maxHeight: false,
+    }
+}));
+
+const SignUpFormTitle = (props) => {
+    const {children, onClose, ...other} = props;
+
+    return (
+        <DialogTitle sx={{m: 0, p: 2}} {...other}>
+            {children}
+            {onClose ? (
+                <IconButton aria-label="close" onClick={onClose}
+                            sx={{
+                                position: 'absolute',
+                                right: 8, top: 8,
+                                color: (theme) => theme.palette.grey[500],
+                            }}
+                >
+                    <CloseIcon/>
+                </IconButton>
+            ) : null}
+        </DialogTitle>
+    );
+};
+
+SignUpFormTitle.propTypes = {
+    children: PropTypes.node,
+    onClose: PropTypes.func.isRequired,
+};

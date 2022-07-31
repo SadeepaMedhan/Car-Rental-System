@@ -6,29 +6,30 @@ import Divider from "@mui/material/Divider";
 import {Stack, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import CustomerService from "../../service/CustomerService";
-
+import UploadFilesService from "../../service/UploadFilesService";
 
 class CustomerManage extends Component{
 
     constructor(props) {
         super(props);
+        this.selectFile = this.selectFile.bind(this);
+        this.uploadNic = this.uploadNic.bind(this);
+
         this.state={
             customer: {
                 cusID: '',
-                cusName: '',
-                cusEmail: '',
-                cusPassword: '',
-                cusNIC: '',
-                cusDrivingLicenseNo: '',
-                cusAddress: '',
-                cusContactNo: ''
+                cusName:'',
+                cusEmail:'',
+                cusPassword:'',
+                cusNIC:'',
+                cusDrivingLicenseNo:'',
+                cusAddress:'',
+                cusContactNo:'',
+                nicUrl:'',
             },
             btnState:props.btnState,
             selectCustomer:props.customerData,
-
-            images:[],
-            imageURLs:[],
-
+            currentFile:undefined,
         }
     }
 
@@ -46,6 +47,7 @@ class CustomerManage extends Component{
                 cusContactNo: ''
             },
             selectCustomer:null,
+            currentFile:undefined,
         })
     }
 
@@ -55,42 +57,43 @@ class CustomerManage extends Component{
             if (res.status === 200) {
                 let tempCustomer = this.state.customer
                 tempCustomer.cusID = res.data.data
-                this.setState({
-                    customer: tempCustomer
-                })
+                this.setState({customer: tempCustomer})
                 console.log("res: " + JSON.stringify(res.data.data))
-
-            } else {
-                console.log("fetching error: " + res)
-            }
+            } else {console.log("fetching error: " + res)}
         }else{
             if(this.state.selectCustomer !== null){
-                this.setState({
-                    customer: this.state.selectCustomer
-                })
+                this.setState({customer: this.state.selectCustomer})
             }
-
         }
-
     }
 
     componentDidMount() {
         this.loadData();
-        if (!this.state.images.length<1){
-            const newImgUrls = [];
-            this.state.images.forEach(image=>newImgUrls.push(URL.createObjectURL(image)));
-            this.setState({imageURLs:newImgUrls})
-        }
+    }
+
+    selectFile(event) {
+        console.log(event.target.files[0].name) //ok
+
+        this.setState({currentFile : event.target.files[0]})
+        this.setState({nicUrl : event.target.files[0].name})
+        console.log(this.state.currentFile) //undefined ?
+        console.log(this.state.nicUrl)      //undefined ?
+    };
+
+     uploadNic = async () => {
+        var data = new FormData();
+        let file = this.state.currentFile;
+        let fileName = this.state.currentFile.name;
+        data.append("myFile", file, fileName);
+
+        let resp = await UploadFilesService.upload(file);
+        console.log(resp)
     }
 
 
-
-
     render() {
+        let baseUrl = "http://localhost:8080/backend_war/uploads/"
 
-        const onImageChange = (e) => {
-            this.setState({images: [...e.target.files]})
-        }
 
         const saveCustomer = async () => {
             if(this.state.btnState === "Save") {
@@ -117,6 +120,7 @@ class CustomerManage extends Component{
         };
 
 
+
         return(
             <Stack style={{border:'1px solid gray', padding:'10px',borderRadius:'8px'}}>
                 <h2>{this.state.btnState} Customer</h2><p>{this.state.customer.cusID}</p>
@@ -139,8 +143,7 @@ class CustomerManage extends Component{
                                    formData.cusNIC = e.target.value
                                    this.setState({ formData })}}/>
 
-                    <input type="file" multiple accept="image/*" onChange={onImageChange}/>
-                    {this.state.imageURLs.map(imageSrc => <img src={imageSrc}/>)}
+                    <img height="80px" className="preview my20" src={baseUrl+this.state.customer.nicUrl} alt=""/>
 
                 </Stack>
 
@@ -179,6 +182,40 @@ class CustomerManage extends Component{
                                    let formData = this.state.customer
                                    formData.cusPassword = e.target.value
                                    this.setState({ formData })}}/>
+                    <Stack direction="row" spacing={2} alignItems="center">
+                        <label htmlFor="btn-upload">
+                            <input
+                                multiple
+                                id="btn-upload"
+                                name="btn-upload"
+                                style={{display: 'none'}}
+                                type="file"
+                                accept="image/*"
+                                onChange={this.selectFile}/>
+                            <Button
+                                className="btn-choose"
+                                variant="outlined"
+                                component="span">
+                                Choose NIC Image
+                            </Button>
+                        </label>
+                        <div>
+                            {this.state.currentFile && (
+                                <img height="80px" className="preview my20"
+                                     src={URL.createObjectURL(this.state.currentFile)} alt=""/>
+                            )}
+                        </div>
+                        <Button
+                            className="btn-upload"
+                            color="primary"
+                            variant="contained"
+                            component="span"
+                            disabled={!this.state.currentFile}
+                            onClick={this.uploadNic}
+                        >
+                            Upload
+                        </Button>
+                    </Stack>
                 </Stack>
                 <Divider />
                 <Stack direction="row" justifyContent="flex-end"

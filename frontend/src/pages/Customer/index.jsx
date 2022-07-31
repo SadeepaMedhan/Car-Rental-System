@@ -34,6 +34,8 @@ class CustomerView extends Component {
     }
 
     render() {
+        let baseUrl = "http://localhost:8080/backend_war/uploads/"
+
         return (
             <Stack direction="row"
                    justifyContent="center"
@@ -121,6 +123,7 @@ class CustomerView extends Component {
                                         fontSize: '0.6em',
                                     }}>{this.state.customer.cusEmail}</span>
                             </IconButton>
+                            <img height="80px" className="preview my20" src={baseUrl+this.state.customer.nicUrl} alt=""/>
                         </Stack>
                     </Stack>
                     <Stack direction="column" justifyContent="flex-start"

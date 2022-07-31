@@ -169,6 +169,7 @@ class HomePage extends Component {
         };
         const logout = () => {
             this.setState({user: null});
+            this.setState({tabValue: 0});
         };
         const openUserInfo = () => {
             this.setState({tabValue: 6});
