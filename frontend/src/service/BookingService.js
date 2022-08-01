@@ -66,6 +66,17 @@ class BookingService {
         })
         return await promise
     }
-
+    deleteBookingData = async (params) => {
+        const promise = new Promise((resolve, reject) => {
+            axios.delete('booking', {params: params})
+                .then((res) => {
+                    return resolve(res)
+                })
+                .catch((err) => {
+                    return resolve(err)
+                })
+        })
+        return await promise;
+    };
 }
 export default new BookingService();

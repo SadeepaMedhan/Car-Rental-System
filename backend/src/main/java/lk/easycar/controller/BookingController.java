@@ -40,4 +40,10 @@ public class BookingController {
         bookingService.updateBooking(booking);
         return new ResponseUtil(200,"Updated",null);
     }
+
+    @DeleteMapping(params = {"id"},produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil deleteBooking(@RequestParam String id) {
+        bookingService.deleteBooking(id);
+        return new ResponseUtil(200,"Deleted",null);
+    }
 }

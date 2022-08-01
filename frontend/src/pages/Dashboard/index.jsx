@@ -56,6 +56,11 @@ import BookingService from "../../service/BookingService";
 import Chip from "@mui/material/Chip";
 import Calendar from "react-calendar";
 import UploadFilesService from "../../service/UploadFilesService";
+import GarageIcon from '@mui/icons-material/Garage';
+import ConstructionIcon from '@mui/icons-material/Construction';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import MoveToInboxIcon from '@mui/icons-material/MoveToInbox';
+import {CanvasJSChart} from 'canvasjs-react-charts'
 
 
 export default function Dashboard() {
@@ -83,6 +88,7 @@ export default function Dashboard() {
     const [driversFormValue, setDriversFormValue] = React.useState(0);
     const [customersFormValue, setCustomersFormValue] = React.useState(0);
     const [bookingFormValue, setBookingFormValue] = React.useState(0);
+    const [reportFormValue, setReportFormValue] = React.useState(0);
     const [requestFormValue, setRquestFormValue] = React.useState(0);
     const [driverSelectDate, setDriverSelectDate] = React.useState(new Date());
     const [imgUrl, setImgUrl] = React.useState(null);
@@ -255,9 +261,21 @@ export default function Dashboard() {
             console.log(response.data)
         }
     }
+    const deleteBooking = async (data) => {
+        let params = {id: data}
+        let response = await BookingService.deleteBookingData(params);
+        if (response.status === 200) {
+            loadBookingData();
+        } else {
+            console.log(response)
+        }
+    }
     const requestFormHandleChange = (event, newValue) => {
         //loadBookingData()
         setRquestFormValue(newValue);
+    }
+    const reportFormHandleChange = (event, newValue) => {
+        setReportFormValue(newValue);
     }
 
     const loadImages = async () => {
@@ -269,6 +287,59 @@ export default function Dashboard() {
 
 
     let baseUrl = "http://localhost:8080/backend_war/uploads/"
+
+
+
+    const options = {
+        animationEnabled: true,
+        exportEnabled: true,
+        title: {text: "Daily Income"},
+        axisY: {
+            title: "Rate",
+            suffix: "LKR"
+        },
+        axisX: {
+            title: "Days of Month",
+            interval: 1
+        },
+
+        data: [{
+                type: "line",
+                dataPoints: [
+                    { label: 1,  y: 10  },
+                    { label: 2,  y: 2  },
+                    { label: 3,  y: 5  },
+                    { label: 4,  y: 45  },
+                    { label: 5,  y: 23  },
+                    { label: 6,  y: 33  },
+                    { label: 7,  y: 18  },
+                    { label: 8,  y: 20  },
+                    { label: 9,  y: 11  },
+                    { label: 10,  y: 10  },
+                    { label: 11,  y: 2  },
+                    { label: 12,  y: 5  },
+                    { label: 13,  y: 45  },
+                    { label: 14,  y: 23  },
+                    { label: 15,  y: 33  },
+                    { label: 16,  y: 33  },
+                    { label: 17,  y: 18  },
+                    { label: 18,  y: 20  },
+                    { label: 19,  y: 11  },
+                    { label: 20,  y: 11  },
+                    { label: 21,  y: 10  },
+                    { label: 22,  y: 2  },
+                    { label: 23,  y: 5  },
+                    { label: 24,  y: 45  },
+                    { label: 25,  y: 23  },
+                    { label: 26,  y: 33  },
+                    { label: 27,  y: 18  },
+                    { label: 28,  y: 20  },
+                    { label: 29,  y: 11  },
+                    { label: 30,  y: 11  },
+                ]
+            }
+        ]
+    }
 
     return (
         <Box sx={{display: 'flex'}}>
@@ -325,16 +396,16 @@ export default function Dashboard() {
                          label="Reports" {...a11yProps(5)} />
                     <Divider/>
                     <Tab className={classes.tab} icon={
-                        <DashboardIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start"
+                        <MoveToInboxIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start"
                          label="Requests" {...a11yProps(6)} />
                     <Tab className={classes.tab} icon={
-                        <CollectionsBookmarkIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>}
+                        <GarageIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>}
                          iconPosition="start" label="Maintenance" {...a11yProps(7)} />
                     <Tab className={classes.tab} icon={
-                        <DirectionsCarIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start"
+                        <ConstructionIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start"
                          label="Damages" {...a11yProps(8)} />
                     <Tab className={classes.tab} icon={
-                        <PeopleIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start"
+                        <CalendarMonthIcon sx={{marginRight: open ? '10px' : '22px !important'}}/>} iconPosition="start"
                          label="Schedule" {...a11yProps(9)} />
 
                 </Tabs>
@@ -590,6 +661,7 @@ export default function Dashboard() {
                                             <TableCell align="left">Driver</TableCell>
                                             <TableCell align="left">Pay</TableCell>
                                             <TableCell align="left">Rental Fee</TableCell>
+                                            <TableCell align="left">Edit</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -635,7 +707,43 @@ export default function Dashboard() {
                                                     </TableCell>
                                                     <TableCell align="left">{row.payment}</TableCell>
                                                     <TableCell align="left">{row.rentalFee}</TableCell>
+                                                    <TableCell align="left">
+                                                        <Tooltip title="Edit">
+                                                            <IconButton
+                                                                onClick={() => {
+                                                                    console.log("edit icon clicked!")
 
+                                                                }}
+                                                            >
+                                                                <EditIcon color="primary"/>
+                                                            </IconButton>
+                                                        </Tooltip>
+                                                        <Tooltip title="Delete">
+                                                            <IconButton
+                                                                onClick={() => {
+                                                                    swal({
+                                                                        title: "Are you sure?",
+                                                                        text: "Once deleted, you will not be able to recover this imaginary file!",
+                                                                        icon: "warning",
+                                                                        buttons: true,
+                                                                        dangerMode: true,
+                                                                    })
+                                                                        .then((willDelete) => {
+                                                                            if (willDelete) {
+                                                                                deleteBooking(row.bookingId);
+                                                                                swal("Poof! Your imaginary file has been deleted!", {
+                                                                                    icon: "success",
+                                                                                });
+                                                                            } else {
+                                                                                swal("Your imaginary file is safe!");
+                                                                            }
+                                                                        });
+                                                                }}
+                                                            >
+                                                                <DeleteIcon color="error"/>
+                                                            </IconButton>
+                                                        </Tooltip>
+                                                    </TableCell>
                                                 </TableRow>
                                             ))
                                         }
@@ -929,7 +1037,30 @@ export default function Dashboard() {
                     </Stack>
                 </TabPanel>
                 {/*-----------------------------------reports-------------------------*/}
-                <TabPanel value={value} index={5}></TabPanel>
+                <TabPanel value={value} index={5}>
+                    <Stack>
+                        <Tabs
+                            value={reportFormValue}
+                            onChange={reportFormHandleChange}
+                            textColor="primary"
+                            indicatorColor="primary"
+                            aria-label="report tabs"
+                        >
+                            <Tab value={0} label="Daily"/>
+                            <Tab value={1} label="Monthly"/>
+                            <Tab value={2} label="Annually"/>
+                        </Tabs>
+                        <TabPanel value={reportFormValue} index={0}>
+                            <CanvasJSChart options = {options} />
+                        </TabPanel>
+                        <TabPanel value={reportFormValue} index={1}>
+
+                        </TabPanel>
+                        <TabPanel value={reportFormValue} index={2}>
+
+                        </TabPanel>
+                    </Stack>
+                </TabPanel>
                 {/*-----------------------------------request-------------------------*/}
                 <TabPanel value={value} index={7}>
                     <Stack>
@@ -957,17 +1088,14 @@ export default function Dashboard() {
                                             <TableCell align="left">Customer</TableCell>
                                             <TableCell align="left">Pay</TableCell>
                                             <TableCell align="left">Rental Fee</TableCell>
-                                            <TableCell align="left">Action</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {
-                                            bookingList.map((row) => (
-
-                                                    row.status === "Pending" &&
-                                                        <TableRow>
-                                                            <TableCell align="left">
-                                                                <Chip label={row.status}
+                                        {bookingList.map((row) => (
+                                            row.status === "Pending" &&
+                                                <TableRow>
+                                                    <TableCell align="left">
+                                                        <Chip label={row.status}
                                                                       color={row.status === "Pending" ? "warning" : "success"}
                                                                       clickable onClick={() => {
                                                                     swal({
@@ -988,7 +1116,7 @@ export default function Dashboard() {
                                                                 }}/>
                                                             </TableCell>
                                                             <TableCell align="left">
-                                                                <Avatar alt="img" src={row.imgUrl1 !== null && "../../assets/images/vehicles/"+row.imgUrl1}/>
+                                                                <Avatar alt="img" src={baseUrl+row.vehicle.imgUrl1}/>
                                                                 {row.vehicle.brand}
                                                             </TableCell>
                                                             <TableCell align="left">{row.leavingDate}</TableCell>
@@ -1000,39 +1128,8 @@ export default function Dashboard() {
                                                             </TableCell>
                                                             <TableCell align="left">{row.payment}</TableCell>
                                                             <TableCell align="left">{row.rentalFee}</TableCell>
-                                                            <TableCell align="left">
-                                                                <Tooltip title="Edit">
-                                                                    <IconButton>
-                                                                        <EditIcon color="primary"/>
-                                                                    </IconButton>
-                                                                </Tooltip>
-                                                                <Tooltip title="Delete">
-                                                                    <IconButton
-                                                                        onClick={() => {
-                                                                            swal({
-                                                                                title: "Are you sure?",
-                                                                                text: "Once deleted, you will not be able to recover this imaginary file!",
-                                                                                icon: "warning",
-                                                                                buttons: true,
-                                                                                dangerMode: true,
-                                                                            })
-                                                                                .then((willDelete) => {
-                                                                                    if (willDelete) {
-                                                                                        swal("Poof! Your imaginary file has been deleted!", {
-                                                                                            icon: "success",
-                                                                                        });
-                                                                                    } else {
-                                                                                        swal("Your imaginary file is safe!");
-                                                                                    }
-                                                                                });
-                                                                        }}
-                                                                    >
-                                                                        <DeleteIcon color="error"/>
-                                                                    </IconButton>
-                                                                </Tooltip>
-                                                            </TableCell>
-                                                        </TableRow>
 
+                                                </TableRow>
                                             ))
                                         }
                                     </TableBody>
@@ -1052,7 +1149,6 @@ export default function Dashboard() {
                                             <TableCell align="left">Customer</TableCell>
                                             <TableCell align="left">Pay</TableCell>
                                             <TableCell align="left">Rental Fee</TableCell>
-                                            <TableCell align="left">Action</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -1083,7 +1179,7 @@ export default function Dashboard() {
                                                         }}/>
                                                     </TableCell>
                                                     <TableCell align="left">
-                                                        <Avatar alt="img" src={row.imgUrl1 !== null && "../../assets/images/vehicles/"+row.imgUrl1}/>
+                                                        <Avatar alt="img" src={baseUrl+row.vehicle.imgUrl1}/>
                                                         {row.vehicle.brand}
                                                     </TableCell>
                                                     <TableCell align="left">{row.leavingDate}</TableCell>
@@ -1095,37 +1191,7 @@ export default function Dashboard() {
                                                     </TableCell>
                                                     <TableCell align="left">{row.payment}</TableCell>
                                                     <TableCell align="left">{row.rentalFee}</TableCell>
-                                                    <TableCell align="left">
-                                                        <Tooltip title="Edit">
-                                                            <IconButton>
-                                                                <EditIcon color="primary"/>
-                                                            </IconButton>
-                                                        </Tooltip>
-                                                        <Tooltip title="Delete">
-                                                            <IconButton
-                                                                onClick={() => {
-                                                                    swal({
-                                                                        title: "Are you sure?",
-                                                                        text: "Once deleted, you will not be able to recover this imaginary file!",
-                                                                        icon: "warning",
-                                                                        buttons: true,
-                                                                        dangerMode: true,
-                                                                    })
-                                                                        .then((willDelete) => {
-                                                                            if (willDelete) {
-                                                                                swal("Poof! Your imaginary file has been deleted!", {
-                                                                                    icon: "success",
-                                                                                });
-                                                                            } else {
-                                                                                swal("Your imaginary file is safe!");
-                                                                            }
-                                                                        });
-                                                                }}
-                                                            >
-                                                                <DeleteIcon color="error"/>
-                                                            </IconButton>
-                                                        </Tooltip>
-                                                    </TableCell>
+
                                                 </TableRow>
 
                                             ))
@@ -1329,8 +1395,6 @@ export default function Dashboard() {
                         <Calendar selectRange={true}/>
                     </Stack>
                 </TabPanel>
-
-
             </Box>
         </Box>
     );

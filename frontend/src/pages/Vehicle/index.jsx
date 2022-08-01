@@ -1,11 +1,9 @@
 import React from "react";
 import VehicleCard from "../../components/Card/VehicleCard";
-import vehicleImg1 from "../../assets/images/vehicles/v1f.jpg";
 import VehicleService from "../../service/VehicleService";
 import {Stack, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import Pagination from '@mui/material/Pagination';
 import MediumVehicleCard from "../../components/Card/mediumVehicleCard";
-import Grid from "@mui/material/Grid";
 
 
 export default function Vehicle(props) {

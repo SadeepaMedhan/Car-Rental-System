@@ -383,13 +383,14 @@ class AddVehicle extends Component {
                             alignItems="center"
                             spacing={2} >
                         {image1 && (
-                            <img height="80px" className="preview my20" src={URL.createObjectURL(image1)}
-                                 alt=""/>
-                        )}{image2 && (
-                        <img height="80px" className="preview my20" src={URL.createObjectURL(image2)} alt=""/>
-                    )}{
-                        this.state.btnState === "Update" && <img height="80px" className="preview my20" src={baseUrl+this.state.selectVehicle.imgUrl1} alt=""/>
-                    }
+                            <img height="80px" className="preview my20" src={URL.createObjectURL(image1)} alt=""/>
+                        )}
+                        {image2 && (
+                            <img height="80px" className="preview my20" src={URL.createObjectURL(image2)} alt=""/>
+                        )}
+                        {this.state.btnState === "Update" && this.state.selectVehicle !== null &&
+                            <img height="80px" className="preview my20" src={baseUrl+this.state.selectVehicle.imgUrl1} alt=""/>
+                        }
                     </Stack>
                     <Stack direction="row"
                             justifyContent="center"

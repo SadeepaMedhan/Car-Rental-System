@@ -4,6 +4,14 @@ import {styleSheet} from "./style";
 import {Link, Stack} from "@mui/material";
 import backImg3 from "../../assets/images/carBack3.jpg";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import TwitterIcon from '@mui/icons-material/Twitter';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import TelegramIcon from '@mui/icons-material/Telegram';
+import CallIcon from '@mui/icons-material/Call';
+
+
 
 class ContactInfo extends Component {
 
@@ -34,47 +42,57 @@ class ContactInfo extends Component {
                             position:'absolute', zIndex:'-1',
                         }}/>
                     </Stack>
-                    <Stack sx={{ width: '100vw', height: '100%',}}
+                    <Stack sx={{ width: '100vw', height: '100%', backgroundColor: 'rgba(8,15,21,0.8)',}}
                            direction="row"
                            justifyContent="space-evenly"
                            alignItems="center"
                            spacing={2}>
                         <Stack>
-                            <h2 style={{
-                                fontFamily: 'Convergence', fontSize: '1.2em',
-                                textAlign: 'center', color: 'white',
-                            }}>
-                                Quick Link
+                            <h2 style={{fontFamily: 'Convergence', fontSize: '1.2em',
+                                textAlign: 'center', color: 'white',}}>
+                                Easy Car Rental Pvt(Ltd)
                             </h2>
-                            <Link>Home</Link>
-                            <Link>Home</Link>
-                            <Link>Home</Link>
                         </Stack>
                         <Stack>
-                            <h2 style={{
-                                fontFamily: 'Convergence', fontSize: '1.2em',
-                                textAlign: 'center', color: 'white',
-                            }}>
-                                Fallow Us
-                            </h2>
-                            <Link>Home</Link>
-                            <Link>Home</Link>
-                            <Link>Home</Link>
-                        </Stack>
-                        <Stack>
-                            <h2 style={{
-                                fontFamily: 'Convergence', fontSize: '1.2em',
-                                textAlign: 'center', color: 'white',
-                            }}>
+                            <p style={{fontFamily: 'Convergence', fontSize: '1.2em',
+                                textAlign: 'center', color: 'white',}}>
+                                About Us
+                            </p>
+                            <p style={{fontFamily: 'Convergence', fontSize: '1.2em',
+                                textAlign: 'center', color: 'white',}}>
+                                Vehicle Fleet
+                            </p>
+                            <p style={{fontFamily: 'Convergence', fontSize: '1.2em',
+                                textAlign: 'center', color: 'white',}}>
+                                Service
+                            </p>
+                            <p style={{fontFamily: 'Convergence', fontSize: '1.2em',
+                                textAlign: 'center', color: 'white',}}>
                                 Contact Us
-                            </h2>
-                            <Link>Home</Link>
-                            <Link>Home</Link>
-                            <Link>Home</Link>
+                            </p>
+                        </Stack>
+                        <Stack direction="row">
+                            <IconButton style={{ color: 'white',}} aria-label="fb-icon">
+                                <CallIcon />
+                            </IconButton>
+                            <IconButton style={{ color: 'white',}} aria-label="fb-icon">
+                                <FacebookIcon />
+                            </IconButton>
+                            <IconButton style={{ color: 'white',}} aria-label="google-icon">
+                                <TwitterIcon/>
+                            </IconButton>
+                            <IconButton style={{ color: 'white',}} aria-label="fb-icon">
+                                <TelegramIcon />
+                            </IconButton>
+                            <IconButton style={{ color: 'white',}} aria-label="google-icon">
+                                <WhatsAppIcon/>
+                            </IconButton>
                         </Stack>
                     </Stack>
                 </Stack>
+
                 <Stack sx={{backgroundColor: '#080F15', height: '4vh', width: '100vw'}}>
+
                     <p style={{
                         fontFamily: 'Convergence', fontSize: '0.75em',
                         textAlign: 'center', color: 'white',

@@ -18,6 +18,7 @@
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
+    "canvasjs-react-charts": "^1.0.5",
     "date-fns": "^2.28.0",
     "dayjs": "^1.11.3",
     "luxon": "^2.5.0",
