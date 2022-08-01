@@ -84,14 +84,15 @@ class HomePage extends Component {
                 returnDate: null,
                 location: null,
                 driverState: 0,
+                vehicle: null,
                 vehicleType: 0,
             },
         }
     }
 
     getUserData = (data) => {
-        console.log("get " + data)
         this.setState({user: data})
+        console.log("get " + data.cusID)
     }
     getDriverData = (data) => {
         console.log("get " + data)
@@ -100,7 +101,24 @@ class HomePage extends Component {
     }
 
     getVehicle = (data) => {
-        this.setState({tabValue: 4});
+        this.setState({vehicle:data})
+        window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+        if (this.state.user !== null) {
+            this.setState({
+                bookingData: {
+                    customer: this.state.user,
+                    leavingDate: this.state.leavingDate,
+                    returnDate: this.state.returnDate,
+                    location: this.state.location,
+                    driverState: this.state.driverStatus,
+                    vehicle: data,
+                    vehicleType: this.state.vehicleType
+                }
+            })
+            this.setState({tabValue: 4});
+        } else {
+            swal("Sign In Unsuccessful!", "Please Sign In", "error")
+        }
     }
 
     async loadData() {
@@ -125,6 +143,7 @@ class HomePage extends Component {
         let {classes} = this.props;
 
         const navTabChange = (event, newValue) => {
+            this.setState({vehicle:null})
             if (newValue === 4) {
                 if (this.state.user !== null) {
                     this.setState({tabValue: 4});
@@ -144,6 +163,7 @@ class HomePage extends Component {
                         returnDate: this.state.returnDate,
                         location: this.state.location,
                         driverState: this.state.driverStatus,
+                        vehicle: this.state.vehicle,
                         vehicleType: this.state.vehicleType
                     }
                 })
@@ -487,7 +507,8 @@ class HomePage extends Component {
                                         <div style={{height: '100%'}}>
                                             <div className={classes.suggest__result}>
                                                 <Vehicle signInUser={this.state.user}
-                                                         setVehicle={this.getVehicle.bind(this)}/>
+                                                         setVehicle={this.getVehicle.bind(this)}
+                                                        setResult={3}/>
                                             </div>
 
                                         </div>
@@ -549,7 +570,7 @@ class HomePage extends Component {
                                    justifyContent="flex-start"
                                    alignItems="stretch"
                                    spacing={2}>
-                                <Vehicle signInUser={this.state.user}/>
+                                <Vehicle signInUser={this.state.user} setResult={0} setVehicle={this.getVehicle.bind(this)}/>
                             </Stack>
                             <Stack direction="column" justifyContent="flex-start"
                                    alignItems="stretch"

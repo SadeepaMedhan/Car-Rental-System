@@ -2,17 +2,22 @@ import React from "react";
 import VehicleCard from "../../components/Card/VehicleCard";
 import vehicleImg1 from "../../assets/images/vehicles/v1f.jpg";
 import VehicleService from "../../service/VehicleService";
-import {Stack} from "@mui/material";
+import {Stack, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import Pagination from '@mui/material/Pagination';
+import MediumVehicleCard from "../../components/Card/mediumVehicleCard";
+import Grid from "@mui/material/Grid";
 
 
 export default function Vehicle(props) {
     const [vehicleList, setVehicleList] = React.useState([]);
     const [user, setUser] = React.useState(props.signInUser);
+    const [count, setCount] = React.useState(props.setResult);
     const [selectVehicle, setSelectVehicle] = React.useState(null);
     const [page, setPage] = React.useState(1);
+    const [sortValue, setSortValue] = React.useState('Recommended');
 
     React.useEffect(() => {
+        window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
         loadVehicleData();
     },[]);
 
@@ -37,18 +42,49 @@ export default function Vehicle(props) {
         props.setVehicle(data)
     }
 
-
+    const sortChange = (event, newAlignment) => {
+        setSortValue(newAlignment)
+    };
 
     return (
         <div>
-            <Stack direction="column" justifyContent="flex-start" alignItems="stretch" spacing={2}>
+            <Stack spacing={2}>
+                <Stack direction="row"
+                       justifyContent="space-between"
+                       alignItems="center">
+                    <h2 style={{marginLeft: '20px', fontFamily: 'Convergence'}}>Vehicle Fleet</h2>
+                    <ToggleButtonGroup
+                        color="primary"
+                        value={sortValue}
+                        exclusive
+                        onChange={sortChange}
+                    >
+                        <ToggleButton value="Recommended">Recommended</ToggleButton>
+                        <ToggleButton value="Price">Price(low to high)</ToggleButton>
+                        <ToggleButton value="Rating">Rating</ToggleButton>
+                    </ToggleButtonGroup>
+                </Stack>
+                <Stack direction="row" justifyContent="center" alignItems="stretch" spacing={2}>
+                    {count === 0 &&
+                    <Stack direction="column" spacing={2} justifyContent="center" alignItems="stretch">
+                        {vehicleList.map((vehicle, i) => (
+                            <VehicleCard setV={vehicle} userSignIn={user}
+                                         setVehicleId={getVehicleData.bind(this)}/>
+                        ))}
+                    </Stack>}
 
-                {vehicleList.map((vehicle,i) => (
-                    <VehicleCard setV={vehicle} userSignIn={user}
-                                 setVehicleId={getVehicleData.bind(this)}/>
-                ))}
+                    {count > 2 && vehicleList.length > 2 &&
+                    <Stack direction="row" spacing={2} justifyContent="center" alignItems="stretch">
+                        <MediumVehicleCard setV={vehicleList[0]} userSignIn={user}
+                                           setVehicleId={getVehicleData.bind(this)}/>
+                        <MediumVehicleCard setV={vehicleList[1]} userSignIn={user}
+                                           setVehicleId={getVehicleData.bind(this)}/>
+                        <MediumVehicleCard setV={vehicleList[2]} userSignIn={user}
+                                           setVehicleId={getVehicleData.bind(this)}/>
+                    </Stack>
+                    }
+                </Stack>
                 <Pagination count={2} page={page} onChange={handleChange} />
-
             </Stack>
         </div>
     );

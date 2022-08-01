@@ -40,6 +40,9 @@ import pay4 from "../../assets/images/payA.png";
 import {TextValidator, ValidatorForm} from "react-material-ui-form-validator";
 import BookingService from "../../service/BookingService";
 import DriverService from "../../service/DriverService";
+import VehicleCard from "../../components/Card/VehicleCard";
+import Pagination from "@mui/material/Pagination";
+import VehicleService from "../../service/VehicleService";
 
 const steps = [
     'Search Results',
@@ -70,11 +73,28 @@ class BookingPage extends Component {
             rentalCost:0,
             leavingDate:props.data.returnDate.toLocaleDateString('en-ZA'),
             returnDate:props.data.returnDate.toLocaleDateString('en-ZA'),
+            vehicleList:[],
+            page:1,
         }
     }
 
     componentDidMount() {
         this.getAvailableDriver()
+        this.loadVehicleData()
+        if (this.props.data.vehicle !== null && this.props.data.vehicle !== undefined){
+            console.log("props "+this.props.data.vehicle.vehicleId)
+            this.getVehicle(this.props.data.vehicle);
+        }
+    }
+
+    loadVehicleData = async () => {
+        const res = await VehicleService.fetchVehicles();
+        if (res.status === 200) {
+            this.setState({vehicleList:res.data.data})
+            console.log(this.state.vehicleList)
+        } else {
+            console.log("fetching error: " + res)
+        }
     }
 
     getAvailableDriver = async () => {
@@ -145,6 +165,9 @@ class BookingPage extends Component {
         let {classes} = this.props;
         let baseUrl = "http://localhost:8080/backend_war/uploads/"
 
+        const pageChange = (event, value) => {
+            this.setState({page:value})
+        };
 
         const goResults = (e) => {
             this.setState({stepperValue: 0});
@@ -286,8 +309,13 @@ class BookingPage extends Component {
                                         </ToggleButtonGroup>
                                     </Stack>
                                     <Divider/>
-                                    <Vehicle signInUser={this.state.searchData.customer}
-                                             setVehicle={this.getVehicle.bind(this)}/>
+
+                                    {this.state.vehicleList.map((vehicle,i) => (
+                                        <VehicleCard setV={vehicle} userSignIn={this.state.searchData.customer}
+                                                     setVehicleId={this.getVehicle.bind(this)}/>
+                                    ))}
+                                    <Pagination count={2} page={this.state.page} onChange={pageChange} />
+
                                     <Divider/>
                                     <Stack direction="row"
                                            justifyContent="center"

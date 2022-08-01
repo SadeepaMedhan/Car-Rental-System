@@ -71,13 +71,10 @@ class CustomerManage extends Component{
         this.loadData();
     }
 
-    selectFile(event) {
-        console.log(event.target.files[0].name) //ok
-
-        this.setState({currentFile : event.target.files[0]})
-        this.setState({nicUrl : event.target.files[0].name})
-        console.log(this.state.currentFile) //undefined ?
-        console.log(this.state.nicUrl)      //undefined ?
+    selectFile = async (event) => {
+        let file = await event.target.files[0];
+        this.setState({currentFile : file})
+        this.setState({nicUrl : file.name})
     };
 
      uploadNic = async () => {
@@ -96,10 +93,11 @@ class CustomerManage extends Component{
 
 
         const saveCustomer = async () => {
+            let formData = this.state.customer
+            formData.nicUrl = this.state.currentFile.name
             if(this.state.btnState === "Save") {
                 console.log(this.state.customer)
 
-                let formData = this.state.customer
                 let response = await CustomerService.createCustomer(formData);
                 if (response.status === 201) {
                     console.log("saved !")
@@ -108,7 +106,6 @@ class CustomerManage extends Component{
                     console.log(response.data)
                 }
             }else{
-                let formData = this.state.customer
                 let response = await CustomerService.updateCustomer(formData);
                 if (response.status === 200) {
                     console.log("updated !")
