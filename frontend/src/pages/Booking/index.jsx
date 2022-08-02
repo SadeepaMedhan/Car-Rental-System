@@ -137,6 +137,7 @@ class BookingPage extends Component {
 
         let formData = {
             bookingId: "b",
+            bookingDate: new Date().toLocaleDateString('en-ZA'),
             leavingDate: this.state.searchData.leavingDate,
             returnDate: this.state.searchData.returnDate,
             location: this.state.searchData.location,

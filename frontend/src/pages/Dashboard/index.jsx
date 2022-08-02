@@ -289,6 +289,35 @@ export default function Dashboard() {
     let baseUrl = "http://localhost:8080/backend_war/uploads/"
 
 
+    const dateList = [];
+
+    const payLis = [
+        {label:'',y:''}
+    ];
+    bookingList.map((book)=>
+        dateList.push({
+            date:book.leavingDate.split('T')[0],
+            payment:book.payment,
+            rentalFee:book.rentalFee,
+            lossDamage:book.lossDamageFee
+        })
+    )
+
+    console.log(dateList)
+
+    const dayLis=[]
+    dateList.map((date)=>{
+            if(true){
+                dayLis.push({
+                    label:date.date,
+                    y:date.rentalFee
+                })
+            }
+        }
+    )
+    console.log(dayLis)
+
+
 
     const options = {
         animationEnabled: true,
@@ -305,38 +334,7 @@ export default function Dashboard() {
 
         data: [{
                 type: "line",
-                dataPoints: [
-                    { label: 1,  y: 10  },
-                    { label: 2,  y: 2  },
-                    { label: 3,  y: 5  },
-                    { label: 4,  y: 45  },
-                    { label: 5,  y: 23  },
-                    { label: 6,  y: 33  },
-                    { label: 7,  y: 18  },
-                    { label: 8,  y: 20  },
-                    { label: 9,  y: 11  },
-                    { label: 10,  y: 10  },
-                    { label: 11,  y: 2  },
-                    { label: 12,  y: 5  },
-                    { label: 13,  y: 45  },
-                    { label: 14,  y: 23  },
-                    { label: 15,  y: 33  },
-                    { label: 16,  y: 33  },
-                    { label: 17,  y: 18  },
-                    { label: 18,  y: 20  },
-                    { label: 19,  y: 11  },
-                    { label: 20,  y: 11  },
-                    { label: 21,  y: 10  },
-                    { label: 22,  y: 2  },
-                    { label: 23,  y: 5  },
-                    { label: 24,  y: 45  },
-                    { label: 25,  y: 23  },
-                    { label: 26,  y: 33  },
-                    { label: 27,  y: 18  },
-                    { label: 28,  y: 20  },
-                    { label: 29,  y: 11  },
-                    { label: 30,  y: 11  },
-                ]
+                dataPoints: dayLis
             }
         ]
     }
@@ -607,7 +605,6 @@ export default function Dashboard() {
                                                         </TableCell>
                                                         <TableCell align="left">
                                                             <Avatar alt="img" src={baseUrl+row.vehicle.imgUrl1}/>
-
                                                             {row.vehicle.brand}
                                                         </TableCell>
                                                         <TableCell align="left">

@@ -15,6 +15,7 @@ import javax.persistence.*;
 public class Booking {
     @Id
     private String bookingId;
+    private String bookingDate;
     private String leavingDate;
     private String returnDate;
     private String location;

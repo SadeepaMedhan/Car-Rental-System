@@ -75,8 +75,8 @@ class HomePage extends Component {
             signInIcon: null,
             user: null,
             vehicleList: [],
-            leavingDate: new Date("2022/07/27"),
-            returnDate: new Date("2022/07/28"),
+            leavingDate: new Date(),
+            returnDate: new Date(),
             location: null,
             bookingData: {
                 customer: null,

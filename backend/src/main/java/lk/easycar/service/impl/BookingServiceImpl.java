@@ -1,12 +1,10 @@
 package lk.easycar.service.impl;
 
 import lk.easycar.dto.BookingDTO;
-import lk.easycar.entity.Booking;
-import lk.easycar.entity.Customer;
-import lk.easycar.entity.Driver;
-import lk.easycar.entity.Vehicle;
+import lk.easycar.entity.*;
 import lk.easycar.repo.BookingRepo;
 import lk.easycar.repo.DriverRepo;
+import lk.easycar.repo.ReportRepo;
 import lk.easycar.repo.VehicleRepo;
 import lk.easycar.service.BookingService;
 import org.modelmapper.ModelMapper;
@@ -15,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,6 +22,9 @@ public class BookingServiceImpl implements BookingService {
 
     @Autowired
     private BookingRepo bookingRepo;
+
+    @Autowired
+    private ReportRepo reportRepo;
 
     @Autowired
     private VehicleRepo vehicleRepo;
@@ -81,6 +83,10 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public List<BookingDTO> getAllBookings() {
+        List<Report> income = mapper.map(bookingRepo.getIncome(), new TypeToken<List<Report>>() {
+        }.getType());
+        System.out.println(income);
+
         return mapper.map(bookingRepo.findAll(), new TypeToken<List<BookingDTO>>() {
         }.getType());
     }
