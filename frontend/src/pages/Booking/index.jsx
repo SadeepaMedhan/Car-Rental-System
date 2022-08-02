@@ -127,8 +127,8 @@ class BookingPage extends Component {
         this.setState({alertState: true})
         this.setState({selectVehicle: data})
         let d = this.state.searchData.returnDate.getTime()-this.state.searchData.leavingDate.getTime();
-        this.setState({duration:d/(1000*3600*24)})
-        this.setState({rentalCost:(d/(1000*3600*24) * data.dailyRate)})
+        this.setState({duration:Math.round(d/(1000*3600*24))})
+        this.setState({rentalCost:Math.round(d/(1000*3600*24) * data.dailyRate)})
         this.setState({stepperValue: 1});
         this.setState({bookingTabValue: 1});
     }
@@ -175,7 +175,6 @@ class BookingPage extends Component {
             this.setState({bookingTabValue: 0});
         }
         const goOptions = (e) => {
-
             this.setState({stepperValue: 1});
             this.setState({bookingTabValue: 1});
         }

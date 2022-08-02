@@ -196,11 +196,6 @@ class HomePage extends Component {
         };
 
 
-        const radioBtnChange = (event) => {
-            this.setState({vehicleTypeId: event.target.value});
-        };
-
-
         const Item = styled(Paper)(({theme}) => ({
             backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
             ...theme.typography.body2, padding: theme.spacing(1),
@@ -512,47 +507,7 @@ class HomePage extends Component {
                                             </div>
 
                                         </div>
-                                        <Stack direction="column" justifyContent="flex-start"
-                                               alignItems="stretch"
-                                               spacing={1} sx={{
-                                            height: '400px',
-                                            width: '230px',
-                                            border: '1px solid #E0E0E0',
-                                            borderRadius: '6px', fontFamily: 'Convergence'
-                                        }}>
-                                            <h3 align="center">Filters</h3>
-                                            <Divider/>
-                                            <Stack direction="column"
-                                                   justifyContent="flex-start"
-                                                   alignItems="center"
-                                                   spacing={1}>
-                                                <FormGroup>
-                                                    <FormLabel id="demo-controlled-radio-buttons-group">
-                                                        Driver Status</FormLabel>
-                                                    <FormControlLabel control={<Checkbox defaultChecked/>}
-                                                                      label="With Driver"/>
-                                                    <FormControlLabel disabled control={<Checkbox/>}
-                                                                      label="Self Drive"/>
-                                                    <Divider/>
-                                                </FormGroup>
 
-                                                <FormControl>
-                                                    <FormLabel id="demo-controlled-radio-buttons-group">Vehicle
-                                                        Type</FormLabel>
-                                                    <RadioGroup aria-labelledby="demo-controlled-radio-buttons-group"
-                                                                name="controlled-radio-buttons-group"
-                                                                value={this.state.vehicleTypeId}
-                                                                onChange={radioBtnChange}>
-                                                        <FormControlLabel value={0} control={<Radio/>} label="General"/>
-                                                        <FormControlLabel value={1} control={<Radio/>} label="Premium"/>
-                                                        <FormControlLabel value={2} control={<Radio/>} label="Luxury"/>
-                                                    </RadioGroup>
-                                                </FormControl>
-
-                                            </Stack>
-                                            <Skeleton animation="wave"/>
-
-                                        </Stack>
                                     </div>
                                 </Stack>
                             </Stack>
@@ -572,44 +527,7 @@ class HomePage extends Component {
                                    spacing={2}>
                                 <Vehicle signInUser={this.state.user} setResult={0} setVehicle={this.getVehicle.bind(this)}/>
                             </Stack>
-                            <Stack direction="column" justifyContent="flex-start"
-                                   alignItems="stretch"
-                                   spacing={1} sx={{
-                                height: '400px',
-                                width: '230px',
-                                border: '1px solid #E0E0E0',
-                                borderRadius: '6px', fontFamily: 'Convergence'
-                            }}>
-                                <h3 align="center">Filters</h3>
-                                <Divider/>
-                                <Stack direction="column"
-                                       justifyContent="flex-start"
-                                       alignItems="center"
-                                       spacing={1}>
-                                    <FormGroup>
-                                        <FormLabel id="demo-controlled-radio-buttons-group">
-                                            Driver Status</FormLabel>
-                                        <FormControlLabel control={<Checkbox defaultChecked/>} label="With Driver"/>
-                                        <FormControlLabel disabled control={<Checkbox/>} label="Self Drive"/>
-                                        <Divider/>
-                                    </FormGroup>
 
-                                    <FormControl>
-                                        <FormLabel id="demo-controlled-radio-buttons-group">Vehicle Type</FormLabel>
-                                        <RadioGroup aria-labelledby="demo-controlled-radio-buttons-group"
-                                                    name="controlled-radio-buttons-group"
-                                                    value={this.state.vehicleTypeId}
-                                                    onChange={radioBtnChange}>
-                                            <FormControlLabel value={0} control={<Radio/>} label="General"/>
-                                            <FormControlLabel value={1} control={<Radio/>} label="Premium"/>
-                                            <FormControlLabel value={2} control={<Radio/>} label="Luxury"/>
-                                        </RadioGroup>
-                                    </FormControl>
-
-                                </Stack>
-                                <Skeleton animation="wave"/>
-
-                            </Stack>
                         </Stack>
                         <ContactInfo/>
                     </TabPanel>

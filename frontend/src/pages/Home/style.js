@@ -127,8 +127,8 @@ export const styleSheet = {
     },
     suggest__result:{
         margin: 'auto',
-         width:'75vw',
-         height:'200px',
+         width:'85vw',
+         height:'500px',
 
     },
     contact_sec:{
