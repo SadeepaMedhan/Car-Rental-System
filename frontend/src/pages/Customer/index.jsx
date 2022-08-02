@@ -7,6 +7,7 @@ import NoiseControlOffIcon from "@mui/icons-material/NoiseControlOff";
 import Chip from "@mui/material/Chip";
 import Avatar from "@mui/material/Avatar";
 import CustomerService from "../../service/CustomerService";
+import swal from "sweetalert";
 
 class CustomerView extends Component {
 
@@ -167,11 +168,37 @@ class CustomerView extends Component {
                                                     <Avatar alt="vehicle"/>
                                                     {row.vehicle.brand}
                                                 </TableCell>
-                                                <TableCell align="left">{row.leavingDate}</TableCell>
-                                                <TableCell align="left">{row.returnDate}</TableCell>
+                                                <TableCell align="left">{row.leavingDate.split('T')[0]}</TableCell>
+                                                <TableCell align="left">{row.returnDate.split('T')[0]}</TableCell>
                                                 <TableCell align="left">{row.location}</TableCell>
                                                 <TableCell align="left">{row.payment}</TableCell>
-                                                <TableCell align="left">Action</TableCell>
+                                                <TableCell align="left">
+                                                    <Chip label={row.status=== "Pending" ? "Cancel" : "Return"}
+                                                          color={row.status === "Pending" ? "error" : "info"}
+                                                          clickable onClick={() => {
+                                                        row.status === "Accept" && (swal("Input Last Mileage here:", {
+                                                            content: "input",
+                                                        }).then((value) => {
+                                                                swal(`You typed: ${value}`);
+                                                        })
+                                                         )
+                                                        row.status === "Pending" && (
+                                                             swal({
+                                                                title: "Are you sure?",
+                                                                text: "Close this Rental!",
+                                                                icon: "info",
+                                                                buttons: true,
+                                                            })
+                                                                .then((a) => {
+                                                                    if (a) {
+                                                                        //updateBookingData(row)
+                                                                        swal("This Rental has been closed!", {
+                                                                            icon: "success",
+                                                                        });
+                                                                    }
+                                                                })
+                                                        )
+                                                }}/></TableCell>
                                             </TableRow>
                                         ))
                                     }

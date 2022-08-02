@@ -57,7 +57,7 @@ class BookingPage extends Component {
         this.state = {
             bookingTabValue: 0,
             stepperValue: 0,
-            vehicleTypeId: 0,
+            vehicleTypeId: props.data.vehicleType,
             searchData: props.data,
             selectVehicle: '',
             alertState: false,
@@ -91,21 +91,22 @@ class BookingPage extends Component {
         const res = await VehicleService.fetchVehicles();
         if (res.status === 200) {
             this.setState({vehicleList:res.data.data})
-            console.log(this.state.vehicleList)
+            // console.log(this.state.vehicleList)
         } else {
             console.log("fetching error: " + res)
         }
     }
 
     getAvailableDriver = async () => {
-        if(this.state.searchData.driverState === 1){
+        console.log(this.state.searchData.driverState)
+        if(this.state.searchData.driverState === "With Driver"){
             let resp = await DriverService.fetchDrivers();
             resp.data.data.map((dr)=>{
                 console.log(dr.name+", "+dr.status)
 
                 if (dr.status === 'Available'){
                     this.checkSchedule(dr)
-                    //this.setState({driver:dr})
+                    this.setState({driver:dr})
                 }
             })
 
@@ -165,6 +166,7 @@ class BookingPage extends Component {
     render() {
         let {classes} = this.props;
         let baseUrl = "http://localhost:8080/backend_war/uploads/"
+        const priceSortList = [...this.state.vehicleList].sort((a,b)=>(a.dailyRate < b.dailyRate) ? 1:-1);
 
         const pageChange = (event, value) => {
             this.setState({page:value})
@@ -182,6 +184,19 @@ class BookingPage extends Component {
             if (this.user !== null) {
                 this.setState({stepperValue: 2});
                 this.setState({bookingTabValue: 2});
+
+                if (this.state.vehicleTypeId === "General") {
+                    this.setState({lossDamageFee: 10000})
+                    console.log(this.state.lossDamageFee)
+                } else if (this.state.vehicleTypeId === "Premium") {
+                    this.setState({lossDamageFee: 15000})
+                    console.log(this.state.lossDamageFee)
+                } else if (this.state.vehicleTypeId === "Luxury") {
+                    this.setState({lossDamageFee: 20000})
+                    console.log(this.state.lossDamageFee)
+                } else {
+                }
+
             } else {
                 swal("Sign In Unsuccessful!", "Please Sign In", "error")
             }
@@ -193,28 +208,14 @@ class BookingPage extends Component {
         }
 
         const radioBtnChange = (event) => {
-            changeLossDamageFee(event.target.value)
             this.setState({vehicleTypeId: event.target.value});
-
         };
 
-        const changeLossDamageFee = (key) => {
-            console.log(key)
-            if (key === 0) {
-                this.setState({lossDamageFee: 10000})
-                console.log(this.state.lossDamageFee)
-            } else if (key === 1) {
-                this.setState({lossDamageFee: 15000})
-                console.log(this.state.lossDamageFee)
-            } else if (key === 2) {
-                this.setState({lossDamageFee: 20000})
-                console.log(this.state.lossDamageFee)
-            } else {
+
+        const sortChange = (event, newValue) => {
+            if(newValue !== null){
+                this.setState({sortValue: newValue})
             }
-        };
-
-        const sortChange = (event, newAlignment) => {
-            this.setState({sortValue: newAlignment})
         };
 
         const confirmPayment = () => {
@@ -274,9 +275,9 @@ class BookingPage extends Component {
                                                         name="controlled-radio-buttons-group"
                                                         value={this.state.vehicleTypeId}
                                                         onChange={radioBtnChange}>
-                                                <FormControlLabel value={0} control={<Radio/>} label="General"/>
-                                                <FormControlLabel value={1} control={<Radio/>} label="Premium"/>
-                                                <FormControlLabel value={2} control={<Radio/>} label="Luxury"/>
+                                                <FormControlLabel value="General" control={<Radio/>} label="General"/>
+                                                <FormControlLabel value="Premium" control={<Radio/>} label="Premium"/>
+                                                <FormControlLabel value="Luxury" control={<Radio/>} label="Luxury"/>
                                             </RadioGroup>
                                         </FormControl>
 
@@ -310,8 +311,12 @@ class BookingPage extends Component {
                                     </Stack>
                                     <Divider/>
 
-                                    {this.state.vehicleList.map((vehicle,i) => (
-                                        <VehicleCard setV={vehicle} userSignIn={this.state.searchData.customer}
+                                    {this.state.sortValue === "Recommended" && this.state.vehicleList.filter(vehicle => vehicle.type === this.state.vehicleTypeId).map(filteredVehicle =>(
+                                        <VehicleCard setV={filteredVehicle} userSignIn={this.state.searchData.customer}
+                                                     setVehicleId={this.getVehicle.bind(this)}/>
+                                    ))}
+                                    {this.state.sortValue === "Price" && priceSortList.filter(vehicle => vehicle.type === this.state.vehicleTypeId).map(filteredVehicle =>(
+                                        <VehicleCard setV={filteredVehicle} userSignIn={this.state.searchData.customer}
                                                      setVehicleId={this.getVehicle.bind(this)}/>
                                     ))}
                                     <Pagination count={2} page={this.state.page} onChange={pageChange} />

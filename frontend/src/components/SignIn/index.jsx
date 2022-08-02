@@ -99,17 +99,18 @@ export default function SignIn(props) {
 
     const findUser = async (id) => {
         clearData();
-        console.log("type "+id)
         const cusResponse = await CustomerService.findCustomer(id);
         const adResponse = await UserService.findAdmin(id);
         const driverResponse = await DriverService.findDriver(id);
         if (cusResponse.status === 200) {setCustomer(cusResponse.data.data);
-            console.log(cusResponse.data.data); }
+            console.log(cusResponse.data.data);}
         else if (adResponse.status === 200) {setAdmin(adResponse.data.data);
             console.log(adResponse.data.data);}
         else if (driverResponse.status === 200) {setDriver(driverResponse.data.data);
             console.log(driverResponse.data.data);}
-        else {console.log("error: " +cusResponse+", "+adResponse+", "+driverResponse)}
+        else {
+            //console.log("sign error: " +cusResponse+", "+adResponse+", "+driverResponse)
+        }
     }
 
 

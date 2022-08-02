@@ -64,14 +64,13 @@ class HomePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            driverStatus: 0,
-            vehicleType: 0,
+            driverStatus: "Self Driver",
+            vehicleType: "None",
             anchorElNav: null,
             value: 1,
             tabValue: 0,
             anchorEl: true,
             openLogin: false,
-            vehicleTypeId: 0,
             signInIcon: null,
             user: null,
             vehicleList: [],
@@ -83,7 +82,7 @@ class HomePage extends Component {
                 leavingDate: null,
                 returnDate: null,
                 location: null,
-                driverState: 0,
+                driverState: "Self Driver",
                 vehicle: null,
                 vehicleType: 0,
             },
@@ -177,6 +176,7 @@ class HomePage extends Component {
             this.setState({driverStatus: event.target.value});
         };
         const vehicleChange = (event) => {
+            console.log(event.target.value)
             this.setState({vehicleType: event.target.value});
         };
 
@@ -361,10 +361,10 @@ class HomePage extends Component {
                                             label="Vehicle Type"
                                             onChange={vehicleChange}
                                         >
-                                            <MenuItem value={0}>None</MenuItem>
-                                            <MenuItem value={1}>General</MenuItem>
-                                            <MenuItem value={2}>Premium</MenuItem>
-                                            <MenuItem value={3}>Luxury</MenuItem>
+                                            <MenuItem value="None">None</MenuItem>
+                                            <MenuItem value="General">General</MenuItem>
+                                            <MenuItem value="Premium">Premium</MenuItem>
+                                            <MenuItem value="Luxury">Luxury</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </Stack>
@@ -385,8 +385,10 @@ class HomePage extends Component {
                                             inputFormat="yyyy/MM/dd"
                                             value={this.state.leavingDate}
                                             onChange={(date) => {
-                                                console.log(date.getTime())
+                                                // console.log(date.getTime())
+                                                // console.log(date.getTime()+(1000*3600*24))
                                                 this.setState({leavingDate: date})
+                                                //this.setState({returnDate: date.getTime()+(1000*3600*24)})
                                             }}
                                             renderInput={(params) => <TextField {...params} />}
                                         />
@@ -400,12 +402,13 @@ class HomePage extends Component {
                                             inputFormat="yyyy/MM/dd"
                                             value={this.state.returnDate}
                                             onChange={(date) => {
-                                                console.log(date.toLocaleDateString('en-ZA'))
-                                                console.log(date.getTime())
-                                                /*let d = date.getTime() - this.state.leavingDate
-                                                console.log(d)
-                                                console.log(d/(1000*3600*24))*/
-                                                this.setState({returnDate: date})
+                                                //console.log(date.toLocaleDateString('en-ZA'))
+                                                //console.log(date.getTime())
+                                                if(date.getTime() - this.state.leavingDate>0)
+                                                {this.setState({returnDate: date})}
+                                                else{console.log("invalid date")}
+                                                // console.log(d)
+                                                // console.log(d/(1000*3600*24))
                                             }}
                                             renderInput={(params) => <TextField {...params} />}
                                         />
@@ -421,8 +424,8 @@ class HomePage extends Component {
                                             label="Self Driver"
                                             onChange={driverChange}
                                         >
-                                            <MenuItem value={0}>Self Driver</MenuItem>
-                                            <MenuItem value={1}>With Driver</MenuItem>
+                                            <MenuItem value="Self Driver">Self Driver</MenuItem>
+                                            <MenuItem value="With Driver">With Driver</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </Stack>
@@ -501,9 +504,7 @@ class HomePage extends Component {
 
                                         <div style={{height: '100%'}}>
                                             <div className={classes.suggest__result}>
-                                                <Vehicle signInUser={this.state.user}
-                                                         setVehicle={this.getVehicle.bind(this)}
-                                                        setResult={3}/>
+                                                <Vehicle signInUser={this.state.user} setVehicle={this.getVehicle.bind(this)} setResult={3}/>
                                             </div>
 
                                         </div>
