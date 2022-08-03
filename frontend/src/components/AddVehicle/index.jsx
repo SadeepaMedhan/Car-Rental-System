@@ -223,8 +223,7 @@ class AddVehicle extends Component {
                     console.log(response.data)
                 }
             } else {
-                //console.log(this.state.vehicle)
-
+                console.log(this.state.vehicle)
                 let formData = this.state.vehicle
                 formData.imgUrl1 = this.state.currentFile.name;
                 let response = await VehicleService.updateVehicle(formData);

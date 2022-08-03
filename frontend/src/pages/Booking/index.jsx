@@ -142,7 +142,7 @@ class BookingPage extends Component {
             leavingDate: this.state.searchData.leavingDate,
             returnDate: this.state.searchData.returnDate,
             location: this.state.searchData.location,
-            payment: "10000",
+            payment: this.state.rentalCost,
             lossDamageFee: this.state.lossDamageFee,
             rentalFee: this.state.rentalCost,
             status: "Pending",

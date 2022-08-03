@@ -177,6 +177,19 @@ export default function Dashboard() {
             console.log("fetching error: " + res)
         }
     }
+
+    const updateVehicleStatus = async (data) => {
+        console.log(data)
+        let response = await VehicleService.updateVehicle(data);
+        if (response.status === 200) {
+            console.log("updated !")
+            loadVehicleData()
+        } else {
+            console.log(response.data)
+        }
+
+    };
+
     // driver
     const driverFormHandleChange = (event, newValue) => {
         loadDriversData()
@@ -303,8 +316,6 @@ export default function Dashboard() {
         })
     )
 
-    console.log(dateList)
-
     const dayLis=[]
     dateList.map((date)=>{
             if(true){
@@ -315,9 +326,6 @@ export default function Dashboard() {
             }
         }
     )
-    console.log(dayLis)
-
-
 
     const dailyIncome = {
         animationEnabled: true,
@@ -1271,7 +1279,6 @@ export default function Dashboard() {
                                             <TableCell align="left">Transmission Type</TableCell>
                                             <TableCell align="left">Fuel Type</TableCell>
                                             <TableCell align="left">Status</TableCell>
-                                            <TableCell align="left">Action</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -1296,7 +1303,7 @@ export default function Dashboard() {
                                                                 .then((a) => {
                                                                     if (a) {
                                                                         row.status = "Available";
-                                                                        //updateVehicle(row)
+                                                                        updateVehicleStatus(row)
                                                                         swal("This Vehicle has been Available!", {
                                                                             icon: "success",
                                                                         });
@@ -1304,44 +1311,7 @@ export default function Dashboard() {
                                                                 });
                                                         }}/>
                                                         </TableCell>
-                                                    <TableCell align="left">
-                                                        <Tooltip title="Edit">
-                                                            <IconButton
-                                                                onClick={() => {
-                                                                    console.log("edit icon clicked!")
-                                                                    //updateVehicle(row);
 
-                                                                }}
-                                                            >
-                                                                <EditIcon color="primary"/>
-                                                            </IconButton>
-                                                        </Tooltip>
-                                                        <Tooltip title="Delete">
-                                                            <IconButton
-                                                                onClick={() => {
-                                                                    swal({
-                                                                        title: "Are you sure?",
-                                                                        text: "Once deleted, you will not be able to recover this imaginary file!",
-                                                                        icon: "warning",
-                                                                        buttons: true,
-                                                                        dangerMode: true,
-                                                                    })
-                                                                        .then((willDelete) => {
-                                                                            if (willDelete) {
-                                                                                deleteVehicle(row.vehicleId);
-                                                                                swal("Poof! Your imaginary file has been deleted!", {
-                                                                                    icon: "success",
-                                                                                });
-                                                                            } else {
-                                                                                swal("Your imaginary file is safe!");
-                                                                            }
-                                                                        });
-                                                                }}
-                                                            >
-                                                                <DeleteIcon color="error"/>
-                                                            </IconButton>
-                                                        </Tooltip>
-                                                    </TableCell>
                                                 </TableRow>
                                             ))
                                         }

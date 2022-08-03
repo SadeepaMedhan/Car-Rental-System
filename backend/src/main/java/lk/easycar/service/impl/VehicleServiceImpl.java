@@ -43,8 +43,9 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public void updateVehicle(VehicleDTO dto) {
-        System.out.println(dto.getVehicleId());
+        System.out.println(dto);
         if (vehicleRepo.existsById(dto.getVehicleId())){
+            System.out.println(mapper.map(dto, Vehicle.class));
             vehicleRepo.save(mapper.map(dto, Vehicle.class));
         }else{
             throw new RuntimeException("No Such Vehicle To Update..! Please Check the ID..!");
