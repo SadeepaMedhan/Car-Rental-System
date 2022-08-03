@@ -319,7 +319,7 @@ export default function Dashboard() {
 
 
 
-    const options = {
+    const dailyIncome = {
         animationEnabled: true,
         exportEnabled: true,
         title: {text: "Daily Income"},
@@ -329,6 +329,44 @@ export default function Dashboard() {
         },
         axisX: {
             title: "Days of Month",
+            interval: 1
+        },
+
+        data: [{
+                type: "line",
+                dataPoints: dayLis
+            }
+        ]
+    }
+    const monthlyIncome = {
+        animationEnabled: true,
+        exportEnabled: true,
+        title: {text: "Monthly Income"},
+        axisY: {
+            title: "Rate",
+            suffix: "LKR"
+        },
+        axisX: {
+            title: "Month of Year",
+            interval: 1
+        },
+
+        data: [{
+                type: "line",
+                dataPoints: dayLis
+            }
+        ]
+    }
+    const annuallyIncome = {
+        animationEnabled: true,
+        exportEnabled: true,
+        title: {text: "Annually Income"},
+        axisY: {
+            title: "Rate",
+            suffix: "LKR"
+        },
+        axisX: {
+            title: "Years",
             interval: 1
         },
 
@@ -667,7 +705,12 @@ export default function Dashboard() {
                                                 <TableRow>
                                                     <TableCell align="left">
                                                         <Chip label={row.status}
-                                                              color={row.status === "Pending" ? "warning" : "success"}
+                                                              color={
+                                                                  row.status === "Pending" && "warning" ||
+                                                                  row.status === "Accept" && "info" ||
+                                                                  row.status === "Finish" && "success" ||
+                                                                  row.status === "Closed" && "warning"
+                                                                 }
                                                               clickable onClick={() => {
                                                             swal({
                                                                 title: "Are you sure?",
@@ -1048,13 +1091,13 @@ export default function Dashboard() {
                             <Tab value={2} label="Annually"/>
                         </Tabs>
                         <TabPanel value={reportFormValue} index={0}>
-                            <CanvasJSChart options = {options} />
+                            <CanvasJSChart options = {dailyIncome} />
                         </TabPanel>
                         <TabPanel value={reportFormValue} index={1}>
-
+                            <CanvasJSChart options = {monthlyIncome} />
                         </TabPanel>
                         <TabPanel value={reportFormValue} index={2}>
-
+                            <CanvasJSChart options = {annuallyIncome} />
                         </TabPanel>
                     </Stack>
                 </TabPanel>
@@ -1116,8 +1159,8 @@ export default function Dashboard() {
                                                                 <Avatar alt="img" src={baseUrl+row.vehicle.imgUrl1}/>
                                                                 {row.vehicle.brand}
                                                             </TableCell>
-                                                            <TableCell align="left">{row.leavingDate}</TableCell>
-                                                            <TableCell align="left">{row.returnDate}</TableCell>
+                                                            <TableCell align="left">{row.leavingDate.split('T')[0]}</TableCell>
+                                                            <TableCell align="left">{row.returnDate.split('T')[0]}</TableCell>
                                                             <TableCell align="left">{row.location}</TableCell>
                                                             <TableCell align="left">
                                                                 <Avatar alt="user"/>
@@ -1179,8 +1222,8 @@ export default function Dashboard() {
                                                         <Avatar alt="img" src={baseUrl+row.vehicle.imgUrl1}/>
                                                         {row.vehicle.brand}
                                                     </TableCell>
-                                                    <TableCell align="left">{row.leavingDate}</TableCell>
-                                                    <TableCell align="left">{row.returnDate}</TableCell>
+                                                    <TableCell align="left">{row.leavingDate.split('T')[0]}</TableCell>
+                                                    <TableCell align="left">{row.returnDate.split('T')[0]}</TableCell>
                                                     <TableCell align="left">{row.location}</TableCell>
                                                     <TableCell align="left">
                                                         <Avatar alt="user"/>
@@ -1240,13 +1283,33 @@ export default function Dashboard() {
                                                     <TableCell align="left">{row.type}</TableCell>
                                                     <TableCell align="left">{row.transmissionType}</TableCell>
                                                     <TableCell align="left">{row.fuelType}</TableCell>
-                                                    <TableCell align="left">{row.status}</TableCell>
+                                                    <TableCell align="left">
+                                                        <Chip label={row.status}
+                                                              color={row.status === "Maintenance" ? "warning" : "success"}
+                                                              clickable onClick={() => {
+                                                            swal({
+                                                                title: "Are you sure?",
+                                                                text: "Change this status!",
+                                                                icon: "info",
+                                                                buttons: true,
+                                                            })
+                                                                .then((a) => {
+                                                                    if (a) {
+                                                                        row.status = "Available";
+                                                                        //updateVehicle(row)
+                                                                        swal("This Vehicle has been Available!", {
+                                                                            icon: "success",
+                                                                        });
+                                                                    }
+                                                                });
+                                                        }}/>
+                                                        </TableCell>
                                                     <TableCell align="left">
                                                         <Tooltip title="Edit">
                                                             <IconButton
                                                                 onClick={() => {
                                                                     console.log("edit icon clicked!")
-                                                                    updateVehicle(row);
+                                                                    //updateVehicle(row);
 
                                                                 }}
                                                             >

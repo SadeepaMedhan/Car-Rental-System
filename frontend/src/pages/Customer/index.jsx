@@ -8,6 +8,7 @@ import Chip from "@mui/material/Chip";
 import Avatar from "@mui/material/Avatar";
 import CustomerService from "../../service/CustomerService";
 import swal from "sweetalert";
+import BookingService from "../../service/BookingService";
 
 class CustomerView extends Component {
 
@@ -34,8 +35,20 @@ class CustomerView extends Component {
         else {console.log("fetching error: " + res)}
     }
 
+
+
     render() {
         let baseUrl = "http://localhost:8080/backend_war/uploads/"
+
+       const updateBookingData = async (data) => {
+            let response = await BookingService.updateBooking(data);
+            if (response.status === 200) {
+                console.log("updated !")
+                this.loadBookingData(this.props.customer.cusID)
+            } else {
+                console.log(response.data)
+            }
+        }
 
         return (
             <Stack direction="row"
@@ -162,7 +175,8 @@ class CustomerView extends Component {
                                         this.state.bookingList.map((row)=>(
                                             <TableRow>
                                                 <TableCell align="left">
-                                                    <Chip label={row.status} color={row.status === "Pending"? "warning":"success"}/>
+                                                    <Chip label={row.status} color={
+                                                        row.status === "Pending" ? "warning" : "default"}/>
                                                 </TableCell>
                                                 <TableCell align="left">
                                                     <Avatar alt="vehicle"/>
@@ -171,15 +185,35 @@ class CustomerView extends Component {
                                                 <TableCell align="left">{row.leavingDate.split('T')[0]}</TableCell>
                                                 <TableCell align="left">{row.returnDate.split('T')[0]}</TableCell>
                                                 <TableCell align="left">{row.location}</TableCell>
-                                                <TableCell align="left">{row.payment}</TableCell>
                                                 <TableCell align="left">
-                                                    <Chip label={row.status=== "Pending" ? "Cancel" : "Return"}
-                                                          color={row.status === "Pending" ? "error" : "info"}
-                                                          clickable onClick={() => {
+                                                    <Stack>
+                                                        <p>Pay : {row.payment}</p>
+                                                        {row.status === "Finish" && (<p>Balance : {row.payment - row.vehicle.dailyRate}</p>) ||
+                                                        row.status === "Closed" && (<p>Balance : {row.payment}</p>)}
+                                                    </Stack>
+                                                </TableCell>
+                                                <TableCell align="left">
+                                                    <Chip label={
+                                                        row.status === "Pending" && "Cancel" ||
+                                                        row.status === "Accept" && "Return" ||
+                                                        row.status === "Finish" && "View" ||
+                                                        row.status === "Closed" && "View"
+                                                    }
+                                                          color={
+                                                              row.status === "Pending" && "error" ||
+                                                              row.status === "Accept" && "info" ||
+                                                              row.status === "Finish" && "primary" ||
+                                                              row.status === "Closed" && "warning"
+                                                              }
+                                                          clickable={row.status !== "Closed" || row.status !== "Finish"}
+                                                          onClick={() => {
                                                         row.status === "Accept" && (swal("Input Last Mileage here:", {
                                                             content: "input",
                                                         }).then((value) => {
-                                                                swal(`You typed: ${value}`);
+                                                                row.vehicle.maintenanceMileage += value;
+                                                                row.status = "Finish";
+                                                                updateBookingData(row)
+                                                                swal(`Your trip: ${value}`);
                                                         })
                                                          )
                                                         row.status === "Pending" && (
@@ -191,7 +225,8 @@ class CustomerView extends Component {
                                                             })
                                                                 .then((a) => {
                                                                     if (a) {
-                                                                        //updateBookingData(row)
+                                                                        row.status = "Closed";
+                                                                        updateBookingData(row)
                                                                         swal("This Rental has been closed!", {
                                                                             icon: "success",
                                                                         });
