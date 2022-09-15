@@ -134,10 +134,10 @@ class BookingPage extends Component {
         this.setState({bookingTabValue: 1});
     }
 
-    saveVehicle = async () => {
+    saveBooking = async () => {
 
         let formData = {
-            bookingId: "b",
+            bookingId: "b001",
             bookingDate: new Date().toLocaleDateString('en-ZA'),
             leavingDate: this.state.searchData.leavingDate,
             returnDate: this.state.searchData.returnDate,
@@ -165,7 +165,7 @@ class BookingPage extends Component {
 
     render() {
         let {classes} = this.props;
-        let baseUrl = "http://localhost:8080/backend_war/uploads/"
+        let baseUrl = "http://localhost:8080/backend/uploads/"
         const priceSortList = [...this.state.vehicleList].sort((a,b)=>(a.dailyRate < b.dailyRate) ? 1:-1);
 
         const pageChange = (event, value) => {
@@ -219,7 +219,7 @@ class BookingPage extends Component {
         };
 
         const confirmPayment = () => {
-            this.saveVehicle()
+            this.saveBooking()
         };
 
         return (
@@ -788,7 +788,7 @@ class BookingPage extends Component {
                                                                    helperText="" size="small"
                                                                    color="primary"
                                                                    errorMessages="Incorrect entry !"
-                                                                   validators={['required',]}
+                                                                   validators={['required','number']}
                                                                    value={this.state.payCardNo}
                                                                    onChange={(e) => {
                                                                        this.setState({payCardNo: e.target.value})

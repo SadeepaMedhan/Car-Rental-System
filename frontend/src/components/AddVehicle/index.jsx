@@ -91,8 +91,8 @@ class AddVehicle extends Component {
                 status: 'Available',
                 imgUrl1: '',
                 imgUrl2: '',
-                imgUrl3: '',
-                imgUrl4: '',
+                imgUrl3: 'car-dash.jpg',
+                imgUrl4: 'Suzuki-Alto-R4.PNG',
             },
             imageList: []
         })

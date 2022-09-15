@@ -45,6 +45,7 @@ public class BookingServiceImpl implements BookingService {
                 throw new RuntimeException("No vehicle added the booking");
             }else {
                 Vehicle vehicle = bookingData.getVehicle();
+                System.out.println(vehicle.getVehicleId()+" select");
                 vehicle.setStatus("Selected");
                 vehicleRepo.save(vehicle);
 

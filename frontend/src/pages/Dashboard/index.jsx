@@ -326,6 +326,16 @@ export default function Dashboard() {
             }
         }
     )
+    const monLis=[]
+    dateList.map((date)=>{
+            if(true){
+                monLis.push({
+                    label:date.date.split('-')[1],
+                    y:date.rentalFee
+                })
+            }
+        }
+    )
 
     const dailyIncome = {
         animationEnabled: true,
@@ -361,7 +371,7 @@ export default function Dashboard() {
 
         data: [{
                 type: "line",
-                dataPoints: dayLis
+                dataPoints: monLis
             }
         ]
     }
@@ -646,7 +656,12 @@ export default function Dashboard() {
                                                     <TableRow>
                                                         <TableCell align="left">
                                                             <Chip label={row.status}
-                                                                  color={row.status === "Pending" ? "warning" : "success"}
+                                                                  color={
+                                                                      row.status === "Pending" && "warning" ||
+                                                                      row.status === "Accept" && "info" ||
+                                                                      row.status === "Finish" && "success" ||
+                                                                      row.status === "Closed" && "warning"
+                                                                  }
                                                                   />
                                                         </TableCell>
                                                         <TableCell align="left">
