@@ -150,6 +150,7 @@ class BookingPage extends Component {
             vehicle: this.state.selectVehicle,
             driver: this.state.driver
         }
+        console.log(formData);
         let response = await BookingService.createBooking(formData);
         console.log("res " + response)
         if (response.status === 201) {
@@ -219,6 +220,7 @@ class BookingPage extends Component {
         };
 
         const confirmPayment = () => {
+            console.log('confirm pay')
             this.saveBooking()
         };
 
@@ -788,7 +790,7 @@ class BookingPage extends Component {
                                                                    helperText="" size="small"
                                                                    color="primary"
                                                                    errorMessages="Incorrect entry !"
-                                                                   validators={['required','number']}
+                                                                   validators={['required',]}
                                                                    value={this.state.payCardNo}
                                                                    onChange={(e) => {
                                                                        this.setState({payCardNo: e.target.value})

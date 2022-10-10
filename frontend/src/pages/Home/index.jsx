@@ -7,20 +7,7 @@ import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import logo from "../../assets/images/logo4.jpg";
 import Button from "@mui/material/Button";
-import {
-    Checkbox,
-    FormControl,
-    FormControlLabel,
-    FormGroup,
-    FormLabel,
-    InputLabel,
-    Paper,
-    Radio,
-    RadioGroup,
-    Select,
-    Stack,
-    Typography
-} from "@mui/material";
+import { FormControl, InputLabel, Paper, Select, Stack, Typography } from "@mui/material";
 import {DesktopDatePicker} from '@mui/x-date-pickers/DesktopDatePicker';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
@@ -50,7 +37,6 @@ import Logout from '@mui/icons-material/Logout';
 import Chip from '@mui/material/Chip';
 import VehicleService from "../../service/VehicleService";
 import BookingPage from "../Booking";
-import Skeleton from "@mui/material/Skeleton";
 import swal from 'sweetalert';
 import CarRentalIcon from '@mui/icons-material/CarRental';
 import ElectricCarIcon from '@mui/icons-material/ElectricCar';
@@ -100,7 +86,7 @@ class HomePage extends Component {
     }
 
     getVehicle = (data) => {
-        this.setState({vehicle:data})
+        this.setState({vehicle: data})
         window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
         if (this.state.user !== null) {
             this.setState({
@@ -127,7 +113,6 @@ class HomePage extends Component {
                 vehicleList: JSON.stringify(res.data.data)
             })
             console.log("res: " + JSON.stringify(res.data.data))
-
         } else {
             console.log("fetching error: " + res)
         }
@@ -142,7 +127,7 @@ class HomePage extends Component {
         let {classes} = this.props;
 
         const navTabChange = (event, newValue) => {
-            this.setState({vehicle:null})
+            this.setState({vehicle: null})
             if (newValue === 4) {
                 if (this.state.user !== null) {
                     this.setState({tabValue: 4});
@@ -404,9 +389,11 @@ class HomePage extends Component {
                                             onChange={(date) => {
                                                 //console.log(date.toLocaleDateString('en-ZA'))
                                                 //console.log(date.getTime())
-                                                if(date.getTime() - this.state.leavingDate>0)
-                                                {this.setState({returnDate: date})}
-                                                else{console.log("invalid date")}
+                                                if (date.getTime() - this.state.leavingDate > 0) {
+                                                    this.setState({returnDate: date})
+                                                } else {
+                                                    console.log("invalid date")
+                                                }
                                                 // console.log(d)
                                                 // console.log(d/(1000*3600*24))
                                             }}
@@ -504,7 +491,8 @@ class HomePage extends Component {
 
                                         <div style={{height: '100%'}}>
                                             <div className={classes.suggest__result}>
-                                                <Vehicle signInUser={this.state.user} setVehicle={this.getVehicle.bind(this)} setResult={3}/>
+                                                <Vehicle signInUser={this.state.user} setResult={3}
+                                                         setVehicle={this.getVehicle.bind(this)}/>
                                             </div>
 
                                         </div>
@@ -526,7 +514,8 @@ class HomePage extends Component {
                                    justifyContent="flex-start"
                                    alignItems="stretch"
                                    spacing={2}>
-                                <Vehicle signInUser={this.state.user} setResult={0} setVehicle={this.getVehicle.bind(this)}/>
+                                <Vehicle signInUser={this.state.user} setResult={0}
+                                         setVehicle={this.getVehicle.bind(this)}/>
                             </Stack>
 
                         </Stack>

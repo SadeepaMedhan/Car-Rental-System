@@ -206,15 +206,15 @@ class AddVehicle extends Component {
 
 
         const saveVehicle = async () => {
-
+            console.log('save btn')
             if (this.state.btnState === "Save") {
                 console.log(this.state.vehicle)
 
                 let formData = this.state.vehicle
                 formData.imgUrl1 = this.state.image1.name;
                 formData.imgUrl2 = this.state.image2.name;
-                formData.imgUrl3 = this.state.image3.name;
-                formData.imgUrl4 = this.state.image4.name;
+                formData.imgUrl3 = this.state.image3;
+                formData.imgUrl4 = this.state.image4;
                 let response = await VehicleService.createVehicle(formData);
                 if (response.status === 201) {
                     console.log("saved !")

@@ -31,7 +31,7 @@ export default function Vehicle(props) {
     React.useEffect(() => {
         window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
         loadVehicleData();
-
+        //console.log(props)
     }, []);
 
     const loadVehicleData = async () => {
