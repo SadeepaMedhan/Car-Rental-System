@@ -292,14 +292,14 @@ export default function Dashboard() {
     }
 
     const loadImages = async () => {
-        let baseUrl = "http://localhost:8080/backend_war/"
+        let baseUrl = "http://localhost:8080/backend/"
         const res = await UploadFilesService.getFiles();
         console.log(baseUrl+res.data[1])
         setImgUrl(baseUrl+res.data[0]);
     }
 
 
-    let baseUrl = "http://localhost:8080/backend_war/uploads/"
+    let baseUrl = "http://localhost:8080/backend/uploads/"
 
 
     const dateList = [];

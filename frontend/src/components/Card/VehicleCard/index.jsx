@@ -39,7 +39,7 @@ class VehicleCard extends Component{
 
     render() {
         let {classes} = this.props;
-        let baseUrl = "http://localhost:8080/backend_war/uploads/"
+        let baseUrl = "http://localhost:8080/backend/uploads/"
 
         return (
             <div /*sx={{ maxWidth: 345 }}*/>

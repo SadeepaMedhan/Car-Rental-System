@@ -162,7 +162,7 @@ export default function SignIn(props) {
                         </Stack>
 
                         <Stack>
-                            <TextValidator label="User ID" variant="outlined" helperText="User ID or E-mail Address" size="small"
+                            <TextValidator label="Email/ID" variant="outlined" helperText="User ID or E-mail Address" size="small"
                                            color="primary"
                                            errorMessages="Incorrect entry !"
                                            value={userName}

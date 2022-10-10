@@ -89,7 +89,7 @@ class CustomerManage extends Component{
 
 
     render() {
-        let baseUrl = "http://localhost:8080/backend_war/uploads/"
+        let baseUrl = "http://localhost:8080/backend/uploads/"
 
 
         const saveCustomer = async () => {
