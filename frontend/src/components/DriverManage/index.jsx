@@ -118,12 +118,12 @@ class DriverManage extends Component{
                                    let formData = this.state.driver
                                    formData.name = e.target.value
                                    this.setState({ formData })}}/>
-                    <TextField value={this.state.driver.name} id="outlined-basic" label="Address" variant="outlined"
+                    <TextField value={this.state.driver.address} id="outlined-basic" label="Address" variant="outlined"
                                onChange={(e) => {
                                        let formData = this.state.driver
                                        formData.address = e.target.value
                                        this.setState({ formData })}}/>
-                    <TextField value={this.state.driver.name} id="outlined-basic" label="NIC Number" variant="outlined"
+                    <TextField value={this.state.driver.nic} id="outlined-basic" label="NIC Number" variant="outlined"
                                onChange={(e) => {
                                        let formData = this.state.driver
                                        formData.nic = e.target.value
@@ -134,17 +134,17 @@ class DriverManage extends Component{
                 <Stack direction="row" justifyContent="flex-start"
                        alignItems="center"
                        spacing={2} style={{ height:'100px'}}>
-                    <TextField value={this.state.driver.name} id="outlined-basic" label="E-mail Address" variant="outlined"
+                    <TextField value={this.state.driver.email} id="outlined-basic" label="E-mail Address" variant="outlined"
                                onChange={(e) => {
                                 let formData = this.state.driver
                                 formData.email = e.target.value
                                 this.setState({ formData })}}/>
-                    <TextField value={this.state.driver.name} id="outlined-basic" label="Contact" variant="outlined"
+                    <TextField value={this.state.driver.contact} id="outlined-basic" label="Contact" variant="outlined"
                                onChange={(e) => {
                                 let formData = this.state.driver
                                 formData.contact = e.target.value
                                 this.setState({ formData })}}/>
-                    <TextField value={this.state.driver.name} id="outlined-basic" label="Age" variant="outlined"
+                    <TextField value={this.state.driver.age} id="outlined-basic" label="Age" variant="outlined"
                                onChange={(e) => {
                                 let formData = this.state.driver
                                 formData.age = e.target.value
@@ -156,14 +156,14 @@ class DriverManage extends Component{
                 <Stack direction="row" justifyContent="flex-start"
                        alignItems="center"
                        spacing={2} style={{ height:'100px'}}>
-                    <TextField value={this.state.driver.name} id="outlined-basic" label="Password" variant="outlined" onChange={(e) => {
+                    <TextField value={this.state.driver.password} id="outlined-basic" label="Password" variant="outlined" onChange={(e) => {
                         let formData = this.state.driver
                         formData.password = e.target.value
                         this.setState({ formData })
                     }}/>
-                    <TextField value={this.state.driver.name} id="outlined-basic" label="Confirm Password" variant="outlined" onChange={(e) => {
+                    <TextField value={this.state.driver.password} id="outlined-basic" label="Confirm Password" variant="outlined" onChange={(e) => {
                         let formData = this.state.driver
-                        formData.name = e.target.value
+                        formData.password = e.target.value
                         this.setState({ formData })
                     }}/>
                 </Stack>
