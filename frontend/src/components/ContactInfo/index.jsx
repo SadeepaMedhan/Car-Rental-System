@@ -25,14 +25,14 @@ class ContactInfo extends Component {
         let {classes} = this.props;
         return (
             <Stack  direction="column">
-                <Stack alignItems="center" direction="row" spacing={1} sx={{backgroundColor:'#081F35',width:'100%',height:'90px',}}>
+                <Stack alignItems="center" direction="row" spacing={1} sx={{backgroundColor:'#081F35',width:'100%',height:'60px',}}>
 
-                    <h2 style={{ fontFamily:'Convergence', fontSize:'1.2em',
+                   {/* <h2 style={{ fontFamily:'Convergence', fontSize:'1.2em',
                         textAlign:'center', marginLeft:'20px', marginRight:'10px', color:'white',}}>
                         You have any questions or need additional information?
                     </h2>
                     <input id="basic" placeholder="Enter your email here"  />
-                    <Button>Subscribe</Button>
+                    <Button>Subscribe</Button>*/}
                 </Stack>
                 <Stack className={classes.contact_sec} sx={{position:'relative'}}>
                     <Stack >

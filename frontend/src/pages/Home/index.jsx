@@ -51,7 +51,7 @@ class HomePage extends Component {
         super(props);
         this.state = {
             driverStatus: "Self Driver",
-            vehicleType: "None",
+            vehicleType: "General",
             anchorElNav: null,
             value: 1,
             tabValue: 0,
@@ -346,7 +346,6 @@ class HomePage extends Component {
                                             label="Vehicle Type"
                                             onChange={vehicleChange}
                                         >
-                                            <MenuItem value="None">None</MenuItem>
                                             <MenuItem value="General">General</MenuItem>
                                             <MenuItem value="Premium">Premium</MenuItem>
                                             <MenuItem value="Luxury">Luxury</MenuItem>
@@ -522,10 +521,14 @@ class HomePage extends Component {
                         <ContactInfo/>
                     </TabPanel>
                     <TabPanel value={this.state.tabValue} index={2}>
-                        <ContactInfo/>
+                        <div style={{height:'100vh', display:'flex',flexDirection:'column', justifyContent:'flex-end'}}>
+                            <ContactInfo />
+                        </div>
                     </TabPanel>
                     <TabPanel value={this.state.tabValue} index={3}>
-                        <ContactInfo/>
+                        <div style={{height:'100vh', display:'flex',flexDirection:'column', justifyContent:'flex-end'}}>
+                            <ContactInfo />
+                        </div>
                     </TabPanel>
                     <TabPanel value={this.state.tabValue} index={4}>
                         <BookingPage data={this.state.bookingData}/>
