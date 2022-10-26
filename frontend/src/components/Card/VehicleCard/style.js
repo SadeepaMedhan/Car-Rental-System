@@ -1,11 +1,11 @@
 export const styleSheet = {
 
     card_box:{
-        padding:5,
+        padding:'10px',
         margin: '0',
         border:'1px solid #E0E0E0',
-        borderRadius: '3px',
-        //boxShadow: '10px 10px 10px 1px #888888',
+        borderRadius: '10px',
+        boxShadow:'1px 2px 5px 1px #E0E0E0',
     },
     card_img:{
         width:'200px',

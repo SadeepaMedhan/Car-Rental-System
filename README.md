@@ -11,10 +11,8 @@
 
 ### ScreenShots
 
-![App Screenshot](images/c1.png)
+![Home](images/c1.png)
 
-![App Screenshot](images/c2.png)
+![Dashboard](images/c4.png)
 
-![App Screenshot](images/c3.png)
-
-![App Screenshot](images/c4.png)
+![SignUp](images/v2.png)

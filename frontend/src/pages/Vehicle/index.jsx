@@ -63,8 +63,8 @@ export default function Vehicle(props) {
     };
 
     const radioBtnChange = (event) => {
-        console.log(event.target.value)
         setFilterType(event.target.value)
+
     };
 
     return (
@@ -102,7 +102,7 @@ export default function Vehicle(props) {
                         </Stack>}
 
                         {count > 2 && vehicleList.length > 2 &&
-                        <Stack direction="row" spacing={2} justifyContent="center" alignItems="stretch">
+                        <Stack direction="row" spacing={8} justifyContent="center" alignItems="stretch" >
                             <MediumVehicleCard setV={vehicleList[0]} userSignIn={user}
                                                setVehicleId={getVehicleData.bind(this)}/>
                             <MediumVehicleCard setV={vehicleList[1]} userSignIn={user}

@@ -131,8 +131,9 @@ export const styleSheet = {
 
     },
     suggest__result:{
+        right:0,
         margin: 'auto',
-         width:'85vw',
+         width:'80vw',
          height:'500px',
 
     },
