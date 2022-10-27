@@ -72,7 +72,7 @@ export default function Vehicle(props) {
             <Stack spacing={2}>
                 <Stack direction="row" spacing={2} alignItems="flex-start">
                     <Stack direction="column" justifyContent="center"  alignItems="stretch" spacing={2}>
-                        <Stack direction="row" justifyContent="flex-end">
+                        <Stack direction="row" justifyContent="flex-end" sx={{display:{ xs:'none',md:'flex'},}}>
                             <ToggleButtonGroup
                                 color="primary"
                                 value={sortValue}
@@ -112,9 +112,10 @@ export default function Vehicle(props) {
                         </Stack>
                         }
                     </Stack>
-                    <Stack direction="column" justifyContent="flex-start"
+                    <Stack  direction="column" justifyContent="flex-start"
                            alignItems="stretch"
                            spacing={1} sx={{
+                        display:{ xs:'none',md:'block'},
                         height: '400px',
                         width: '230px',
                         border: '1px solid #E0E0E0',

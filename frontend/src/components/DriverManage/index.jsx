@@ -22,7 +22,7 @@ class DriverManage extends Component{
                 password:'',
                 contact:'',
                 age:'',
-                salary:'',
+                salary:'1500',
                 status:'Available'
             },
             btnState:props.btnState,
@@ -41,7 +41,7 @@ class DriverManage extends Component{
                 password:'',
                 contact:'',
                 age:'',
-                salary:'',
+                salary:'1500',
                 status:'Available'
             },
             selectDriver:null,

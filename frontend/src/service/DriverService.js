@@ -3,6 +3,7 @@ import qs from "qs";
 
 class DriverService {
     postDriver = async (data) => {
+        console.log("form data: " + qs.stringify(data))
         const promise = new Promise((resolve, reject) => {
             axios.post('driver', qs.stringify(data))   //10s
                 .then((res) => {

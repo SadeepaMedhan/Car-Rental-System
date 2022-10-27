@@ -9,4 +9,7 @@ public interface DriverRepo extends JpaRepository<Driver,String> {
     @Query(value = "SELECT * FROM `driver` ORDER BY driverID DESC LIMIT 1", nativeQuery = true)
     Driver getLastDriver();
 
+    boolean existsByEmail(String email);
+    Driver findDriverByEmail(String email);
+
 }

@@ -60,6 +60,8 @@ public class DriverServiceImpl implements DriverService {
     public DriverDTO searchDriver(String id) {
         if (driverRepo.existsById(id)) {
             return mapper.map(driverRepo.findById(id).get(), DriverDTO.class);
+        }else if(driverRepo.existsByEmail(id)){
+            return mapper.map(driverRepo.findDriverByEmail(id), DriverDTO.class);
         } else {
             throw new RuntimeException("No Driver For " + id + " ..!");
         }
